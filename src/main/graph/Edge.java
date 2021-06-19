@@ -8,7 +8,7 @@ public class Edge
 	private int weight;
 	private  Graph graphPt;
 	
-	public Edge(Graph g, int from, int to, int weight)
+	public Edge(Graph graphPt, int from, int to, int weight)
 	{
 		this.graphPt = graphPt;
 		this.weight=weight;
@@ -18,10 +18,20 @@ public class Edge
 		this.to = graphPt.getVertices().get(to);
 		this.to.getPred().add(this);
 	}
+
+	public Vertex getFrom() 
+	{
+		return from;
+	}
+
+	public Vertex getTo() 
+	{
+		return to;
+	}
+
 	
 	@Override
-	public String toString()
-	{
-		return "\n Kante von"+from + " | nach: "+to;
+	public String toString() {
+		return " [from: " + this.from + ", to: " + this.to + "]";
 	}
 }
