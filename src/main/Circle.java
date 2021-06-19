@@ -1,19 +1,26 @@
 package main;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+
 import javax.swing.*;
-import java.awt.*;
 
-public class Panel_with_background extends JPanel {
 
+
+public class Circle extends JPanel {
+	
+	
 	private Image img;
 
-	public Panel_with_background(String img) {
+	public Circle(String img) {
 		this(new ImageIcon(img).getImage());
 	}
 
-	public Panel_with_background(Image img) {
+	public Circle(Image img) {
 		this.img = img;
-		Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
+		Dimension size = new Dimension((10),(10));
 		setPreferredSize(size);
 		setMinimumSize(size);
 		setMaximumSize(size);
@@ -24,4 +31,5 @@ public class Panel_with_background extends JPanel {
 	public void paintComponent(Graphics g) {
 		g.drawImage(img, 0, 0, null);
 	}
+
 }
