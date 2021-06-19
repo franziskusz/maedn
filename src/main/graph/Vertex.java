@@ -9,7 +9,7 @@ public class Vertex
 {
 
 	private static int indexCount =0;
-	private int index = ++indexCount;
+	private int index = indexCount++;
 	private List<Edge> predecessors = new ArrayList<>();
 	private List<Edge> successors = new ArrayList<>();
 	private Graph graphPtr;
@@ -23,13 +23,11 @@ public class Vertex
 	}
 	
 	public List<Edge> getPred()
-	
 	{
 		return predecessors;
 	}
 	
 	public List<Edge> getSucc()
-	
 	{
 		return predecessors;
 	}
@@ -37,6 +35,6 @@ public class Vertex
 	@Override
 	public String toString()
 	{
-		return "\n Knoten"+index + " | Vorgänger: "+predecessors+ " | Nachfolger "+successors;
+		return "Vertex ("+index+")";
 	}
 }

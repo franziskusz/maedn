@@ -76,9 +76,7 @@ public class Graph
 			}
 			w = 0;
 			Edge e = new Edge(this, from, to, w);
-			edges.add(e);
-			
-			
+			edges.add(e);	
 		}
 		
 		//Initialisierung der Zielfelder
@@ -94,7 +92,7 @@ public class Graph
 			{
 				from = 9;
 			}
-			else if (i<=66) //Zielfelder Spieler 3
+			else if (i<=67) //Zielfelder Spieler 3
 			{
 				from = 19;
 			}
@@ -104,8 +102,7 @@ public class Graph
 			}
 			w = 0;
 			Edge e = new Edge(this, from, to, w);
-			edges.add(e);
-			
+			edges.add(e);	
 		}
 		return null;
 	}
@@ -118,7 +115,12 @@ public class Graph
 	
 	public void testPrint()
 	{
-		System.out.println(vertices);
-		System.out.println(edges);
+		
+		int count = 0;
+		for (Edge edge : edges)
+		{
+			++count;
+			System.out.println("Edge #"+count+" "+edge);	
+		}
 	}
 }
