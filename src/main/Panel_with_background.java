@@ -3,7 +3,7 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 
-public class Panel_with_background extends JFrame {
+public class Panel_with_background extends JPanel {
 
 
 private Image img;
