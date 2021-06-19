@@ -1,0 +1,53 @@
+Start:
+
+
+Sonderregeln{
+Wer eine 6 würfelt, würfelt erneut
+Die Figur auf dem Startfeld muss zuerst bewegt werden
+Wenn die Figur auf dem Startfeld nicht bewegt werden kann, hat der Spieler freie Wahl eine andere Figur zu bewegen
+Figuren im Ziel dürfen nicht übersprungen werden 
+Wenn Figuren im Ziel restlos aufgerückt sind und sonst keine Spielfiguren mehr auf dem Spielfeld sind, darf er wieder 3 mal  würfeln
+Es muss nicht geschlagen werden sofern Optionen existieren
+}
+
+Spieler x hat Farbe (gelb,rot,grün,blau)
+
+Spielbeginn (Set-Up) {
+Jeder Spieler würfelt 1x und die größte Zahl gewinnt
+
+	- Sollten Spieler die gleiche Zahl haben würfeln jene erneut und die größte Zahl gewinnt
+	
+ So ergibt sich eine Hierarchie
+ Die Spieler würfeln in absteigender Reihenfolge 3 mal bis jemand eine 6 hat
+ Sollte niemand eine 6 würfeln beginnt die Rundreise von vorn
+}
+
+Wer eine 6 würfelt stellt Spielfigur auf Startfeld
+Der Würfel gibt vor wie viele Felder in Rundreise-Richtung die Spielfigur bewegt werden soll.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
