@@ -16,9 +16,8 @@ Spielbeginn (Set-Up) {
 Jeder Spieler würfelt 1x und die größte Zahl gewinnt
 
 	- Sollten Spieler die gleiche Zahl haben würfeln jene erneut und die größte Zahl gewinnt
-	
- So ergibt sich eine Hierarchie
- Die Spieler würfeln in absteigender Reihenfolge 3 mal bis jemand eine 6 hat
+
+ Die Spieler würfeln im Uhrzeigersinn (beginnend bei dem Spieler mit der größten Zahl) 3 mal bis jemand eine 6 hat
  Sollte niemand eine 6 würfeln beginnt die Rundreise von vorn
 }
 
