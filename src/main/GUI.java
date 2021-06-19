@@ -21,7 +21,7 @@ public class GUI extends JFrame{
 		controller= new Controller(this);
 		
 		content = new Panel_with_background(new ImageIcon("./background.png").getImage());
-		circle = new Circle(new ImageIcon("./circle.png").getImage());
+		circle = new Circle();
 		
 		setTitle("Mensch ärgere dich nicht");
 		setSize(700,700);
