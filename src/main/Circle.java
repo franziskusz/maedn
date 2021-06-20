@@ -11,11 +11,8 @@ import javax.swing.*;
 
 
 
-public class Circle extends JFrame {
-	
-	/*ImageIcon Image = new ImageIcon("circle.png");
-	
-	
+public class Circle extends JLabel {
+	//ImageIcon Image = new ImageIcon("circle.png");
 	private Image img;
 
 	public Circle(String img) {
@@ -35,8 +32,8 @@ public class Circle extends JFrame {
 	public void paintComponent(Graphics g) {
 		g.drawImage(img, 0, 0, null);
 	}
-*/
-	private ImageIcon image1;
+
+	/*private ImageIcon image1;
 	private JLabel label1;
 	
 	
@@ -46,8 +43,10 @@ public class Circle extends JFrame {
 		image1= new ImageIcon(getClass().getResource("./circle.png"));
 		label1 =new JLabel(image1);
 		add(label1);
+		
+		
 	}
-	
+*/
 		
 		
 		
