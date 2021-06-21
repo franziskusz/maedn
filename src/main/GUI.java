@@ -30,8 +30,8 @@ public class GUI extends JFrame{
 		 setSize(new Dimension(700,700));
 		 setTitle("Mensch ärgere dich nicht");
 	    
-		
-		JLabel label1= new JLabel();
+		/*
+		  JLabel label1= new JLabel();
 		   label1.setOpaque(true);
 		   label1.setBackground(Color.RED);
 		   label1.setBounds(50,50,200,200);
@@ -40,12 +40,13 @@ public class GUI extends JFrame{
 		   label2.setOpaque(true);
 		   label2.setBackground(Color.GREEN);
 		   label2.setBounds(100,100,200,200);
-		   
+		   */
 		  JLabel label3= new JLabel(new ImageIcon("./circle.png"));
-		  label3.setOpaque(true);
-		  label3.setVisible(true);
-		  label3.setBounds(150,150,200,200);
-		  label3.setSize(500,500);
+		   label3.setBackground(new Color(0,0,0,0));
+		   label3.setOpaque(true);
+		   label3.setVisible(true);
+		   label3.setBounds(100,100,100,100);
+		   label3.setSize(250,250);
 		  
 		   
 		 /* JButton button = new JButton();
@@ -58,8 +59,8 @@ public class GUI extends JFrame{
 		   JLayeredPane layeredPane = new Panel_with_background(new ImageIcon("./background.png").getImage());
 		
 		   layeredPane.setBounds(0,0,700,700);
-		   layeredPane.add(label1, Integer.valueOf(1));
-		   layeredPane.add(label2, Integer.valueOf(2));
+		  // layeredPane.add(label1, Integer.valueOf(1));
+		   //layeredPane.add(label2, Integer.valueOf(2));
 		   layeredPane.add(label3, Integer.valueOf(3));
 		   //layeredPane.add(button, Integer.valueOf(15001));
 		   
