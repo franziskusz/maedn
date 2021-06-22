@@ -3,6 +3,8 @@ package main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
@@ -41,20 +43,29 @@ public class GUI extends JFrame{
 		   label2.setBackground(Color.GREEN);
 		   label2.setBounds(100,100,200,200);
 		   */
-		  JLabel label3= new JLabel(new ImageIcon("./circle.png"));
-		   label3.setBackground(new Color(0,0,0,0));
+		 
+		 JLabel label3 = new JLabel();
+		 label3.setOpaque(true);
+		 drawOval(10,10,10,10);
+		 setVisible(true);
+		 fillOval();
+		 
+		 
+		 
+		 
+		 
+		 /* funktioniert
+		  JLabel label3= new JLabel(new ImageIcon("./circle_2.png"));
+		   label3.setBackground(new Color(0,0,0,50));
 		   label3.setOpaque(true);
 		   label3.setVisible(true);
-		   label3.setBounds(100,100,100,100);
-		   label3.setSize(250,250);
+		   label3.setBounds(20,20,100,100);
+		   label3.setSize(50,50);
+		   !!!
+		   */
 		  
 		   
-		 /* JButton button = new JButton();
-		   button.setOpaque(true);
-		   button.setBackground(Color.GREEN);
-		   button.setBounds(100,100,200,200);
-		   button.setText("klappt");
-		   */
+		
 		   
 		   JLayeredPane layeredPane = new Panel_with_background(new ImageIcon("./background.png").getImage());
 		
@@ -128,11 +139,15 @@ public class GUI extends JFrame{
 		
 		
 	}
-	
-	
-	
 
+	private void fillOval() {
+		setBackground(Color.BLACK);
+	}
 
+	private void drawOval(int i, int j, int k, int l) {
+		i=j=k=l=10;
+	}
+	
 }
 
 
