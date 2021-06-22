@@ -192,6 +192,28 @@ public class Controller {
 	 */
 	public void selectOption(){
 
+		//TODO Bearbeite Model nach Input
+		//TODO Überprüfe ob gewonnen
+
+		/*TODO Überprüfe ob 3x Würfeln aktiviert werden muss (evt auch für andere Spieler)
+		* PROBLEM: Wenn man mit dieser Wahl im Ziel alle auf dem Spielfeld befindlichen Figuren
+		* richtig anordnet müsste PlayerState auf THREE TIMES gesetzt werden. Allerding würde der
+		* Spieler dann direkt wieder dran sein, weil nur bei NORMAL der nächste Spieler dran ist.
+		*
+		* Evt mit if THREE TIMES und dann return (darf die normalen THREE TIMES nicht beeinflussen)
+		 */
+
+
+
+		// Nächster Spieler wenn PlayerState == NORMAL
+		if((playerTurn.getPlayerState() == PlayerState.NORMAL)) {
+			nextPlayer();
+			return;
+		}
+
+
+		//TODO GUI Aufruf, "Bitte Würfeln Spieler X"
+
 	}
 
 
@@ -200,9 +222,18 @@ public class Controller {
 	 */
 	public void dice() {
 		int diced = random.nextInt(6)+1;
-		//TODO GUI aufruf mit Würfelrgenbis anzeigen
-		playerTurn.setLastDiced(diced);
 		playerTurnDicedCount += 1;
+		//TODO GUI aufruf mit Würfelrgenbis anzeigen
+
+		if((playerTurn.getPlayerState() == PlayerState.DICE_THREE_TIMES) && (playerTurnDicedCount <= 3)) {
+			playerTurn.setPlayerState(PlayerState.NORMAL);
+		}
+
+		if(diced == 6 && gameState != GameState.DETERMINE_ORDER) {
+			playerTurn.setPlayerState(PlayerState.DICE_AGAIN);
+		}
+
+		playerTurn.setLastDiced(diced);
 
 		//TODO entfernen
 		System.out.println(playerTurn.getPlayerColor().toString() + " hat " + diced + " gewürfelt");
@@ -215,7 +246,7 @@ public class Controller {
 					gameState = GameState.IN_GAME;
 
 					//TODO entfernen
-					System.out.println(data.getPlayers().get(0).getPlayerColor().toString() + " beginnt!");
+					System.out.println(data.getPlayers().get(0).getPlayerColor().toString() + " beginnt!\n");
 
 					// Spiel beginnt mit Beginner
 //					nextPlayer();
@@ -226,9 +257,7 @@ public class Controller {
 			return;
 		}
 
-//		if((playerTurn.getPlayerState() == PlayerState.DICE_THREE_TIMES) && (gameState != GameState.DETERMINE_ORDER)) {
-//			 // playerTurnDicedCount muss erhöht werden
-//		}
+		displayOptions();
 
 	}
 }
