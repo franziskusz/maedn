@@ -1,4 +1,6 @@
-package main.graph;
+package main.model.graph;
+
+import main.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +12,20 @@ public class Graph
 {
 	private Map <Integer, Vertex> vertices = new HashMap<Integer, Vertex>();
 	private List<Edge> edges = new ArrayList<Edge>();
-	
+
+	/**
+	 * Gibt zurück ob Möglichleiten verfügbar sind
+	 * Wenn ja, werden diese im Model gesetzt.
+	 *
+	 * (@Franziskus kannst du ignorieren)
+	 *
+	 * @param player
+	 * @param pieceID
+	 * @return
+	 */
+	public boolean getOptions(Player player, int pieceID) {
+		return false;
+	}
 	
 	//TODO ändern in Initialisierung des  Spielfeldes
 	/*
