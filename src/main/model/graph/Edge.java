@@ -1,4 +1,4 @@
-package main.graph;
+package main.model.graph;
 
 public class Edge
 {

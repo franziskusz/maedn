@@ -1,7 +1,6 @@
-package main.graph;
+package main.model.graph;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
