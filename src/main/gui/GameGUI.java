@@ -1,146 +1,223 @@
 package main.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+
+
+
+
+
+
 
 public class GameGUI extends JFrame{
 
+	
+ 	private static final Graphics Graphics = null;
 	private JLabel myLabel;
-	private JButton startButton;
+	private JButton option1;
+	private JButton option2;
+	private JButton option3;
+	private JButton würfeln;
+	private JPanel mainPanel;
+	private JPanel rightPanel;
 	private Panel_with_background content;
 	private Circle circle;
-	
+	 
 	public GameGUI(){
 		
-		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 setResizable(false);
-		 setLayout(null);
-		 setSize(new Dimension(700,700));
-		 setTitle("Mensch ärgere dich nicht");
-	    
+		this.setTitle("Mensch ärgere dich nicht!");
 		/*
-		  JLabel label1= new JLabel();
-		   label1.setOpaque(true);
-		   label1.setBackground(Color.RED);
-		   label1.setBounds(50,50,200,200);
-		   
-		  JLabel label2= new JLabel();
-		   label2.setOpaque(true);
-		   label2.setBackground(Color.GREEN);
-		   label2.setBounds(100,100,200,200);
-		   */
-		 
-		 JLabel label3 = new JLabel();
-		 label3.setOpaque(true);
-		 drawOval(10,10,10,10);
-		 setVisible(true);
-		 fillOval();
-		 
-		 
-		 
-		 
-
-		 /* funktioniert
-		  JLabel label3= new JLabel(new ImageIcon("./images/circle_2.png"));
-		   label3.setBackground(new Color(0,0,0,50));
-		   label3.setOpaque(true);
-		   label3.setVisible(true);
-		   label3.setBounds(20,20,100,100);
-		   label3.setSize(50,50);
-		   !!!
-		   */
-
-		   
+		mainPanel = new JPanel(null);
+		mainPanel.setSize(1000,700);
+		this.setContentPane(mainPanel);
 		
-		   
-		   JLayeredPane layeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage());
-		
-		   layeredPane.setBounds(0,0,700,700);
-		  // layeredPane.add(label1, Integer.valueOf(1));
-		   //layeredPane.add(label2, Integer.valueOf(2));
-		   layeredPane.add(label3, Integer.valueOf(3));
-		   //layeredPane.add(button, Integer.valueOf(15001));
-		   
-		    
-		     
-		   	  setContentPane(layeredPane);
-		      pack();
-		      setVisible(true);
-
 	
-		/*
-		// setLayout(new FlowLayout());
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		JFrame frame = new JFrame();
+		JPanel panel = new JPanel();
+		JPanel panel1 = new JPanel();
+	
+		
+
+		panel1.setBackground(Color.red);
 		
 		
 		
-		JLabel background;
-		setSize(700,700);
-		ImageIcon image = new ImageIcon ("./images/background.png");
-		
-		background = new JLabel ("",image, JLabel.CENTER);
-		background.setBounds(0,0,700,700);
-		add(background);
-		
-		setVisible(true);
-		
+		frame.add(panel, BorderLayout.WEST);
+		frame.add(panel1, BorderLayout.EAST);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+		frame.setSize(getPreferredSize());
 		*/
 		
 		
 		
-		
-		/*
-		JLabel circle;
-		setSize(100,100);
-		ImageIcon circles = new ImageIcon ("./images/circle.png");
-		
-		circle = new JLabel ("", JLabel.NORTH);
-		add(circle);
-		
-		*/
-		
-	
-		/*content = new Panel_with_background(new ImageIcon("./images/background.png").getImage());
-		circle = new Circle(new ImageIcon("./images/circle.png").getImage());
-		
-		setLayout(new FlowLayout());
-		
-		setTitle("Mensch ärgere dich nicht");
-		setSize(700,700);
-		setResizable(false);
-	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		
-		//setContentPane(content);
-		getContentPane().add(content);
-		setContentPane(circle);
+		setResizable(false);
+		setLayout(null);
+		setSize(new Dimension(700,700));
+		setTitle("Mensch ärgere dich nicht");
+		JLayeredPane layeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage());
+		layeredPane.setBounds(0,0,500,500);
+		setContentPane(layeredPane);
 		pack();
-		
-		setVisible(true);
-		*/
+		setVisible(true); 
 		
 		
-		
-		
-	}
-
-	private void fillOval() {
-		setBackground(Color.BLACK);
-	}
-
-	private void drawOval(int i, int j, int k, int l) {
-		i=j=k=l=10;
-	}
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+	}	
 	
+	
+	public void paint(Graphics g){
+		 // 					(Zeile,Spalte)
+		 g.setColor(Color.blue);
+		 //Haus 
+		 g.fillOval(40,40,30,30); //0,0
+		 g.fillOval(80,40,30,30); //0,1
+		 g.fillOval(40,80,30,30); //1,0
+		 g.fillOval(80,80,30,30); //1,1
+		 //Hotzone
+		 g.fillOval(40,200,30,30);
+		 //Safezone
+		 g.fillOval(80,240,30,30);
+		 g.fillOval(120,240,30,30);
+		 g.fillOval(160,240,30,30);
+		 g.fillOval(200,240,30,30);
+		 
+		 //Spielfeld
+		 g.setColor(Color.black);
+		 g.fillOval(200,40,30,30);//0,5
+		 g.fillOval(240,40,30,30);//0,6
+		 g.fillOval(40,240,30,30);
+		 g.fillOval(40,280,30,30);
+		 g.fillOval(440,200,30,30);
+		 g.fillOval(440,240,30,30);
+		 g.fillOval(240,440,30,30);
+		 g.fillOval(280,440,30,30);
+		 
+		 
+		 g.fillOval(80,200,30,30);
+		 g.fillOval(120,200,30,30);
+		 g.fillOval(160,200,30,30);
+		 g.fillOval(200,200,30,30);
+		 g.fillOval(280,200,30,30);
+		 g.fillOval(320,200,30,30);
+		 g.fillOval(360,200,30,30);
+		 g.fillOval(400,200,30,30);
+		 
+		
+		//Mitte
+		
+		 
+		 g.fillOval(80,280,30,30);
+		 g.fillOval(120,280,30,30);
+		 g.fillOval(160,280,30,30);
+		 g.fillOval(200,280,30,30);
+		
+		 g.fillOval(280,280,30,30);
+		 g.fillOval(320,280,30,30);
+		 g.fillOval(360,280,30,30);
+		 g.fillOval(400,280,30,30);
+		 
+		
+		 
+		 g.fillOval(200,80,30,30);
+		 g.fillOval(200,120,30,30);
+		 g.fillOval(200,160,30,30);
+		 
+		 
+		 g.fillOval(280,80,30,30); 
+		 g.fillOval(280,120,30,30); 
+		 g.fillOval(280,160,30,30); 
+		
+		
+		 g.fillOval(200,400,30,30); 
+		 g.fillOval(200,360,30,30);	
+		 g.fillOval(200,320,30,30); 
+		
+		 g.fillOval(280,400,30,30); 
+		 g.fillOval(280,360,30,30);	
+		 g.fillOval(280,320,30,30); 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		
+		 		 
+		 g.setColor(Color.green);
+		 //Haus
+		 g.fillOval(400,40,30,30);//0,9
+		 g.fillOval(400,80,30,30);
+		 g.fillOval(440,40,30,30);//0,10
+		 g.fillOval(440,80,30,30);
+		 //Hotzone
+		 g.fillOval(280,40,30,30);//0,7
+		 //Safezone
+		 g.fillOval(240,80,30,30); 
+		 g.fillOval(240,120,30,30); 
+		 g.fillOval(240,160,30,30);
+		 g.fillOval(240,200,30,30);
+		 
+		 
+		 g.setColor(Color.red);
+		 //Haus
+		 g.fillOval(40,400,30,30);
+		 g.fillOval(40,440,30,30);
+		 g.fillOval(80,400,30,30);
+		 g.fillOval(80,440,30,30);
+		 //Hotzone
+		 g.fillOval(200,440,30,30);
+		 //Safezone
+		 g.fillOval(240,400,30,30); 
+		 g.fillOval(240,360,30,30);	
+		 g.fillOval(240,320,30,30); 
+		 g.fillOval(240,280,30,30);
+		 
+		 
+		 
+		 g.setColor(Color.yellow);
+		 //Haus
+		 g.fillOval(400,400,30,30);
+		 g.fillOval(400,440,30,30);
+		 g.fillOval(440,400,30,30);
+		 g.fillOval(440,440,30,30);
+		 //Hotzone
+		 g.fillOval(440,280,30,30);
+		 //Safezone
+		 g.fillOval(280,240,30,30);
+		 g.fillOval(320,240,30,30);
+		 g.fillOval(360,240,30,30);
+		 g.fillOval(400,240,30,30);
+		 
+		 
+	 }
+
+	public static void main(String[] args){
+	  new GameGUI();
+	 }
+	 
 }
+
 
 
 
