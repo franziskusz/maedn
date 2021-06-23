@@ -42,7 +42,31 @@ public class GameGUI extends JFrame{
 	public GameGUI(){
 		
 		this.setTitle("Mensch ärgere dich nicht!");
-		
+
+
+
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.black);
+		panel.setPreferredSize(new Dimension(700, 700));
+		this.add(panel, BorderLayout.CENTER);
+
+		JPanel panel1 = new JPanel();
+		panel1.setBackground(Color.red);
+		panel1.setPreferredSize(new Dimension(300, 700));
+		this.add(panel1, BorderLayout.EAST);
+
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.pack();
+		this.setVisible(true);
+		this.setResizable(false);
+
+
+
+
+
+
+/*
 		mainPanel = new JPanel(null);
 		mainPanel.setSize(1000,700);
 		this.setContentPane(mainPanel);
@@ -52,10 +76,10 @@ public class GameGUI extends JFrame{
 		JPanel panel = new JPanel();
 		JPanel panel1 = new JPanel();
 		
-		
+
 		panel1.setBackground(Color.red);
 		panel.setBackground(Color.black);
-		
+
 		mainPanel.add(panel,panel1);
 		
 		frame.add(panel, BorderLayout.CENTER);
@@ -66,7 +90,7 @@ public class GameGUI extends JFrame{
 		frame.pack();
 		frame.setVisible(true);
 		frame.setResizable(false);
-		
+*/
 		
 		
 		/*
