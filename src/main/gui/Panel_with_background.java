@@ -28,18 +28,14 @@ public class Panel_with_background extends JLayeredPane {
 		 
 		 //Spielfeld
 				 g.setColor(Color.black);
-
 				 g.fillOval(220,20,40,40);//0,4
 				 g.fillOval(270,20,40,40);//0,5
-
 		 		 g.fillOval(20,270,40,40);//5,0
 		 		 g.fillOval(20,320,40,40);//6,0
 		 		 g.fillOval(520,220,40,40);//4,10
 		 		 g.fillOval(520,270,40,40);//5,10
 		 		 g.fillOval(270,520,40,40);//10,5
 		 		 g.fillOval(320,520,40,40);//10,6
-
-
 		 		 g.fillOval(70,220,40,40);//4,1
 		 		 g.fillOval(120,220,40,40);//4,2
 		 		 g.fillOval(170,220,40,40);//4,3
@@ -48,39 +44,27 @@ public class Panel_with_background extends JLayeredPane {
 		 		 g.fillOval(370,220,40,40);//4,7
 		 		 g.fillOval(420,220,40,40);//4,8
 		 		 g.fillOval(470,220,40,40);//4,9
-			 	
-		 		 
 		 		 g.fillOval(70,320,40,40);//6,1
 		 		 g.fillOval(120,320,40,40);//6,2
 		 		 g.fillOval(170,320,40,40);//6,3
 		 		 g.fillOval(220,320,40,40);//6,4
-
-		 		
 		 		 g.fillOval(320,320,40,40);//6,6
 		 		 g.fillOval(370,320,40,40);//6,7
 		 		 g.fillOval(420,320,40,40);//6,8
 		 		 g.fillOval(470,320,40,40);//6,9
-		 		 
-
 		 		 g.fillOval(220,70,40,40);//1,4
 		 		 g.fillOval(220,120,40,40);//2,4
 		 		 g.fillOval(220,170,40,40);//3,4
-
-		 		 
 		 		 g.fillOval(320,70,40,40); //1,6
 		 		 g.fillOval(320,120,40,40); //2,6
 		 		 g.fillOval(320,170,40,40); //3,6
-
-		 		
 		 		 g.fillOval(220,470,40,40); //9,4
 		 		 g.fillOval(220,420,40,40);	//8,4
 		 		 g.fillOval(220,370,40,40); //7,4
-
-		 	
 		 		 g.fillOval(320,470,40,40); //9,6
 		 		 g.fillOval(320,420,40,40);	//8,6
 		 		 g.fillOval(320,370,40,40); //7,6
-
+		 		
 
 		 		 g.setColor(Color.blue);
 		 		 //Haus 
@@ -141,6 +125,6 @@ public class Panel_with_background extends JLayeredPane {
 		 		 g.fillOval(420,270,40,40);//5,8
 		 		 g.fillOval(470,270,40,40);//5,9
 		 
- 
 	 }
+	
 }
