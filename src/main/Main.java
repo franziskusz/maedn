@@ -32,7 +32,7 @@ public class Main {
 //		TestGameGUI testGameGUI = new TestGameGUI();
 //		GameModel gameModel = new GameModel(INITIAL_PLAYERS);
 //		GameController gameController = new GameController(gameModel, testGameGUI);
-		//
+		
 		
 	}
 }
