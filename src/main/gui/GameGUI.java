@@ -129,7 +129,6 @@ public class GameGUI extends JFrame{
 		text.setPreferredSize( new Dimension( 200, 24 ) );
 		panel1.add(text);
 
-
 		btnWuerfel.setText("Würfeln");
 		btnWuerfel.setActionCommand(WUERFELN);
 		panel2.add(btnWuerfel);
@@ -149,16 +148,6 @@ public class GameGUI extends JFrame{
 		btnOption4.setText("Option 4");
 		btnOption4.setActionCommand(OPTION_3);
 		panel2.add(btnOption4);
-		
-		
-		
-	
-		
-		
-	
-	
-	
-		
 		
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
