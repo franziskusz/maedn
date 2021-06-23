@@ -15,6 +15,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		
 		GameGUI gameGui = new GameGUI();
 
 
@@ -22,17 +23,18 @@ public class Main {
 		board.initGraph();
 		board.testPrint();
 
+		/*
 		// TESTS JOHANNES
-//		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
-//		INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
-//		INITIAL_PLAYERS.add(new Gamer(PlayerColor.BLUE));
-//		INITIAL_PLAYERS.add(new Gamer(PlayerColor.GREEN));
-//		INITIAL_PLAYERS.add(new Gamer(PlayerColor.YELLOW));
-//
-//		TestGameGUI testGameGUI = new TestGameGUI();
-//		GameModel gameModel = new GameModel(INITIAL_PLAYERS);
-//		GameController gameController = new GameController(gameModel, testGameGUI);
-		
+		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
+		INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
+		INITIAL_PLAYERS.add(new Gamer(PlayerColor.BLUE));
+		INITIAL_PLAYERS.add(new Gamer(PlayerColor.GREEN));
+		INITIAL_PLAYERS.add(new Gamer(PlayerColor.YELLOW));
+
+		TestGameGUI testGameGUI = new TestGameGUI();
+		GameModel gameModel = new GameModel(INITIAL_PLAYERS);
+		GameController gameController = new GameController(gameModel, testGameGUI);
+		*/
 		
 	}
 }
