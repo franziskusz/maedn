@@ -32,6 +32,6 @@ public class Edge
 	
 	@Override
 	public String toString() {
-		return " [from: " + this.from + ", to: " + this.to + "]";
+		return " [from: " + this.from + ", to: " + this.to + ", weight = "+this.weight+"]";
 	}
 }
