@@ -124,11 +124,11 @@ public class GameGUI extends JFrame{
 		
 		
 		
+		text.setEditable(false);
+		text.setText("?");
+		text.setPreferredSize( new Dimension( 200, 24 ) );
+		panel1.add(text);
 
-		wZahl.setEditable(false);
-		wZahl.setText("0");
-		wZahl.setSize(10, 10);
-		panel1.add(wZahl);
 
 		btnWuerfel.setText("Würfeln");
 		btnWuerfel.setActionCommand(WUERFELN);
