@@ -1,5 +1,8 @@
 package main.gui;
 
+import main.model.player.Piece;
+import main.model.player.Player;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -54,8 +58,10 @@ public class GameGUI extends JFrame{
 
 	private JTextField text = new JTextField();
 	private JTextField wZahl = new JTextField();
+
+	private Panel_with_background boardLayeredPane;
 	 
-	public GameGUI(){
+	public GameGUI(ArrayList<Piece> pieces){
 		
 		this.setTitle("Mensch ärgere dich nicht!");
 
@@ -106,9 +112,9 @@ public class GameGUI extends JFrame{
 		
 		*/
 		
-		JLayeredPane layeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage());
-		layeredPane.setPreferredSize(new Dimension(580, 580));
-		this.add(layeredPane,BorderLayout.CENTER);
+		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
+		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
+		this.add(boardLayeredPane,BorderLayout.CENTER);
 		
 		
 		
@@ -151,14 +157,10 @@ public class GameGUI extends JFrame{
 		
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
 		this.pack();
 		this.setVisible(true);
-		this.setResizable(false);
-
-		
-		
-
-	}	
+	}
 	
 	public JButton getBtnWuerfel() {
 		return btnWuerfel;
@@ -183,7 +185,17 @@ public class GameGUI extends JFrame{
 	public JTextField getText() {
 		return text;
 	}
-	
+
+	//
+	// NEU
+	//
+	public Panel_with_background getBoardLayeredPane() {
+		return boardLayeredPane;
+	}
+	//
+	// NEU ENDE
+	//
+
 }
 
 

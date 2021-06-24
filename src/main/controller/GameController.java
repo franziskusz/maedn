@@ -1,8 +1,8 @@
 package main.controller;
 
+import main.gui.GameGUI;
 import main.model.enums.GameState;
 import main.model.GameModel;
-import main.gui.TestGameGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +12,9 @@ import java.util.Observer;
 public class GameController implements Observer, ActionListener {
 
 	private GameModel gameModel;
-	private TestGameGUI view;
+	private GameGUI view;
 
-	public GameController(GameModel gameModel, TestGameGUI view) {
+	public GameController(GameModel gameModel, GameGUI view) {
 		this.gameModel = gameModel;
 		this.view = view;
 
@@ -68,6 +68,9 @@ public class GameController implements Observer, ActionListener {
 				}
 			}
 
+//			view.updateGUI(gameModel.getPieces());
+			view.getBoardLayeredPane().setPieces(gameModel.getPieces());
+			view.getBoardLayeredPane().repaint();
 
 			System.out.println("Updated GUI");
 			// view set Values aus model
@@ -77,19 +80,19 @@ public class GameController implements Observer, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-			case TestGameGUI.WUERFELN:
+			case GameGUI.WUERFELN:
 				gameModel.diceRoll();
 				break;
-			case TestGameGUI.OPTION_1:
+			case GameGUI.OPTION_1:
 				gameModel.performOption(1);
 				break;
-			case TestGameGUI.OPTION_2:
+			case GameGUI.OPTION_2:
 				gameModel.performOption(2);
 				break;
-			case TestGameGUI.OPTION_3:
+			case GameGUI.OPTION_3:
 				gameModel.performOption(3);
 				break;
-			case TestGameGUI.OPTION_4:
+			case GameGUI.OPTION_4:
 				gameModel.performOption(4);
 				break;
 
