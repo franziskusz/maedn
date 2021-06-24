@@ -3,6 +3,7 @@ package main.model;
 import main.model.enums.GameState;
 import main.model.enums.PlayerState;
 import main.model.graph.Graph;
+import main.model.player.Piece;
 import main.model.player.Player;
 
 import java.util.ArrayList;
@@ -21,12 +22,21 @@ public class GameModel extends Observable {
 
 	private ArrayList<Player> INITIAL_PLAYERS; // Für initalen Aufruf
 	private ArrayList<Player> players; // geordnet nach Uhrzeigersinn und an Stelle 0 ist Beginner
+	private ArrayList<Piece> pieces;
 
 
 
 	public GameModel(ArrayList<Player> INITIAL_PLAYERS) {
 		this.INITIAL_PLAYERS = INITIAL_PLAYERS;
 		players = new ArrayList<>(INITIAL_PLAYERS);
+
+		pieces = new ArrayList<Piece>();
+		for(Player player : players) {
+			for(int i = 0; i < 4; i++) {
+				pieces.add(player.getPieces()[i]);
+			}
+		}
+
 		playerTurn = players.get(0);
 		changeGameState(GameState.DETERMINE_ORDER);
 	}
@@ -133,6 +143,10 @@ public class GameModel extends Observable {
 	public boolean hasOption() {
 		//TODO Wenn Options vatiable exisiert schauen, ob Optionen vorhanden sind
 		return false;
+	}
+
+	public ArrayList<Piece> getPieces() {
+		return pieces;
 	}
 
 	public Player getPlayerTurn() {

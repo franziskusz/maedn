@@ -1,13 +1,13 @@
 package main;
 
-import main.gui.TestGameGUI;
+import main.gui.GameGUI;
 
 public class SleepThread implements Runnable {
 
-	TestGameGUI testGameGUI;
+	GameGUI gameGUI;
 
-	public SleepThread(TestGameGUI testGameGUI) {
-		this.testGameGUI = testGameGUI;
+	public SleepThread(GameGUI gameGUI) {
+		this.gameGUI = gameGUI;
 	}
 
 	@Override
@@ -15,7 +15,7 @@ public class SleepThread implements Runnable {
 		try {
 			// thread to sleep for 1000 milliseconds
 			Thread.sleep(2000);
-			testGameGUI.getText().setText("???");
+			gameGUI.getText().setText("???");
 		} catch(Exception e) {
 			System.out.println(e);
 		}
