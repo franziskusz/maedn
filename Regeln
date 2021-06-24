@@ -34,8 +34,11 @@ Testen:
 - alle im gleichen Abstand vor dem ziel, keiner mehr im Haus
     ->Bei 6 nochmal Wüerfeln ohne Option, bei anderen Zahlen nächster Spieler ohne Optionen
 
+- Spieler hat schon Spielfigur im Ziel, aber noch nicht aufgerückt und
+    hat die Möglichkeit mit Überspingen seiner Spielfigur weiter aufzurücken.
+    -> Unterbinden, keine Möglichkeit!!
 
-
+-
 
 
 

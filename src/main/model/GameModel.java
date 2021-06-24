@@ -19,6 +19,7 @@ public class GameModel extends Observable {
 	private GameState gameState = GameState.NOT;
 	private Player playerTurn;
 	private int playerTurnDicedCount = 0;
+	private int diced = 6;
 
 	private ArrayList<Player> INITIAL_PLAYERS; // Für initalen Aufruf
 	private ArrayList<Player> players; // geordnet nach Uhrzeigersinn und an Stelle 0 ist Beginner
@@ -46,9 +47,11 @@ public class GameModel extends Observable {
 	// Aus Controller Aufrufbare Methoden
 	//
 
-
+	/**
+	 *
+	 */
 	public void diceRoll() {
-		int diced = random.nextInt(6)+1;
+		diced = random.nextInt(6)+1;
 		playerTurnDicedCount += 1;
 
 		if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
@@ -60,8 +63,11 @@ public class GameModel extends Observable {
 		//TODO entfernen
 		System.out.println(playerTurn.getPlayerColor().toString() + " hat " + diced + " gewürfelt");
 
+		// Wird gerade der Beginner ausgewürelt?
 		if(gameState == GameState.DETERMINE_ORDER) {
-			if(playerTurn == players.get(players.size() - 1)) { // Ermittlung Beginner, jeder hat 1x gewürfelt
+			// Ist Spieler 4? -> (Alle haben gewürfelt)
+			if(playerTurn == players.get(players.size() - 1)) {
+				// Kann eindeutiger Beginner ermittelt werden?
 				if(determineBeginner()) {
 					setPlayerOrder();
 					clearPlayerLastDice();
@@ -70,40 +76,46 @@ public class GameModel extends Observable {
 					//TODO entfernen
 					System.out.println(players.get(0).getPlayerColor().toString() + " beginnt!\n");
 
-					// Spiel beginnt mit Beginner
+					// Spiel beginnt mit Spieler, der die höchste Zahl gewürfelt hat
 					firstPlayer();
 					updateGUI();
 					return;
 				}
 			}
+			// Nächster Spieler mit Würfeln dran
 			nextPlayer();
 			updateGUI();
 			return;
 		}
 
+
+
 		//TODO über den Spielbrett-Graph die Möglichkeiten für den Spieler, mit Würfelzahl ermitteln und irgendwie im Model
 		// speichern, damit beim GUI Update die OPTION Buttons aktivieert werden können
-		// !! Wenn es keine Möglichkeiten gibt (Figuren vor dem Haus und keine passende Zahl oder PlayerState THREE TIMES)
-		// dann muss irgendwie geschaut werden, ob der
+		// board.getOptions(playerTurn, diced);
+		// !! Option: "Keine Möglichkeiten" beachten z.B. wenn Figuren vor dem Haus und keine passende Zahl
 
 
 
-		// TODO !!! Wenn man mit ner 6 im Ziel mit Figuren restlos aurück, dann darf man theoretisch wieder 3x
-
-		if(board.getOptions(playerTurn, diced)) { // würde True zurückgeben, wenn Möglich. vorhanden und diese in der Klasse gesetzt werden
+		// Gibt es eine oder mehrere Möglichkeiten, unter der der Spieler auswählen kann
+		if(hasOption()) {
 			playerTurn.setPlayerState(PlayerState.NORMAL);
 
-			//TODO evt braucht man DICE_AGAIN gar nicht und es geht auch nur mit dice == 6, dann nicht nextPlayer();
 			if((diced == 6) && (gameState != GameState.DETERMINE_ORDER)) {
 				playerTurn.setPlayerState(PlayerState.DICE_AGAIN);
-				// Hier könnte auch irgendeine Variable gesetzt werden, die in der GUI geprüft und dann "Nochmal würfeln" ausgibt
-			} else {
-				nextPlayer();
+				//TODO Hier könnte auch irgendeine Variable gesetzt werden, die in der GUI geprüft und dann "Nochmal würfeln" ausgibt
 			}
+			// TODO Wahrscheinlich falsch an dieser Stelle! (Sollte erst in performOption aufgerufen werden, da Möglichkeit zum auswählen)
+			// else {
+			//	nextPlayer();
+			// }
 		} else {
+			// Der Spieler hat keine Möglichkeiten
+
+			// Hat der Spieler eine 6 gewürfelt? -> nochmal würfeln
 			if((diced == 6) && (gameState != GameState.DETERMINE_ORDER)) {
 				playerTurn.setPlayerState(PlayerState.DICE_AGAIN);
-				// Hier könnte auch irgendeine Variable gesetzt werden, die in der GUI geprüft und dann "Nochmal würfeln" ausgibt
+				//TODO Hier könnte auch irgendeine Variable gesetzt werden, die in der GUI geprüft und dann "Nochmal würfeln" ausgibt
 			}
 
 			// 3x hintereinander ohne Erfolg gewürfelt
@@ -117,32 +129,76 @@ public class GameModel extends Observable {
 		updateGUI();
 	}
 
+
+	/**
+	 *
+	 *
+	 * @param option 0-3 entspricht der Option und somit auch PieceID
+	 */
 	public void performOption(int option) {
-		//TODO
-		// Getroffene Auswahl bearbeiten
-		// Beim Schlagen eines anderen Spielers überprüfen, ob dieser Spiler dann nur noch Figuren im Haus
-		//   oder restlos aufgerück im Ziel hat. Wenn ja, muss dem anderen Spieler PlayerState THREE TIMES gegeben
-		//   werden.
-		// Auch der Spieler der dran ist muss gegf. THREE TIMES Status bekommen, wenn er alle Figuren restlos
-		//   aufgerückt im Ziel hat.
-		// Überorüfung, ob gewonnen
+
+		boolean isSuperSpecialCase = false;
+
+		// TODO isSuperSpecialCase = board.perfromODERSO(option);
+		// - in performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
+		//    und daraufhin bestimmte Sachen überprüft
+		//    - Wurde Geschlagen?
+		//        - Muss geschlagener Spieler THREE TIMES bekommen (gar keine Spielfiguren mehr
+		//            aufm Spielfeld oder restlos aufgerückt)
+		//    - Ist der Spieler restlos aufgerückt und hast sonst keine Spielsteine auf dem Feld?
+		//        - Dann bekommt er THREE TIMES (return true; (THREE TIMES nicht setzen!) sonst immer return false;)
+		//    - Ob eigene Spielfigur übersprungen wurde muss NICHT überprüft werden, da es durch "keine Möglichkeit" auisgeschlossen
+
+
+		// TODO board.hatGewonnenODERSO(playerTrun)
+		// - in performOption() eine Methode im Graph aufrufen, die überprüft, ob der
+		//    mitgegebene Spieler (playerTrun) gewonnen hat
+		//    - Falls ja -> GameState END setzen
+		//
+		// if(board.hatGewonnen(playerTurn)) {
+		//   changeGameState(GameState.END);
+		// }
+
 
 		//TODO Auswahloptionen zurücksetzen, sodass auf GUI OPTION bUTTONS deaktiviert werden
-		//
-		//
 
 
-		// Nächster Spieler wenn PlayerState == NORMAL
-		if((playerTurn.getPlayerState() == PlayerState.NORMAL)) {
-			nextPlayer();
+		if(gameState != GameState.END) {
+			if(playerTurn.getPlayerState() == PlayerState.NORMAL) {
+				nextPlayer();
+			}
+
+			// TODO Wenn Spieler durch diesen Zug THREE TIMES bekommt und keine 6 gewürfelt hat
+			//  darf er erst nächste Runde wieder würfeln.
+			//  Wenn er allerdings durch diesen Zug THREE TIMES bekommt und eine 6 gewürfelt hat,
+			//  darf er direkt weiter 3x würfeln!
+			//  !!!!Wird durch folgendes gelöst (wahrscheinlich)!!!
+
+			if(isSuperSpecialCase) {
+				if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
+					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
+				} else {
+					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
+					nextPlayer();
+				}
+			}
 		}
 
 		updateGUI();
 	}
 
+	/**
+	 * @return ob playerTurn Möglichkeiten hat zu handeln
+	 */
 	public boolean hasOption() {
-		//TODO Wenn Options vatiable exisiert schauen, ob Optionen vorhanden sind
+		//TODO Wenn Mögöichkeiten vatiable eingebaut schauen, ob Möglichkeiten vorhanden sind
+		// NIHCT NOCHMAL board.getOptions(playerTurn, 0);
+		// auf lokale Möglichkeiten Variable zugreifen
 		return false;
+	}
+
+	public int getDiced() {
+		return diced;
 	}
 
 	public ArrayList<Piece> getPieces() {
@@ -163,8 +219,7 @@ public class GameModel extends Observable {
 
 	/**
 	 * Überprüft, wie viele und welche Spieler die höchste Punktzahl gewürfelt haben.
-	 * Wird nur bei deim Beginner auswürfeln aufgerufen.
-	 * alle Spieler mit zu kleinen Augenzahlen werden aus data.players gelöscht (setPlayerOder() wieder hinzugefügt)
+	 * alle Spieler mit zu kleinen Augenzahlen werden aus players gelöscht (in setPlayerOder() wieder hinzugefügt)
 	 *
 	 * @return ob es einen Spieler gibt, der die höchste Zahl gewüfelt hat
 	 */
@@ -188,9 +243,9 @@ public class GameModel extends Observable {
 	}
 
 	/**
-	 * Füllt data.player mit Spielern im Uhrzeigersinn
-	 * Spieler mit der höchsten gewüfelten Zahl steht noch in data.player,
-	 * der Rest wird aus data.INITALPLAYER geholt
+	 * Füllt players mit Spielern im Uhrzeigersinn
+	 * Spieler mit der höchsten gewüfelten Zahl steht noch in players,
+	 * der Rest wird aus INITAL_PLAYERS geholt
 	 */
 	private void setPlayerOrder() {
 		switch(INITIAL_PLAYERS.indexOf(players.get(0))) {
@@ -218,7 +273,7 @@ public class GameModel extends Observable {
 	}
 
 	/**
-	 * Setzt alle Letzte Würfel 0
+	 * Setzt bei allen Spielern Letzter Würfel 0
 	 */
 	private void clearPlayerLastDice() {
 		for(Player player : players) {
@@ -226,6 +281,9 @@ public class GameModel extends Observable {
 		}
 	}
 
+	/**
+	 * Setzt playerTurn auf den Beginner
+	 */
 	private void firstPlayer() {
 		playerTurn = players.get(0);
 		playerTurnDicedCount = 0;
@@ -240,7 +298,6 @@ public class GameModel extends Observable {
 	 * Setzt Spieler der dran ist im Urzeigersinn weiter
 	 * Setzt den letzen Wüfel beim Spieler, der jetzt nicht mehr dran ist auf 0
 	 * Setzt playerTurnDicedCount 0
-	 * ruft die GUI Würfeln für neuen Spieler auf
 	 */
 	private void nextPlayer() {
 		if(gameState == GameState.IN_GAME) {
@@ -265,6 +322,10 @@ public class GameModel extends Observable {
 		playerTurnDicedCount = 0;
 	}
 
+	/**
+	 * Ändert Game Status
+	 * @param newGameState neuer Game Status
+	 */
 	private void changeGameState(GameState newGameState) {
 		gameState = newGameState;
 	}
@@ -275,6 +336,9 @@ public class GameModel extends Observable {
 	// Methode zum updaten des GUI
 	//
 
+	/**
+	 * benachrichtigt Controller, dass Änderungen auf GUI aktualisiert werden müssen
+	 */
 	private void updateGUI() {
 		setChanged();
 		notifyObservers();
