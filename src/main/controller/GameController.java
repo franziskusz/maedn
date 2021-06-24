@@ -22,17 +22,12 @@ public class GameController implements Observer, ActionListener {
 		gameModel.addObserver(this);
 
 
-
 		// set Listener für Buttons
 		view.getBtnWuerfel().addActionListener(this);
 		view.getBtnOption1().addActionListener(this);
 		view.getBtnOption2().addActionListener(this);
 		view.getBtnOption3().addActionListener(this);
 		view.getBtnOption4().addActionListener(this);
-
-
-		//TODO setze Inititiale Werte auf der Spieloberfläche, die noch nicht gesetzt wurden
-
 
 
 		// mach Fenster sichtbar
@@ -52,12 +47,14 @@ public class GameController implements Observer, ActionListener {
 		if(o == gameModel) {
 			if(gameModel.getGameState() == GameState.END) {
 				view.getText().setText("Gewonnen hat " + gameModel.getPlayerTurn().getPlayerColor().toString());
+				//TODO evt Button sichtbar machen, der Wieder das Initiale JFrame aufruft für neue Runde
 			} else {
 				if(gameModel.hasOption()) {
 					//TODO aktiviere OPTION Buttons
 					//	deaktiviere Würfel Button
 					//	evt. admin Button deaktivieren
 
+					// set Diced Würfelimage gameModel.getDiced();
 					view.getText().setText("Wähle Option");
 				} else {
 					//TODO deaktiviere OPTION Buttons
@@ -68,12 +65,10 @@ public class GameController implements Observer, ActionListener {
 				}
 			}
 
-//			view.updateGUI(gameModel.getPieces());
 			view.getBoardLayeredPane().setPieces(gameModel.getPieces());
 			view.getBoardLayeredPane().repaint();
 
 			System.out.println("Updated GUI");
-			// view set Values aus model
 		}
 	}
 
