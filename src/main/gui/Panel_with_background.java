@@ -1,5 +1,6 @@
 package main.gui;
 
+import main.model.enums.PlayerColor;
 import main.model.player.Piece;
 
 import javax.swing.*;
@@ -138,10 +139,13 @@ public class Panel_with_background extends JLayeredPane {
 		// mit den folgenden Befehlen wirst du dir dann wah. die Position holen können. (funktioneirt im Moment noch nciht)
 		// pieces.get(i).getPosition().getX();
 		// pieces.get(i).getPosition().getY();
+		// if(pieces.get(i).getPlayer().getPlayerColor() == PlayerColor.BLUE) {
+		//	//male Blauerkreis
+		// }
 
 		//Das hier ist ein beispielkreis, der beim erstenmal würfeln gesetzt wird
 		g.setColor(Color.MAGENTA);
-		g.fillOval(40, 40, 40, 40);
+		g.fillOval(30, 30, 20, 20);
 
 		//
 		// NEU ENDE
