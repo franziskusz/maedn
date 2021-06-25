@@ -54,7 +54,21 @@ public class GameController implements Observer, ActionListener {
 					//	deaktiviere Würfel Button
 					//	evt. admin Button deaktivieren
 
-					// set Diced Würfelimage gameModel.getDiced();
+					// TODO set Diced Würfelimage gameModel.getDiced();
+
+					// TODO setze neben die Pieces die Zuordnung der Buttons (pieceID)
+					//  kann wie das zeichnen der Pices passieren
+					//  view.getBoardLayeredPane().setOptionPieces(gameModel.getOPTIOEN);
+					//  Optionen dazu muss der Controller hier noch aus dem model.playerTurn die Piece Objekte raushole
+					//  undzwar nur die, die im gameModel.getOPTIOEN stehen, diese Pieces dann an die GUI geben wie
+					//  beim normalen Piece zeichen
+					//
+					//  ODER (Wah. besser)
+					//
+					//  in die Pices, die Ziehbare Spielsteine sind, entweder im Graph oder im Model FLAG OPTION setzen
+					//  dann kann die GUI beim normalen painten, einfach überprüfen
+					//  Wichtig, FLAG muss bei perform Action wieder entfernt werden
+
 					view.getText().setText("Wähle Option");
 				} else {
 					//TODO deaktiviere OPTION Buttons
