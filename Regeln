@@ -42,16 +42,48 @@ Testen:
 
 
 
+Noch zu tun was Franziskus betrifft:
+- in diceRoll() board.getOptions() aufrufen, wo alle (max 4) Möglichkeiten
+    ermittelt und im Model gesetzt werden
+
+- in performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
+    und daraufhin bestimmte Sachen überprüft
+    - Wurde Geschlagen?
+        - Muss geschlagener Spieler THREE TIMES bekommen (gar keine Spielfiguren mehr
+            oder restlos aufgerückt)
+    - Ist der Spieler restlos aufgerückt und hast sonst keine Spielsteine auf dem Feld?
+        - Dann bekommt er THREE TIMES (evt noch nicht setzen, sondern nur als FLAG)
+    - Ob eigene Spielfigur übersprungen wurde muss NICHT überprüft werden, da es durch "keine Möglichkeit" auisgeschlossen
+
+- in performOption() eine Methode im Graph aufrufen, die überprüft, ob der
+    mitgegebene Spieler (playerTrun) gewonnen hat
+    - Falls ja -> GameState END setzen
+
+
+- Pieces in den Graphen einfügen und bei jedem Piece den Vertex setzen
+- In jeden Vertex die Koordinaten, des Feldes (für GUI berechnung)
+    - mit getX() und getY() versehen
+
+
+
+
+
+Noch zu tun was Toni betrifft:
+- Spielfiguren zeichnen
+- Würfel Ausgabe einbinden (Image?!?)
+- Option Buttons in ein Flout Layout, damit der Button Option 0 immer dem Piece mit pieceID = 0
+    entspricht. Dann immer die anderen Buttons unsichtbar machen
+- Überlegen, wie man die einzelnen Möglichkeiten Zuordnet (evt Image, was auch im Button ist
+    neben die entsprechende Spielfigur zeichnen)
 
 
 
 
 
 
-
-
-
-
-
-
-
+Noch zu tun was Johanes betrifft:
+- Extra Fenster für die Initialisierung der Spieler mit Bot auswahl
+- Bots
+- 1 Möglichkkeit Züge automatisch machen
+- Bei Bot und automatischen Zügen Zeitverzögernugen, damit alles nachvollziehbar bleibt
+- Evt. Text INPUT FIELD, um bestimmte Konstalationen zu testen

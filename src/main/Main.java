@@ -20,7 +20,6 @@ public class Main {
 		board.testPrint();
 
 
-		// TESTS JOHANNES
 		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
 		INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
 		INITIAL_PLAYERS.add(new Gamer(PlayerColor.BLUE));

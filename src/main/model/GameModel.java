@@ -48,7 +48,7 @@ public class GameModel extends Observable {
 	//
 
 	/**
-	 *
+	 * Wird durch Buttonclick auf Würfeln aufgerufen
 	 */
 	public void diceRoll() {
 		diced = random.nextInt(6)+1;
@@ -89,7 +89,7 @@ public class GameModel extends Observable {
 		}
 
 
-
+		// @Franziskus
 		//TODO über den Spielbrett-Graph die Möglichkeiten für den Spieler, mit Würfelzahl ermitteln und irgendwie im Model
 		// speichern, damit beim GUI Update die OPTION Buttons aktivieert werden können
 		// board.getOptions(playerTurn, diced);
@@ -131,7 +131,8 @@ public class GameModel extends Observable {
 
 
 	/**
-	 *
+	 * Wird durch Buttonclick auf Option Buttons aufgerufen
+	 * Wählt eine der Optionen aus, die aus dem Graph zur Verfügung gestellt wurden
 	 *
 	 * @param option 0-3 entspricht der Option und somit auch PieceID
 	 */
@@ -139,7 +140,8 @@ public class GameModel extends Observable {
 
 		boolean isSuperSpecialCase = false;
 
-		// TODO isSuperSpecialCase = board.perfromODERSO(option);
+		// @Franziskus
+		// TODO isSuperSpecialCase = board.perfromODERSO(int option);
 		// - in performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
 		//    und daraufhin bestimmte Sachen überprüft
 		//    - Wurde Geschlagen?
@@ -149,8 +151,8 @@ public class GameModel extends Observable {
 		//        - Dann bekommt er THREE TIMES (return true; (THREE TIMES nicht setzen!) sonst immer return false;)
 		//    - Ob eigene Spielfigur übersprungen wurde muss NICHT überprüft werden, da es durch "keine Möglichkeit" auisgeschlossen
 
-
-		// TODO board.hatGewonnenODERSO(playerTrun)
+		// @Franziskus
+		// TODO board.hatGewonnenODERSO(Player playerTrun)
 		// - in performOption() eine Methode im Graph aufrufen, die überprüft, ob der
 		//    mitgegebene Spieler (playerTrun) gewonnen hat
 		//    - Falls ja -> GameState END setzen
