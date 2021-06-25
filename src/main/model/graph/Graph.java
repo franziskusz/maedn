@@ -14,17 +14,15 @@ public class Graph
 	private List<Edge> edges = new ArrayList<Edge>();
 
 	/**
-	 * Gibt zurück ob Möglichleiten verfügbar sind
-	 * Wenn ja, werden diese im Model gesetzt.
-	 *
-	 * (@Franziskus kannst du ignorieren)
+	 * Gibt die Möglichleiten für den Spieler mit gewürfelter Zahl zurück (inform der pieceIDs)
+	 * Bei keinen Möglichkeiten return null;
 	 *
 	 * @param player
-	 * @param pieceID
+	 * @param diced
 	 * @return
 	 */
-	public boolean getOptions(Player player, int pieceID) {
-		return false;
+	public ArrayList<Integer> getOptions(Player player, int diced) {
+		return null;
 	}
 	
 	/*
