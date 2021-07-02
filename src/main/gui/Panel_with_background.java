@@ -143,10 +143,14 @@ public class Panel_with_background extends JLayeredPane {
 		//	//male Blauerkreis
 		// }
 
+		
 		//Das hier ist ein beispielkreis, der beim erstenmal würfeln gesetzt wird
-		g.setColor(Color.MAGENTA);
+		g.setColor(Color.WHITE);
+		g.drawOval(29, 29, 22, 22);
+		
+		g.setColor(Color.cyan);
 		g.fillOval(30, 30, 20, 20);
-
+		
 		//
 		// NEU ENDE
 		//
