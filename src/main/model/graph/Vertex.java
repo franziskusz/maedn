@@ -12,6 +12,8 @@ public class Vertex
 	private List<Edge> predecessors = new ArrayList<>();
 	private List<Edge> successors = new ArrayList<>();
 	private Graph graphPtr;
+	
+	
 	public Vertex(Graph graphPtr)
 	{
 		this.graphPtr=graphPtr;
