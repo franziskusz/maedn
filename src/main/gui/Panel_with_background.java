@@ -33,7 +33,8 @@ public class Panel_with_background extends JLayeredPane {
 		// 					(Zeile,Spalte)
 
 		//Spielfeld
-		g.setColor(Color.black);
+		g.setColor(new Color (0,0,0,150));
+		//g.setColor(Color.black);
 		g.fillOval(220, 20, 40, 40);//0,4
 		g.fillOval(270, 20, 40, 40);//0,5
 		g.fillOval(20, 270, 40, 40);//5,0
@@ -71,8 +72,8 @@ public class Panel_with_background extends JLayeredPane {
 		g.fillOval(320, 420, 40, 40);    //8,6
 		g.fillOval(320, 370, 40, 40); //7,6
 
-
-		g.setColor(Color.blue);
+		g.setColor(new Color (0,0,255,150));
+		//g.setColor(Color.blue);
 		//Haus
 		g.fillOval(20, 20, 40, 40); //0,0
 		g.fillOval(70, 20, 40, 40); //0,1
@@ -86,8 +87,8 @@ public class Panel_with_background extends JLayeredPane {
 		g.fillOval(170, 270, 40, 40); //5,3
 		g.fillOval(220, 270, 40, 40); //5,4
 
-
-		g.setColor(Color.green);
+		g.setColor(new Color (0,255,0,150));
+		//g.setColor(Color.green);
 		//Haus
 		g.fillOval(470, 20, 40, 40);//0,9
 		g.fillOval(470, 70, 40, 40);//1,9
@@ -100,9 +101,10 @@ public class Panel_with_background extends JLayeredPane {
 		g.fillOval(270, 120, 40, 40); //2,5
 		g.fillOval(270, 170, 40, 40); //3,5
 		g.fillOval(270, 220, 40, 40); //4,5
-
-
-		g.setColor(Color.red);
+		
+		
+		g.setColor(new Color (255,0,0,150));
+		//g.setColor(Color.red);
 		//Haus
 		g.fillOval(20, 470, 40, 40);//9,0
 		g.fillOval(20, 520, 40, 40);//10,0
@@ -116,8 +118,8 @@ public class Panel_with_background extends JLayeredPane {
 		g.fillOval(270, 370, 40, 40); //7,5
 		g.fillOval(270, 320, 40, 40);    //6,5
 
-
-		g.setColor(Color.yellow);
+		g.setColor(new Color (255,255,0,150));
+		//g.setColor(Color.yellow);
 		//Haus
 		g.fillOval(470, 470, 40, 40); //9,9
 		g.fillOval(470, 520, 40, 40); //10,9
@@ -145,11 +147,13 @@ public class Panel_with_background extends JLayeredPane {
 
 		
 		//Das hier ist ein beispielkreis, der beim erstenmal würfeln gesetzt wird
+		/*
 		g.setColor(Color.WHITE);
 		g.drawOval(29, 29, 22, 22);
-		
-		g.setColor(Color.cyan);
-		g.fillOval(30, 30, 20, 20);
+		*/
+		g.setColor(new Color (30,144,255,255));
+		//g.setColor(Color.CYAN);
+		g.fillOval(25, 25, 30, 30);
 		
 		//
 		// NEU ENDE
