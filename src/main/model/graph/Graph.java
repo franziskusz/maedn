@@ -1,5 +1,6 @@
 package main.model.graph;
 
+import main.model.player.Piece;
 import main.model.player.Player;
 
 import java.util.ArrayList;
@@ -72,28 +73,51 @@ public class Graph
 	public Graph initGraph()
 	{
 		//Initialisierung der insgesamt 72 Knoten/Felder
-		int numberFields=72;
-		for (int i=0; i<numberFields; i++)
-		{
-			Vertex v = new Vertex(this);
-			vertices.put(v.getIndex(),v);
-		}
+		initGUIRaster();
+		
+		initVertices();
 		
 		initTour();
 		initHome();
 		initGoal();
-		
-		initGUIRaster();
 		
 		
 		return null;
 		
 	}
 	
+	// FÜR DIE GUI: Getter für die im Knoten gespeicherten Koordinaten
+	public int getCoordinateXofVertex(int vertexIndex)
+	{
+		System.out.println("Knoten ["+vertexIndex+"] X = "+vertices.get(vertexIndex).getCoordinateX()); //debug
+	    return vertices.get(vertexIndex).getCoordinateX();
+	}
+	
+	public int getCoordinateYofVertex(int vertexIndex)
+	{
+		System.out.println("Knoten ["+vertexIndex+"] Y = "+vertices.get(vertexIndex).getCoordinateY());
+		return vertices.get(vertexIndex).getCoordinateY();
+	}
+	
+	//FÜR DIE GUI: Getter der für einen Spielstein überprüft, auf welchem Feld er vorhanden ist und dessen Index zurückgibt
+	public int getVertexIndexbyPiece(Piece piece)
+	{
+		int vertexIndex=-1;
+		for (int i = 0; i<72; i++)
+		{
+			if (vertices.get(i).getPiece()==piece)
+			{
+				vertexIndex=i;
+				break;
+			}
+		}
+		return vertexIndex;
+	}
 	
 	
-	// getter für die Koordinaten mit dem Index des Knoten als Parameter
-	public int getRasterX(int vertexIndex)
+	
+	// Klassenintern getter für die Koordinaten mit dem Index des Knoten als Parameter
+	private int getRasterX(int vertexIndex)
 	{
 		int x = -1;
 		for (int i=0; i<11; i++)
@@ -110,7 +134,7 @@ public class Graph
 		return x;
 	}
 		
-	public int getRasterY(int vertexIndex)
+	private int getRasterY(int vertexIndex)
 	{
 		int y = -1;
 		for (int i=0; i<11; i++)
@@ -171,6 +195,18 @@ public class Graph
 	 * ganz oben die Rasterkoordinaten der einzelnen Knoten
 	 * danach folgen die Kanten
 	 */
+	private void initVertices()
+	{
+		int numberFields=72;
+		for (int i=0; i<numberFields; i++)
+		{
+			Vertex v = new Vertex(this);
+			vertices.put(v.getIndex(),v);
+			v.setCoordinateX(getRasterX(i));
+			v.setCoordinateY(getRasterY(i));
+		}
+	}
+	
 	
 	private void initGUIRaster()
 	{	//zunächst mit -1 füllen, weil -1 für alle weiteren Funktionen, die auf das Raster zugreifen 'neutral' ist

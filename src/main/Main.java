@@ -21,11 +21,11 @@ public class Main {
 		
 		board.printGUIRaster();
 		System.out.println();
-		System.out.println(board.getRasterX(0)); //Testausgabe für getter Knotenkoordinaten (Beispiel Knoten 0)
-		System.out.println(board.getRasterY(0));
 		
+		board.getCoordinateXofVertex(0);
+		board.getCoordinateYofVertex(0);
 		
-		
+		board.getVertexIndexbyPiece(null);
 		
 		
 
