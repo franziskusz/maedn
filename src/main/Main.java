@@ -13,23 +13,6 @@ import java.util.ArrayList;
 public class Main {
 
 	public static void main(String[] args) {
-
-
-		Graph board = new Graph();
-		board.initGraph();
-		//board.testPrint();
-		
-		board.printGUIRaster();
-		System.out.println();
-		
-		board.getCoordinateXofVertex(0);
-		board.getCoordinateYofVertex(0);
-		
-		board.getVertexIndexbyPiece(null);
-		
-		
-
-
 		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
 		INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
 		INITIAL_PLAYERS.add(new Gamer(PlayerColor.BLUE));
