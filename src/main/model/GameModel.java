@@ -15,7 +15,7 @@ public class GameModel extends Observable {
 
 	private Random random = new Random();
 
-	private Graph board = new Graph();
+	private Graph board;
 	private GameState gameState = GameState.NOT;
 	private Player playerTurn;
 	private int playerTurnDicedCount = 0;
@@ -37,6 +37,8 @@ public class GameModel extends Observable {
 				pieces.add(player.getPieces()[i]);
 			}
 		}
+
+		board = new Graph(players);
 
 		playerTurn = players.get(0);
 		changeGameState(GameState.DETERMINE_ORDER);

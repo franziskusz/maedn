@@ -2,6 +2,7 @@ package main.gui;
 
 import main.model.enums.PlayerColor;
 import main.model.player.Piece;
+import main.model.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -133,36 +134,37 @@ public class Panel_with_background extends JLayeredPane {
 		g.fillOval(420, 270, 40, 40);//5,8
 		g.fillOval(470, 270, 40, 40);//5,9
 
-		//
-		// NEU
-		//
+		// NUR SOLANGE PIECES BEIM INITALISIEREN KEIN FELD HABEN
+		if(pieces.get(0).getPosition() != null) {
+			for(Piece piece : pieces) {
+				int x = 20 + (piece.getPosition().getCoordinateX() * 50) + 5;
+				int y = 20 + (piece.getPosition().getCoordinateY() * 50) + 5;
 
-		//TODO @Toni Hier die Spielsteine Painten
-		// mit den folgenden Befehlen wirst du dir dann wah. die Position holen können. (funktioneirt im Moment noch nciht)
-		// pieces.get(i).getPosition().getX();
-		// pieces.get(i).getPosition().getY();
-		// if(pieces.get(i).getPlayer().getPlayerColor() == PlayerColor.BLUE) {
-		//	//male Blauerkreis
-		// }
+				int pieceSize = 30;
 
-		
-		//Das hier ist ein beispielkreis, der beim erstenmal würfeln gesetzt wird
-		/*
-		g.setColor(Color.WHITE);
-		g.drawOval(29, 29, 22, 22);
-		*/
-		g.setColor(new Color (30,144,255,255));
-		//g.setColor(Color.CYAN);
-		g.fillOval(25, 25, 30, 30);
-		
-		//
-		// NEU ENDE
-		//
+				switch(piece.getPlayer().getPlayerColor()) {
+					case RED:
+						g.setColor(new Color (118, 0, 0,255));
+						g.fillOval(x, y, pieceSize, pieceSize);
+						break;
+					case BLUE:
+						g.setColor(new Color (30,144,255,255));
+						g.fillOval(x, y, pieceSize, pieceSize);
+						break;
+					case GREEN:
+						g.setColor(new Color (35, 149, 0,255));
+						g.fillOval(x, y, pieceSize, pieceSize);
+						break;
+					case YELLOW:
+						g.setColor(new Color (255,255,0,150));
+						g.fillOval(x, y, pieceSize, pieceSize);
+						break;
+				}
+			}
+		}
+
 	}
 
-	//
-	// NEU
-	//
 	/**
 	 * Setzt die Spielfiguren, damit diese gepaintet werden können
 	 * @param pieces
@@ -170,7 +172,4 @@ public class Panel_with_background extends JLayeredPane {
 	public void setPieces(ArrayList<Piece> pieces) {
 		this.pieces = pieces;
 	}
-	//
-	// NEU ENDE
-	//
 }

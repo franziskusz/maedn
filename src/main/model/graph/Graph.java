@@ -15,6 +15,36 @@ public class Graph
 	private List<Edge> edges = new ArrayList<Edge>();
 	private int [][] guiRaster = new int [11][11];
 
+	public Graph(ArrayList<Player> players)
+	{
+
+		// TODO @Franziskus
+		// 	mit players.get(i).getPieces()[j]; bekomst du die Pieces, die du dann auf die Home Felder setzen kannst
+		//  ist glaube ich auch nach der Logik unten Links zuerst, dann oben links, oben rechts unten rechts
+		//  pieces sollten auch schon angezeigt werden, wenn sie einen Vertex zugeordnet bekommen
+
+
+
+		//
+		// AUS DER MAIN
+		//
+
+		initGraph();
+		//testPrint();
+
+		printGUIRaster();
+		System.out.println();
+
+		getCoordinateXofVertex(0);
+		getCoordinateYofVertex(0);
+
+		getVertexIndexbyPiece(null);
+
+		//
+		// ENDE AUS DER MAIN
+		//
+	}
+
 	/**
 	 * Gibt die Möglichleiten für den Spieler mit gewürfelter Zahl zurück (inform der pieceIDs)
 	 * Bei keinen Möglichkeiten return null;
