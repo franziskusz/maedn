@@ -19,7 +19,17 @@ public class Vertex
 	private Piece piece;
 	
 	
-	
+	public void printPiece() //debug
+	{
+		if (piece==null)
+		{
+			System.out.println("Kein Spielstein");
+		}
+		else
+		{
+			System.out.println("Spielstein vorhanden");
+		}
+	}
 	
 	public Piece getPiece()
 	{
