@@ -39,11 +39,52 @@ public class Graph
 		getCoordinateYofVertex(0);
 
 		getVertexIndexbyPiece(null);
+		
+		
+		// Setzen der Spielsteine auf ihre Startpositionen
+		for (int i = 40; i<56; i++)
+		{
+			int count = 0;
+			if (i<44)
+			{
+				vertices.get(i).setPiece(players.get(0).getPieces()[count]);
+				//players.get(0).getPieces()[count].setPosition(vertices.get(i)); //führt zum Crash der GUI
+				count++;
+			}
+			else if (i<48)
+			{
+				vertices.get(i).setPiece(players.get(1).getPieces()[count]);
+				//players.get(1).getPieces()[count].setPosition(vertices.get(i));
+				count++;
+			}
+			else if (i<52)
+			{
+				vertices.get(i).setPiece(players.get(2).getPieces()[count]);
+				//players.get(2).getPieces()[count].setPosition(vertices.get(i));
+				count++;
+			}
+			else
+			{
+				vertices.get(i).setPiece(players.get(3).getPieces()[count]);
+				//players.get(3).getPieces()[count].setPosition(vertices.get(i));
+				count++;
+			}	
+		}	
 
+		//debug Testausgabe
+		for (int i = 0; i<16; i++)
+		{
+			System.out.print(vertices.get(i+40)+" ");
+			vertices.get(i+40).printPiece();
+		}
+		System.out.print(vertices.get(0)+" ");
+		vertices.get(0).printPiece();
+		
 		//
 		// ENDE AUS DER MAIN
 		//
 	}
+	
 
 	/**
 	 * Gibt die Möglichleiten für den Spieler mit gewürfelter Zahl zurück (inform der pieceIDs)
@@ -53,7 +94,12 @@ public class Graph
 	 * @param diced
 	 * @return
 	 */
-	public ArrayList<Integer> getOptions(Player player, int diced) {
+	public ArrayList<Integer> getOptions(Player player, int diced)
+	{
+		for (int i = 0; i<4; i++)
+		{
+			player.getPieces(); //erster Ansatz, macht noch nichts
+		}
 		return null;
 	}
 	
