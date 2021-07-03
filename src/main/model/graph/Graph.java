@@ -38,7 +38,7 @@ public class Graph
 		getCoordinateXofVertex(0);
 		getCoordinateYofVertex(0);
 
-		getVertexIndexbyPiece(null);
+		
 		
 		
 		// Setzen der Spielsteine auf ihre Startpositionen
@@ -80,6 +80,11 @@ public class Graph
 		System.out.print(vertices.get(0)+" ");
 		vertices.get(0).printPiece();
 		
+		
+		System.out.println("Stein 1 von Spieler 1 steht auf Vertex "+getVertexIndexbyPiece(players.get(0).getPieces()[0])); //debug
+		
+		//getOptions(players.get(0), 6); //Debug
+		
 		//
 		// ENDE AUS DER MAIN
 		//
@@ -94,13 +99,37 @@ public class Graph
 	 * @param diced
 	 * @return
 	 */
+	
+	//erster Ansatz, funktioniert noch nicht
 	public ArrayList<Integer> getOptions(Player player, int diced)
 	{
-		for (int i = 0; i<4; i++)
+		ArrayList<Integer> options=new ArrayList<Integer>();
+		Vertex[] optionVertices=new Vertex[4];
+		
+		//Erst werden alle Ausgangspositionen in einem Array abgelegt
+		for (int i = 0; i<4; i++) 
 		{
-			player.getPieces(); //erster Ansatz, macht noch nichts
+			optionVertices[i]=player.getPieces()[i].getPosition(); 
 		}
-		return null;
+		
+		//Für alle Ausgangspositionen wird geschaut, wie viele Ziele (Kanten) es von dort aus gibt
+		for (int j = 0; j<4; j++)
+		{
+			int sizeOptions=optionVertices[j].getSucc().size(); //PROBLEM NullPointerException
+			
+			//Für jede dieser Kanten wird dann geprüft, ob sie mit dem Würfelergebnis begehbar sind.
+			//Wenn ja, werden die Indexe der Zielknoten in der ArrayList options abgelegt
+			for (int k=0; k<sizeOptions; k++)
+			{
+				if(optionVertices[j].getSucc().get(k).getTo().getIndex()==optionVertices[j].getIndex()+diced)
+				{
+					options.add(optionVertices[j].getSucc().get(k).getTo().getIndex());
+				}					
+			}
+		}			
+		
+		options.listIterator(); //Testausgabe
+		return options;
 	}
 	
 	/*
