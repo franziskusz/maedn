@@ -4,6 +4,7 @@ import main.model.player.Piece;
 import main.model.player.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +48,10 @@ public class Graph
 		*/
 		
 		System.out.println("Stein 1 von Spieler 1 steht auf Vertex "+getVertexIndexbyPiece(players.get(0).getPieces()[0])); //debug
-		System.out.println("Stein 1 von Spieler 1 steht auf Vertex "+players.get(0).getPieces()[0].getPosition().getIndex()); //debug
+		System.out.println("Stein 2 von Spieler 3 steht auf Vertex "+players.get(2).getPieces()[1].getPosition().getIndex()); //debug
 		
-		//getOptions(players.get(0), 6); //Debug
+		System.out.println("Testausgabe Player 1 Options für Dice 6:");
+		getOptions(players.get(0), 6); //Debug
 	}
 	
 	/**
@@ -66,12 +68,15 @@ public class Graph
 	{
 		ArrayList<Integer> options=new ArrayList<Integer>();
 		Vertex[] optionVertices=new Vertex[4];
+		//System.out.println(options.toString()); //debug
 		
 		//Erst werden alle Ausgangspositionen in einem Array abgelegt
 		for (int i = 0; i<4; i++) 
 		{
 			optionVertices[i]=player.getPieces()[i].getPosition(); 
 		}
+		System.out.println(Arrays.toString(optionVertices));
+		
 		
 		//Für alle Ausgangspositionen wird geschaut, wie viele Ziele (Kanten) es von dort aus gibt
 		for (int j = 0; j<4; j++)
@@ -83,9 +88,9 @@ public class Graph
 			for (int k=0; k<sizeOptions; k++)
 			{	
 				//Prüfen, welche Felder erreichbar sind
-				if((optionVertices[j].getSucc().get(k).getWeight()==diced)
+				if((optionVertices[j].getSucc().get(k).getWeight()==diced))
 						//prüfen ob auf dem Zielfeld ein Stein des aktiven Spielers steht
-						&&(optionVertices[j].getSucc().get(k).getTo().getPiece().getPlayer()!=player))
+						//&&(optionVertices[j].getSucc().get(k).getTo().getPiece().getPlayer()!=player)) //nullpointer exception, wenn kein Spieler vorhanden ist
 				{
 					//options.add(optionVertices[j].getSucc().get(k).getTo().getIndex());
 					options.add(optionVertices[j].getPiece().getId());
@@ -93,9 +98,17 @@ public class Graph
 			}
 		}			
 		
-		System.out.println(options.listIterator());
+		//System.out.println(options.listIterator());
 		System.out.println(options.toString());//Testausgabe
-		return options;
+		
+		if (options.size()==0)
+		{
+			return null;
+		}
+		else
+		{
+			return options;
+		}	
 	}
 	
 	/*
