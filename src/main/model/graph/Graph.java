@@ -23,55 +23,20 @@ public class Graph
 		//  ist glaube ich auch nach der Logik unten Links zuerst, dann oben links, oben rechts unten rechts
 		//  pieces sollten auch schon angezeigt werden, wenn sie einen Vertex zugeordnet bekommen
 
-
-
-		//
-		// AUS DER MAIN
-		//
-
 		initGraph();
-		//testPrint();
-
-		printGUIRaster();
-		System.out.println();
-
-		getCoordinateXofVertex(0);
-		getCoordinateYofVertex(0);
-
-		
-		
 		
 		// Setzen der Spielsteine auf ihre Startpositionen
-		for (int i = 40; i<56; i++)
-		{
-			int count = 0;
-			if (i<44)
-			{
-				vertices.get(i).setPiece(players.get(0).getPieces()[count]);
-				//players.get(0).getPieces()[count].setPosition(vertices.get(i)); //führt zum Crash der GUI
-				count++;
-			}
-			else if (i<48)
-			{
-				vertices.get(i).setPiece(players.get(1).getPieces()[count]);
-				//players.get(1).getPieces()[count].setPosition(vertices.get(i));
-				count++;
-			}
-			else if (i<52)
-			{
-				vertices.get(i).setPiece(players.get(2).getPieces()[count]);
-				//players.get(2).getPieces()[count].setPosition(vertices.get(i));
-				count++;
-			}
-			else
-			{
-				vertices.get(i).setPiece(players.get(3).getPieces()[count]);
-				//players.get(3).getPieces()[count].setPosition(vertices.get(i));
-				count++;
-			}	
-		}	
-
-		//debug Testausgabe
+		initPiecePositions(players);
+		
+		
+		//debug und Testausgaben
+		printGUIRaster();
+		System.out.println();
+		getCoordinateXofVertex(40); 
+		getCoordinateYofVertex(40);
+		
+		//testPrint(); //alle Kanten
+		/*
 		for (int i = 0; i<16; i++)
 		{
 			System.out.print(vertices.get(i+40)+" ");
@@ -79,18 +44,14 @@ public class Graph
 		}
 		System.out.print(vertices.get(0)+" ");
 		vertices.get(0).printPiece();
-		
+		*/
 		
 		System.out.println("Stein 1 von Spieler 1 steht auf Vertex "+getVertexIndexbyPiece(players.get(0).getPieces()[0])); //debug
+		System.out.println("Stein 1 von Spieler 1 steht auf Vertex "+players.get(0).getPieces()[0].getPosition().getIndex()); //debug
 		
 		//getOptions(players.get(0), 6); //Debug
-		
-		//
-		// ENDE AUS DER MAIN
-		//
 	}
 	
-
 	/**
 	 * Gibt die Möglichleiten für den Spieler mit gewürfelter Zahl zurück (inform der pieceIDs)
 	 * Bei keinen Möglichkeiten return null;
@@ -115,20 +76,25 @@ public class Graph
 		//Für alle Ausgangspositionen wird geschaut, wie viele Ziele (Kanten) es von dort aus gibt
 		for (int j = 0; j<4; j++)
 		{
-			int sizeOptions=optionVertices[j].getSucc().size(); //PROBLEM NullPointerException
+			int sizeOptions=optionVertices[j].getSucc().size();
 			
 			//Für jede dieser Kanten wird dann geprüft, ob sie mit dem Würfelergebnis begehbar sind.
 			//Wenn ja, werden die Indexe der Zielknoten in der ArrayList options abgelegt
 			for (int k=0; k<sizeOptions; k++)
-			{
-				if(optionVertices[j].getSucc().get(k).getTo().getIndex()==optionVertices[j].getIndex()+diced)
+			{	
+				//Prüfen, welche Felder erreichbar sind
+				if((optionVertices[j].getSucc().get(k).getWeight()==diced)
+						//prüfen ob auf dem Zielfeld ein Stein des aktiven Spielers steht
+						&&(optionVertices[j].getSucc().get(k).getTo().getPiece().getPlayer()!=player))
 				{
-					options.add(optionVertices[j].getSucc().get(k).getTo().getIndex());
+					//options.add(optionVertices[j].getSucc().get(k).getTo().getIndex());
+					options.add(optionVertices[j].getPiece().getId());
 				}					
 			}
 		}			
 		
-		options.listIterator(); //Testausgabe
+		System.out.println(options.listIterator());
+		System.out.println(options.toString());//Testausgabe
 		return options;
 	}
 	
@@ -186,12 +152,60 @@ public class Graph
 		initHome();
 		initGoal();
 		
-		
 		return null;
-		
 	}
 	
-	// FÜR DIE GUI: Getter für die im Knoten gespeicherten Koordinaten
+	
+	private void initPiecePositions(ArrayList<Player> players)
+	{
+		for (int i = 40; i<56; i++)
+		{
+			if (i==40)
+			{
+				int count=0;
+				for (int k = 40; k<44; k++)
+				{	
+					vertices.get(k).setPiece(players.get(0).getPieces()[count]);
+					players.get(0).getPieces()[count].setPosition(vertices.get(k));
+					count++;
+				}
+			}
+			else if (i==44)
+			{
+				int count=0;
+				for (int k = 44; k<48; k++)
+				{	
+					vertices.get(k).setPiece(players.get(1).getPieces()[count]);
+					players.get(1).getPieces()[count].setPosition(vertices.get(k));
+					count++;
+				}
+			}
+			else if (i==48)
+			{
+				int count=0;
+				for (int k = 48; k<52; k++)
+				{	
+					vertices.get(k).setPiece(players.get(2).getPieces()[count]);
+					players.get(2).getPieces()[count].setPosition(vertices.get(k));
+					count++;
+				}
+			}
+			else
+			{
+				int count=0;
+				for (int k = 52; k<56; k++)
+				{	
+					vertices.get(k).setPiece(players.get(3).getPieces()[count]);
+					players.get(3).getPieces()[count].setPosition(vertices.get(k));
+					count++;
+				}
+			}	
+		}
+	}
+	
+	
+	
+	// optional (kann evtl. weg) Getter für die im Knoten gespeicherten Koordinaten
 	public int getCoordinateXofVertex(int vertexIndex)
 	{
 		System.out.println("Knoten ["+vertexIndex+"] X = "+vertices.get(vertexIndex).getCoordinateX()); //debug
@@ -204,7 +218,7 @@ public class Graph
 		return vertices.get(vertexIndex).getCoordinateY();
 	}
 	
-	//FÜR DIE GUI: Getter der für einen Spielstein überprüft, auf welchem Feld er vorhanden ist und dessen Index zurückgibt
+	// optional (kann evtl weg) Getter der für einen Spielstein überprüft, auf welchem Feld er vorhanden ist und dessen Index zurückgibt
 	public int getVertexIndexbyPiece(Piece piece)
 	{
 		int vertexIndex=-1;
