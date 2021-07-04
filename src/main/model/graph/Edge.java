@@ -28,10 +28,17 @@ public class Edge
 	{
 		return to;
 	}
+	
+	public int getWeight()
+	{
+		return weight;
+	}
 
 	
 	@Override
 	public String toString() {
 		return " [from: " + this.from + ", to: " + this.to + ", weight = "+this.weight+"]";
 	}
+
+	
 }
