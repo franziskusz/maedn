@@ -43,7 +43,7 @@ Testen:
 
 
 Noch zu tun was Franziskus betrifft:
-- in diceRoll() board.getOptions() aufrufen, wo alle (max 4) Möglichkeiten
+-DONE- in diceRoll() board.getOptions() aufrufen, wo alle (max 4) Möglichkeiten
     ermittelt und im Model gesetzt werden
 
 - in performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
@@ -60,8 +60,8 @@ Noch zu tun was Franziskus betrifft:
     - Falls ja -> GameState END setzen
 
 
-- Pieces in den Graphen einfügen und bei jedem Piece den Vertex setzen
-- In jeden Vertex die Koordinaten, des Feldes (für GUI berechnung)
+-DONE- Pieces in den Graphen einfügen und bei jedem Piece den Vertex setzen
+-DONE- In jeden Vertex die Koordinaten, des Feldes (für GUI berechnung)
     - mit getX() und getY() versehen
 
 
@@ -69,7 +69,7 @@ Noch zu tun was Franziskus betrifft:
 
 
 Noch zu tun was Toni betrifft:
-- Spielfiguren zeichnen
+-DONE- Spielfiguren zeichnen
 - Würfel Ausgabe einbinden (Image?!?)
 - Option Buttons in ein Flout Layout, damit der Button Option 0 immer dem Piece mit pieceID = 0
     entspricht. Dann immer die anderen Buttons unsichtbar machen

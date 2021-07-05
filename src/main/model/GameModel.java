@@ -25,6 +25,8 @@ public class GameModel extends Observable {
 	private ArrayList<Player> players; // geordnet nach Uhrzeigersinn und an Stelle 0 ist Beginner
 	private ArrayList<Piece> pieces;
 
+	private ArrayList<Integer> options = null;
+
 
 
 	public GameModel(ArrayList<Player> INITIAL_PLAYERS) {
@@ -96,7 +98,8 @@ public class GameModel extends Observable {
 		// speichern, damit beim GUI Update die OPTION Buttons aktivieert werden können
 		// board.getOptions(playerTurn, diced);
 		// !! Option: "Keine Möglichkeiten" beachten z.B. wenn Figuren vor dem Haus und keine passende Zahl
-
+		options = board.getOptions(playerTurn, diced, INITIAL_PLAYERS);
+		givePiecesOptionFlag();
 
 
 		// Gibt es eine oder mehrere Möglichkeiten, unter der der Spieler auswählen kann
@@ -165,6 +168,9 @@ public class GameModel extends Observable {
 
 
 		//TODO Auswahloptionen zurücksetzen, sodass auf GUI OPTION bUTTONS deaktiviert werden
+		//TODO Überprüfen, ob es hier an der richtigen Stelle ist
+		options.clear();
+		removePiecesOptionFlag();
 
 
 		if(gameState != GameState.END) {
@@ -198,7 +204,22 @@ public class GameModel extends Observable {
 		//TODO Wenn Mögöichkeiten vatiable eingebaut schauen, ob Möglichkeiten vorhanden sind
 		// NIHCT NOCHMAL board.getOptions(playerTurn, 0);
 		// auf lokale Möglichkeiten Variable zugreifen
-		return false;
+		return options != null;
+	}
+
+	public void givePiecesOptionFlag() {
+		// TODO IF entfernen, wenn board.getOptions statt null leere Arraylist zurückgibt
+		if(getOptions() != null) {
+			for(Integer integer : getOptions()) {
+				getPlayerTurn().getPieces()[integer].setOption(true);
+			}
+		}
+	}
+
+	public void removePiecesOptionFlag() {
+		for(Piece piece : getPlayerTurn().getPieces()) {
+			piece.setOption(false);
+		}
 	}
 
 	public int getDiced() {
@@ -215,6 +236,10 @@ public class GameModel extends Observable {
 
 	public GameState getGameState() {
 		return gameState;
+	}
+
+	public ArrayList<Integer> getOptions() {
+		return options;
 	}
 
 	//
