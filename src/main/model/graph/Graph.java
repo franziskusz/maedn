@@ -51,7 +51,7 @@ public class Graph
 		System.out.println("Stein 2 von Spieler 3 steht auf Vertex "+players.get(2).getPieces()[1].getPosition().getIndex()); //debug
 		
 		System.out.println("Testausgabe Player 1 Options für Dice 6:");
-		getOptions(players.get(0), 6); //Debug
+		getOptions(players.get(1), 6, players); //Debug
 	}
 	
 	/**
@@ -63,8 +63,12 @@ public class Graph
 	 * @return
 	 */
 	
-	//erster Ansatz, funktioniert noch nicht
-	public ArrayList<Integer> getOptions(Player player, int diced)
+	//erster Ansatz, funktioniert aber ohne Exception handling
+	//Prüft ob den Zielposition ein eigener Stein steht
+	//Prüft ob Rundreise für den Spieler bereits beendet ist
+	//TODO Prüfen ob im Zielfeld eine eigene Figur übersprungen werden müsste
+	
+	public ArrayList<Integer> getOptions(Player player, int diced, ArrayList<Player> players)
 	{
 		ArrayList<Integer> options=new ArrayList<Integer>();
 		Vertex[] optionVertices=new Vertex[4];
@@ -88,17 +92,20 @@ public class Graph
 			for (int k=0; k<sizeOptions; k++)
 			{	
 				//Prüfen, welche Felder erreichbar sind
-				if((optionVertices[j].getSucc().get(k).getWeight()==diced))
-						//prüfen ob auf dem Zielfeld ein Stein des aktiven Spielers steht
-						//&&(optionVertices[j].getSucc().get(k).getTo().getPiece().getPlayer()!=player)) //nullpointer exception, wenn kein Spieler vorhanden ist
+				if((optionVertices[j].getSucc().get(k).getWeight()==diced)
+						&&(checkTargetOccupation(player, optionVertices[j].getSucc().get(k).getTo().getPiece()))
+						&&(checkJourneyEnd(player, optionVertices[j], players, diced)))
 				{
+					System.out.println(optionVertices[j]+" Successors: "+optionVertices[j].getSucc()); //debug
 					//options.add(optionVertices[j].getSucc().get(k).getTo().getIndex());
+					System.out.println(options.toString()); //debug
 					options.add(optionVertices[j].getPiece().getId());
+					System.out.println(options.toString()); //debug
+					
 				}					
 			}
 		}			
-		
-		//System.out.println(options.listIterator());
+	
 		System.out.println(options.toString());//Testausgabe
 		
 		if (options.size()==0)
@@ -109,6 +116,81 @@ public class Graph
 		{
 			return options;
 		}	
+	}
+	
+	
+	/*
+	 * Die nächsten zwei Funktionen sind Hilfsfunktionen für checkOptions()
+	 */
+	
+	//Wenn auf dem Zielfeld eine Figur des aktiven Spielers steht, wird der zu bewegende Stein nicht als Option gezählt
+	private boolean checkTargetOccupation(Player movingPlayer, Piece targetPiece)
+	{
+		if(targetPiece==null)
+		{
+			return true;
+		}
+		else if (movingPlayer==targetPiece.getPlayer())
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	//Wenn der Würfelnde Spieler auf einem der letzten beiden Feldern der Rundreise steht
+	// aber eine Zahl würfelt, die größer als die Kantengewichte der Zielfelder ist
+	// wird der zu bewegende Stein nicht als Option gezählt.
+	private boolean checkJourneyEnd(Player movingPlayer, Vertex option, ArrayList<Player> players, int diced)
+	{
+		boolean re = true;
+		if (movingPlayer==players.get(0))
+		{
+			if ((option.getIndex()==39)&&diced>4)
+			{
+				re = false;
+			}
+			else if ((option.getIndex()==38)&&diced>5)
+			{
+				re = false;
+			}	
+		}
+		else if (movingPlayer==players.get(1))
+		{
+			if ((option.getIndex()==9)&&diced>4)
+			{
+				re = false;
+			}
+			else if ((option.getIndex()==8)&&diced>5)
+			{
+				re = false;
+			}	
+		}
+		else if (movingPlayer==players.get(2))
+		{
+			if ((option.getIndex()==19)&&diced>4)
+			{
+				re = false;
+			}
+			else if ((option.getIndex()==18)&&diced>5)
+			{
+				re = false;
+			}	
+		}
+		else if (movingPlayer==players.get(3))
+		{
+			if ((option.getIndex()==29)&&diced>4)
+			{
+				re = false;
+			}
+			else if ((option.getIndex()==28)&&diced>5)
+			{
+				re = false;
+			}	
+		}
+		return re;
 	}
 	
 	/*
@@ -461,7 +543,7 @@ public class Graph
 			to=0;
 			w=0;
 			
-			if (i<39)
+			if (i<34)
 			{
 				for (int j=1; j<=6; j++)
 				{
@@ -472,6 +554,111 @@ public class Graph
 				}
 				
 			}
+			
+			// Zielfelder ab Knoten 34 sind etwas komplizierter, da die vorige Schleife bei den Heimatfeldern landen würde
+			else
+			{
+				if (i==34)
+				{
+					for (int j=5; j>0; j--)
+					{	
+						to=i+j;
+						w=j;
+						Edge e = new Edge(this, from, to, w);
+						edges.add(e);
+					}
+					to=0;
+					w=6;
+					Edge e = new Edge(this, from, to, w);
+					edges.add(e);
+				}
+				
+				else if (i==35)
+				{
+					for (int j=4; j>0; j--)
+					{	
+						to=i+j;
+						w=j;
+						Edge e = new Edge(this, from, to, w);
+						edges.add(e);
+					}
+					
+					for (int k=0; k<2; k++)
+					{
+						to=k;
+						w=k+5;
+						Edge e = new Edge(this, from, to, w);
+						edges.add(e);
+					}
+				}
+				
+				else if (i==36)
+				{
+					for (int j=3; j>0; j--)
+					{	
+						to=i+j;
+						w=j;
+						Edge e = new Edge(this, from, to, w);
+						edges.add(e);
+					}
+					
+					for (int k=0; k<3; k++)
+					{
+						to=k;
+						w=k+4;
+						Edge e = new Edge(this, from, to, w);
+						edges.add(e);
+					}
+				}
+				
+				else if (i==37)
+				{
+					for (int j=2; j>0; j--)
+					{	
+						to=i+j;
+						w=j;
+						Edge e = new Edge(this, from, to, w);
+						edges.add(e);
+					}
+					
+					for (int k=0; k<4; k++)
+					{
+						to=k;
+						w=k+3;
+						Edge e = new Edge(this, from, to, w);
+						edges.add(e);
+					}	
+				}
+				else if (i==38)
+				{
+					for (int k=0; k<5; k++)
+					{
+						to=k;
+						w=k+2;
+						Edge e = new Edge(this, from, to, w);
+						edges.add(e);
+					}
+					
+					to=i+1;
+					w=1;
+					Edge e = new Edge(this, from, to, w);
+					edges.add(e);	
+				}
+				
+				else // i==39
+				{	
+					for (int k=0; k<6; k++)
+					{
+						to=k;
+						w=k+1;
+						Edge e = new Edge(this, from, to, w);
+						edges.add(e);
+					}	
+				}
+			}	
+
+			//Falsche Implementierung
+			/*
 			else // das letzte Feld wird mit den ersten verbunden
 			{
 				for (int j=39; j>=34; j--)
@@ -483,6 +670,7 @@ public class Graph
 					edges.add(e);
 				}
 			}
+			*/
 		}
 	}
 	
