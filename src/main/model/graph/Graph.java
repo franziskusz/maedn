@@ -63,10 +63,11 @@ public class Graph
 	 * @return
 	 */
 	
-	//erster Ansatz, funktioniert aber ohne Exception handling
+	//erster Ansatz sollte funktionieren
 	//Prüft ob den Zielposition ein eigener Stein steht
 	//Prüft ob Rundreise für den Spieler bereits beendet ist
-	//TODO Prüfen ob im Zielfeld eine eigene Figur übersprungen werden müsste
+	//Prüft ob im Zielfeld eine eigene Figur übersprungen werden müsste
+	//(TODO ? Ausschließen, dass Spieler in Fremdes Ziel einlaufen können ? Oder erst bei Perform move?)
 	
 	public ArrayList<Integer> getOptions(Player player, int diced, ArrayList<Player> players)
 	{
@@ -94,7 +95,8 @@ public class Graph
 				//Prüfen, welche Felder erreichbar sind
 				if((optionVertices[j].getSucc().get(k).getWeight()==diced)
 						&&(checkTargetOccupation(player, optionVertices[j].getSucc().get(k).getTo().getPiece()))
-						&&(checkJourneyEnd(player, optionVertices[j], players, diced)))
+						&&(checkJourneyEnd(player, optionVertices[j], players, diced))
+						&&(somethingInTheWay(player, optionVertices[j], optionVertices[j].getSucc().get(k).getTo(), players)))
 				{
 					System.out.println(optionVertices[j]+" Successors: "+optionVertices[j].getSucc()); //debug
 					//options.add(optionVertices[j].getSucc().get(k).getTo().getIndex());
@@ -120,7 +122,7 @@ public class Graph
 	
 	
 	/*
-	 * Die nächsten zwei Funktionen sind Hilfsfunktionen für checkOptions()
+	 * Die nächsten drei Funktionen sind Hilfsfunktionen für checkOptions()
 	 */
 	
 	//Wenn auf dem Zielfeld eine Figur des aktiven Spielers steht, wird der zu bewegende Stein nicht als Option gezählt
@@ -191,6 +193,194 @@ public class Graph
 			}	
 		}
 		return re;
+	}
+	
+	//Prüfen ob auf den Zielfeldern eine Figur übersprungen werden müsste
+	private boolean somethingInTheWay(Player movingPlayer, Vertex option, Vertex target, ArrayList<Player> players)
+	{
+		boolean re = true;
+		if (movingPlayer==players.get(0))
+		{
+			if ((option.getIndex()==(39))||(option.getIndex()==(38))||(option.getIndex()==(37))
+					||(option.getIndex()==(36))||(option.getIndex()==(35)))
+			{
+				if ((target.getIndex()==57)&&(vertices.get(56).getPiece()!=null))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==58)
+						&&((vertices.get(57).getPiece()!=null)
+						||(vertices.get(56).getPiece()!=null)))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==59)
+						&&((vertices.get(58).getPiece()!=null)
+						||(vertices.get(57).getPiece()!=null)
+						||(vertices.get(56).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}
+			else if (option.getIndex()==(56))
+			{
+				if ((target.getIndex()==58)
+						&&((vertices.get(57).getPiece()!=null)))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==59)
+						&&((vertices.get(58).getPiece()!=null)
+						||(vertices.get(57).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}
+			else if (option.getIndex()==(57))
+			{
+				if ((target.getIndex()==59)&&((vertices.get(58).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}	
+		}
+		if (movingPlayer==players.get(1))
+		{
+			if ((option.getIndex()==(9))||(option.getIndex()==(8))||(option.getIndex()==(7))
+					||(option.getIndex()==(6))||(option.getIndex()==(5)))
+			{
+				if ((target.getIndex()==61)&&(vertices.get(60).getPiece()!=null))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==62)
+						&&((vertices.get(61).getPiece()!=null)
+						||(vertices.get(60).getPiece()!=null)))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==63)
+						&&((vertices.get(62).getPiece()!=null)
+						||(vertices.get(61).getPiece()!=null)
+						||(vertices.get(60).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}
+			else if (option.getIndex()==(60))
+			{
+				if ((target.getIndex()==62)
+						&&((vertices.get(61).getPiece()!=null)))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==63)
+						&&((vertices.get(62).getPiece()!=null)
+						||(vertices.get(61).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}
+			else if (option.getIndex()==(61))
+			{
+				if ((target.getIndex()==63)&&((vertices.get(62).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}	
+		}
+		if (movingPlayer==players.get(2))
+		{
+			if ((option.getIndex()==(19))||(option.getIndex()==(18))||(option.getIndex()==(17))
+					||(option.getIndex()==(16))||(option.getIndex()==(15)))
+			{
+				if ((target.getIndex()==65)&&(vertices.get(64).getPiece()!=null))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==66)
+						&&((vertices.get(65).getPiece()!=null)
+						||(vertices.get(64).getPiece()!=null)))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==67)
+						&&((vertices.get(66).getPiece()!=null)
+						||(vertices.get(65).getPiece()!=null)
+						||(vertices.get(64).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}
+			else if (option.getIndex()==(64))
+			{
+				if ((target.getIndex()==66)
+						&&((vertices.get(65).getPiece()!=null)))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==67)
+						&&((vertices.get(66).getPiece()!=null)
+						||(vertices.get(65).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}
+			else if (option.getIndex()==(65))
+			{
+				if ((target.getIndex()==67)&&((vertices.get(66).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}	
+		}
+		if (movingPlayer==players.get(3))
+		{
+			if ((option.getIndex()==(29))||(option.getIndex()==(28))||(option.getIndex()==(27))
+					||(option.getIndex()==(26))||(option.getIndex()==(25)))
+			{
+				if ((target.getIndex()==69)&&(vertices.get(68).getPiece()!=null))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==70)
+						&&((vertices.get(69).getPiece()!=null)
+						||(vertices.get(68).getPiece()!=null)))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==71)
+						&&((vertices.get(70).getPiece()!=null)
+						||(vertices.get(69).getPiece()!=null)
+						||(vertices.get(68).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}
+			else if (option.getIndex()==(68))
+			{
+				if ((target.getIndex()==70)
+						&&((vertices.get(69).getPiece()!=null)))
+				{
+					re = false;
+				}
+				else if ((target.getIndex()==71)
+						&&((vertices.get(70).getPiece()!=null)
+						||(vertices.get(69).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}
+			else if (option.getIndex()==(69))
+			{
+				if ((target.getIndex()==71)&&((vertices.get(70).getPiece()!=null)))
+				{
+					re = false;
+				}
+			}	
+		}
+		return re;
+
 	}
 	
 	/*
