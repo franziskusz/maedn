@@ -9,10 +9,12 @@ public class Piece {
 	int id;
 	PieceState pieceState;
 	Vertex position;
+	private boolean isOption;
 
 	public Piece(Player player, int id) {
 		this.player = player;
 		this.id = id;
+		this.isOption = false;
 		this.pieceState = PieceState.HOME;
 	}
 
@@ -38,5 +40,13 @@ public class Piece {
 
 	public void setPosition(Vertex position) {
 		this.position = position;
+	}
+
+	public boolean isOption() {
+		return isOption;
+	}
+
+	public void setOption(boolean option) {
+		isOption = option;
 	}
 }

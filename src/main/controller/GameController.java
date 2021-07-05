@@ -38,6 +38,7 @@ public class GameController implements Observer, ActionListener {
 
 	private void initGUI() {
 		view.getText().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+		view.getBtnWuerfel().setEnabled(true);
 		System.out.println("Updated GUI");
 	}
 
@@ -53,6 +54,11 @@ public class GameController implements Observer, ActionListener {
 					//TODO aktiviere OPTION Buttons
 					//	deaktiviere Würfel Button
 					//	evt. admin Button deaktivieren
+					view.getBtnWuerfel().setEnabled(false);
+					if(gameModel.getOptions().contains(0)) view.getBtnOption1().setEnabled(true);
+					if(gameModel.getOptions().contains(1)) view.getBtnOption2().setEnabled(true);
+					if(gameModel.getOptions().contains(2)) view.getBtnOption3().setEnabled(true);
+					if(gameModel.getOptions().contains(3)) view.getBtnOption4().setEnabled(true);
 
 					// TODO set Diced Würfelimage gameModel.getDiced();
 
@@ -69,11 +75,18 @@ public class GameController implements Observer, ActionListener {
 					//  dann kann die GUI beim normalen painten, einfach überprüfen
 					//  Wichtig, FLAG muss bei perform Action wieder entfernt werden
 
+//					gameModel.givePiecesOptionFlag(); // in Model?
+
 					view.getText().setText("Wähle Option");
 				} else {
 					//TODO deaktiviere OPTION Buttons
 					//	aktiviere Würfel Button
 					//	evt. admin Button aktivieren
+					view.getBtnWuerfel().setEnabled(true);
+					view.getBtnOption1().setEnabled(false);
+					view.getBtnOption2().setEnabled(false);
+					view.getBtnOption3().setEnabled(false);
+					view.getBtnOption4().setEnabled(false);
 
 					view.getText().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
 				}
