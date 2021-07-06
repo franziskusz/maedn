@@ -60,7 +60,7 @@ public class GameController implements Observer, ActionListener {
 					if(gameModel.getOptions().contains(2)) view.getBtnOption3().setEnabled(true);
 					if(gameModel.getOptions().contains(3)) view.getBtnOption4().setEnabled(true);
 
-					// TODO set Diced Würfelimage gameModel.getDiced();
+
 
 					// TODO setze neben die Pieces die Zuordnung der Buttons (pieceID)
 					//  kann wie das zeichnen der Pices passieren
@@ -91,6 +91,9 @@ public class GameController implements Observer, ActionListener {
 					view.getText().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
 				}
 			}
+
+			// TODO set Diced Würfelimage gameModel.getDiced();
+			view.getTfDiced().setText(String.valueOf(gameModel.getDiced()));
 
 			view.getBoardLayeredPane().setPieces(gameModel.getPieces());
 			view.getBoardLayeredPane().repaint();

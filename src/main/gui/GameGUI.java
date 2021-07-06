@@ -57,7 +57,7 @@ public class GameGUI extends JFrame{
 	private JButton btnOption4 = new JButton();
 
 	private JTextField text = new JTextField();
-	private JTextField wZahl = new JTextField();
+	private JTextField tfDiced = new JTextField("6");
 
 	private Panel_with_background boardLayeredPane;
 	 
@@ -139,6 +139,9 @@ public class GameGUI extends JFrame{
 		btnWuerfel.setActionCommand(WUERFELN);
 		panel2.add(btnWuerfel);
 
+		tfDiced.setEditable(false);
+		panel2.add(tfDiced);
+
 		btnOption1.setText("Option 1");
 		btnOption1.setActionCommand(OPTION_1);
 		panel2.add(btnOption1);
@@ -184,6 +187,10 @@ public class GameGUI extends JFrame{
 
 	public JTextField getText() {
 		return text;
+	}
+
+	public JTextField getTfDiced() {
+		return tfDiced;
 	}
 
 	//
