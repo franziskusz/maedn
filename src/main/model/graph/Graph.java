@@ -67,12 +67,13 @@ public class Graph
 	//Prüft ob den Zielposition ein eigener Stein steht
 	//Prüft ob Rundreise für den Spieler bereits beendet ist
 	//Prüft ob im Zielfeld eine eigene Figur übersprungen werden müsste
-	//(TODO ? Ausschließen, dass Spieler in Fremdes Ziel einlaufen können ? Oder erst bei Perform move?)
+	//Prüft ob die Figur in ein fremdes Zielfeld einlaufen würde
 	
 	public ArrayList<Integer> getOptions(Player player, int diced, ArrayList<Player> players)
 	{
 		ArrayList<Integer> options=new ArrayList<Integer>();
 		Vertex[] optionVertices=new Vertex[4];
+		
 		//System.out.println(options.toString()); //debug
 		
 		//Erst werden alle Ausgangspositionen in einem Array abgelegt
@@ -96,28 +97,22 @@ public class Graph
 				if((optionVertices[j].getSucc().get(k).getWeight()==diced)
 						&&(checkTargetOccupation(player, optionVertices[j].getSucc().get(k).getTo().getPiece()))
 						&&(checkJourneyEnd(player, optionVertices[j], players, diced))
-						&&(somethingInTheWay(player, optionVertices[j], optionVertices[j].getSucc().get(k).getTo(), players)))
+						&&(somethingInTheWay(player, optionVertices[j], optionVertices[j].getSucc().get(k).getTo(), players))
+						&&(excludeOpponentsGoal(player, optionVertices[j].getSucc().get(k).getTo(), players)))
 				{
 					System.out.println(optionVertices[j]+" Successors: "+optionVertices[j].getSucc()); //debug
 					//options.add(optionVertices[j].getSucc().get(k).getTo().getIndex());
 					System.out.println(options.toString()); //debug
+				
 					options.add(optionVertices[j].getPiece().getId());
-					System.out.println(options.toString()); //debug
 					
+					System.out.println(options.toString()); //debug	
 				}					
 			}
 		}			
 	
-		System.out.println(options.toString());//Testausgabe
-		
-		if (options.size()==0)
-		{
-			return null;
-		}
-		else
-		{
-			return options;
-		}	
+		System.out.println(options.toString());//Testausgabe	
+		return options;	
 	}
 	
 	
@@ -196,6 +191,8 @@ public class Graph
 	}
 	
 	//Prüfen ob auf den Zielfeldern eine Figur übersprungen werden müsste
+	//Wird ein Zielfeld geprüft, dass über die Rundreise des jeweiligen Spielers hinausgehen würde,
+	//wird das wie das Entfernungsmäßig äquivalente Zielfeld behandelt
 	private boolean somethingInTheWay(Player movingPlayer, Vertex option, Vertex target, ArrayList<Player> players)
 	{
 		boolean re = true;
@@ -204,20 +201,24 @@ public class Graph
 			if ((option.getIndex()==(39))||(option.getIndex()==(38))||(option.getIndex()==(37))
 					||(option.getIndex()==(36))||(option.getIndex()==(35)))
 			{
-				if ((target.getIndex()==57)&&(vertices.get(56).getPiece()!=null))
+				if (((target.getIndex()==57)||(target.getIndex()==1))
+						&&(vertices.get(56).getPiece()!=null) // Ist das zu überspingende Feld frei?
+						||(vertices.get(57).getPiece()!=null)) //Ist das Zielfeld frei?
 				{
 					re = false;
 				}
-				else if ((target.getIndex()==58)
+				else if (((target.getIndex()==58)||(target.getIndex()==2))
 						&&((vertices.get(57).getPiece()!=null)
-						||(vertices.get(56).getPiece()!=null)))
+						||(vertices.get(56).getPiece()!=null)
+						||(vertices.get(58).getPiece()!=null)))
 				{
 					re = false;
 				}
-				else if ((target.getIndex()==59)
+				else if (((target.getIndex()==59)||(target.getIndex()==3))
 						&&((vertices.get(58).getPiece()!=null)
 						||(vertices.get(57).getPiece()!=null)
-						||(vertices.get(56).getPiece()!=null)))
+						||(vertices.get(56).getPiece()!=null)
+						||(vertices.get(59).getPiece()!=null)))
 				{
 					re = false;
 				}
@@ -249,20 +250,24 @@ public class Graph
 			if ((option.getIndex()==(9))||(option.getIndex()==(8))||(option.getIndex()==(7))
 					||(option.getIndex()==(6))||(option.getIndex()==(5)))
 			{
-				if ((target.getIndex()==61)&&(vertices.get(60).getPiece()!=null))
+				if (((target.getIndex()==61)||(target.getIndex()==11))
+						&&(vertices.get(60).getPiece()!=null)
+						||(vertices.get(61).getPiece()!=null))
 				{
 					re = false;
 				}
-				else if ((target.getIndex()==62)
+				else if (((target.getIndex()==62)||(target.getIndex()==12))
 						&&((vertices.get(61).getPiece()!=null)
-						||(vertices.get(60).getPiece()!=null)))
+						||(vertices.get(60).getPiece()!=null)
+						||(vertices.get(62).getPiece()!=null)))
 				{
 					re = false;
 				}
-				else if ((target.getIndex()==63)
+				else if (((target.getIndex()==63)||(target.getIndex()==13))
 						&&((vertices.get(62).getPiece()!=null)
 						||(vertices.get(61).getPiece()!=null)
-						||(vertices.get(60).getPiece()!=null)))
+						||(vertices.get(60).getPiece()!=null)
+						||(vertices.get(63).getPiece()!=null)))
 				{
 					re = false;
 				}
@@ -294,20 +299,24 @@ public class Graph
 			if ((option.getIndex()==(19))||(option.getIndex()==(18))||(option.getIndex()==(17))
 					||(option.getIndex()==(16))||(option.getIndex()==(15)))
 			{
-				if ((target.getIndex()==65)&&(vertices.get(64).getPiece()!=null))
+				if (((target.getIndex()==65)||(target.getIndex()==21))
+						&&(vertices.get(64).getPiece()!=null)
+						||(vertices.get(65).getPiece()!=null))
 				{
 					re = false;
 				}
-				else if ((target.getIndex()==66)
+				else if (((target.getIndex()==66)||(target.getIndex()==22))
 						&&((vertices.get(65).getPiece()!=null)
-						||(vertices.get(64).getPiece()!=null)))
+						||(vertices.get(64).getPiece()!=null)
+						||(vertices.get(66).getPiece()!=null)))
 				{
 					re = false;
 				}
-				else if ((target.getIndex()==67)
+				else if (((target.getIndex()==67)||(target.getIndex()==23))
 						&&((vertices.get(66).getPiece()!=null)
 						||(vertices.get(65).getPiece()!=null)
-						||(vertices.get(64).getPiece()!=null)))
+						||(vertices.get(64).getPiece()!=null)
+						||(vertices.get(67).getPiece()!=null)))
 				{
 					re = false;
 				}
@@ -339,20 +348,24 @@ public class Graph
 			if ((option.getIndex()==(29))||(option.getIndex()==(28))||(option.getIndex()==(27))
 					||(option.getIndex()==(26))||(option.getIndex()==(25)))
 			{
-				if ((target.getIndex()==69)&&(vertices.get(68).getPiece()!=null))
+				if (((target.getIndex()==69)||(target.getIndex()==31))
+						&&(vertices.get(68).getPiece()!=null)
+						||(vertices.get(69).getPiece()!=null))
 				{
 					re = false;
 				}
-				else if ((target.getIndex()==70)
+				else if (((target.getIndex()==70)||(target.getIndex()==32))
 						&&((vertices.get(69).getPiece()!=null)
-						||(vertices.get(68).getPiece()!=null)))
+						||(vertices.get(68).getPiece()!=null)
+						||(vertices.get(70).getPiece()!=null)))
 				{
 					re = false;
 				}
-				else if ((target.getIndex()==71)
+				else if (((target.getIndex()==71)||(target.getIndex()==33))
 						&&((vertices.get(70).getPiece()!=null)
 						||(vertices.get(69).getPiece()!=null)
-						||(vertices.get(68).getPiece()!=null)))
+						||(vertices.get(68).getPiece()!=null)
+						||(vertices.get(71).getPiece()!=null)))
 				{
 					re = false;
 				}
@@ -380,7 +393,68 @@ public class Graph
 			}	
 		}
 		return re;
-
+	}
+	
+	//Schließt gegnerische Zielfelder als Option aus
+	public boolean excludeOpponentsGoal(Player movingPlayer, Vertex target, ArrayList<Player> players)
+	{
+		boolean re = true;
+		if (movingPlayer==players.get(0))
+		{
+			for(int i = 60; i<72; i++)
+			{
+				if (target==vertices.get(i))
+				{
+					re = false;
+				}
+			}
+		}
+		else if (movingPlayer==players.get(1))
+		{
+			for(int i = 64; i<72; i++)
+			{
+				if (target==vertices.get(i))
+				{
+					re = false;
+				}
+			}
+			for(int i = 56; i<60; i++)
+			{
+				if (target==vertices.get(i))
+				{
+					re = false;
+				}
+			}
+		}
+		else if (movingPlayer==players.get(2))
+		{
+			for(int i = 68; i<72; i++)
+			{
+				if (target==vertices.get(i))
+				{
+					re = false;
+				}
+			}
+			for(int i = 56; i<68; i++)
+			{
+				if (target==vertices.get(i))
+				{
+					re = false;
+				}
+			}
+		}
+		else if (movingPlayer==players.get(3))
+		{
+			for(int i = 56; i<68; i++)
+			{
+				if (target==vertices.get(i))
+				{
+					re = false;
+				}
+			}
+		}
+		
+		return re;
 	}
 	
 	/*
