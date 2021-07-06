@@ -25,7 +25,7 @@ public class GameModel extends Observable {
 	private ArrayList<Player> players; // geordnet nach Uhrzeigersinn und an Stelle 0 ist Beginner
 	private ArrayList<Piece> pieces;
 
-	private ArrayList<Integer> options = null;
+	private ArrayList<Integer> options = new ArrayList<>();
 
 
 
@@ -204,15 +204,12 @@ public class GameModel extends Observable {
 		//TODO Wenn Mögöichkeiten vatiable eingebaut schauen, ob Möglichkeiten vorhanden sind
 		// NIHCT NOCHMAL board.getOptions(playerTurn, 0);
 		// auf lokale Möglichkeiten Variable zugreifen
-		return options != null;
+		return options.size() != 0 ;
 	}
 
 	public void givePiecesOptionFlag() {
-		// TODO IF entfernen, wenn board.getOptions statt null leere Arraylist zurückgibt
-		if(getOptions() != null) {
-			for(Integer integer : getOptions()) {
-				getPlayerTurn().getPieces()[integer].setOption(true);
-			}
+		for(Integer integer : getOptions()) {
+			getPlayerTurn().getPieces()[integer].setOption(true);
 		}
 	}
 
