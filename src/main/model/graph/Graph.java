@@ -52,6 +52,7 @@ public class Graph
 		
 		System.out.println("Testausgabe Player 1 Options für Dice 6:");
 		getOptions(players.get(1), 6, players); //Debug
+		//performOption(players.get(1), vertices.get(47), 6, players); //debug
 	}
 	
 	/**
@@ -67,21 +68,79 @@ public class Graph
 	public void performOption(Player player, Vertex option, int diced, ArrayList<Player> players)
 	{
 		Vertex target = getTarget(player, option, diced, players);
+		int targetIndex = target.getIndex();
+		
+		Piece movingPiece = option.getPiece();
+		//int movingPieceID=movingPiece.getId();
+		
+		//Piece targetPiece = target.getPiece();
+		
+		/*
+		if (targetPiece!=null)
+		{
+			int targetPieceID=targetPiece.getId();
+			Player targetPlayer = target.getPiece().getPlayer();
+		}
+		*/
 		
 		//TODO: Anhand des Zielknotens ermitteln, ob Laufen und Schlagen ausgeführt wird
 		//TODO: Laufen oder Schlagen ausführen
-		if (target.getPiece()==null)
+		if (target.getPiece()==null) // Laufen
 		{
-			//Laufen
-		}
-		else
-		{
-			//Schlagen
+			vertices.get(targetIndex).setPiece(movingPiece);
+			vertices.get(targetIndex).getPiece().setPosition(target);
+			option.setPiece(null);
 		}
 		
-		
-		
-		
+		else //Schlagen
+		{
+			vertices.get(targetIndex).setPiece(movingPiece);
+			vertices.get(targetIndex).getPiece().setPosition(target);
+			option.setPiece(null);
+			
+			//geschlagene Pieces gehen nach Hause
+			if (target.getPiece().getPlayer()==players.get(0))
+			{
+				for (int i = 0; i<4; i++)
+				{
+					if (vertices.get(40+i).getPiece()==null)
+					{
+						vertices.get(40+i).setPiece(target.getPiece());
+					}
+				}
+			}
+			else if (target.getPiece().getPlayer()==players.get(1))
+			{
+				for (int i = 0; i<4; i++)
+				{
+					if (vertices.get(44+i).getPiece()==null)
+					{
+						vertices.get(44+i).setPiece(target.getPiece());
+					}
+				}
+			}
+			else if (target.getPiece().getPlayer()==players.get(2))
+			{
+				for (int i = 0; i<4; i++)
+				{
+					if (vertices.get(48+i).getPiece()==null)
+					{
+						vertices.get(48+i).setPiece(target.getPiece());
+					}
+				}
+			}
+			else if (target.getPiece().getPlayer()==players.get(3))
+			{
+				for (int i = 0; i<4; i++)
+				{
+					if (vertices.get(52+i).getPiece()==null)
+					{
+						vertices.get(52+i).setPiece(target.getPiece());
+					}
+				}
+			}
+			
+		}
 		
 		
 		//TODO:   - Wurde Geschlagen?
@@ -95,11 +154,10 @@ public class Graph
            - in performOption() eine Methode im Graph aufrufen, die überprüft, ob der
     	mitgegebene Spieler (playerTrun) gewonnen hat
     	- Falls ja -> GameState END setzen
-        */
-		
-		
-		
+        */	
 	}
+	
+	
 	/*
 	 * Die nächsten x Funktionen sind Hilfsfunktionen für performOption()
 	 */
