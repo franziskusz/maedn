@@ -13,9 +13,6 @@ public class Panel_with_background extends JLayeredPane {
 	private Image img;
 	private ArrayList<Piece> pieces;
 
-//	public Panel_with_background(String img) {
-//		this(new ImageIcon(img).getImage());
-//	}
 
 	public Panel_with_background(Image img, ArrayList<Piece> pieces) {
 		this.pieces = pieces;
@@ -33,6 +30,30 @@ public class Panel_with_background extends JLayeredPane {
 		g.drawImage(img, 0, 0, null);
 		// 					(Zeile,Spalte)
 
+		
+		
+		
+		
+		/* Meine TO-DO's
+		 * 
+		 * Schriftart+Größe Spielstein ID ändern
+		 * 
+		 * Spiel GUI grafisch optimieren
+		 *		Farbe der Häuser dunkler als Spielsteinfarbe
+		 *		eventuell opacity verändern
+		 * 
+		 * Buttons verändern Schriftfarbe Schriftart, Hintergrund
+		 * 
+		 * Würfel anzeigen (Bild)
+		 * 
+		 * 
+		 */
+		
+		
+		
+		
+		
+		
 		//Spielfeld
 		g.setColor(new Color (0,0,0,150));
 		//g.setColor(Color.black);
