@@ -55,12 +55,555 @@ public class Graph
 	}
 	
 	/**
+	 * 
+	 * führt für den gwünschten Spielstein eine Option aus 
+	 *
+	 * @param player
+	 * @param diced
+	 * @param Vertex/Piece/PieceID
+	 * @return
+	 */
+	
+	public void performOption(Player player, Vertex option, int diced, ArrayList<Player> players)
+	{
+		Vertex target = getTarget(player, option, diced, players);
+		
+		//TODO: Anhand des Zielknotens ermitteln, ob Laufen und Schlagen ausgeführt wird
+		//TODO: Laufen oder Schlagen ausführen
+		if (target.getPiece()==null)
+		{
+			//Laufen
+		}
+		else
+		{
+			//Schlagen
+		}
+		
+		
+		
+		
+		
+		
+		//TODO:   - Wurde Geschlagen?
+		/*
+        - Muss geschlagener Spieler THREE TIMES bekommen (gar keine Spielfiguren mehr
+                oder restlos aufgerückt)
+        - Ist der Spieler restlos aufgerückt und hast sonst keine Spielsteine auf dem Feld?
+            - Dann bekommt er THREE TIMES (evt noch nicht setzen, sondern nur als FLAG)
+            
+            
+           - in performOption() eine Methode im Graph aufrufen, die überprüft, ob der
+    	mitgegebene Spieler (playerTrun) gewonnen hat
+    	- Falls ja -> GameState END setzen
+        */
+		
+		
+		
+	}
+	/*
+	 * Die nächsten x Funktionen sind Hilfsfunktionen für performOption()
+	 */
+	
+	private Vertex getTarget(Player player, Vertex option, int diced, ArrayList<Player> players)
+	{
+		Vertex target=null;
+		
+		//Spieler 1
+		if (player==players.get(0))
+		{
+			if(option.getIndex()<34)
+			{
+				target=vertices.get(option.getIndex()+diced);
+			}
+			else if (option.getIndex()==34)
+			{
+				if(diced < 6)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(56);
+				}
+			}
+			else if (option.getIndex()==35)
+			{
+				if(diced < 5)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(56+diced-5);
+				}
+			}
+			else if (option.getIndex()==36)
+			{
+				if(diced < 4)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(56+diced-4);
+				}
+			}
+			else if (option.getIndex()==37)
+			{
+				if(diced < 3)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(56+diced-3);
+				}
+			}
+			else if (option.getIndex()==38)
+			{
+				if(diced < 2)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(56+diced-2);
+				}
+			}
+			else if (option.getIndex()==39)
+			{
+					target=vertices.get(56+diced-1);
+			}
+			else if ((option.getIndex()==40)||(option.getIndex()==41)||(option.getIndex()==42)||(option.getIndex()==43))
+			{
+					target=vertices.get(0);
+			}
+			else if ((option.getIndex()==56)||(option.getIndex()==57)||(option.getIndex()==58))
+			{
+				target=vertices.get(option.getIndex()+diced);
+			}
+		}
+		//Spieler 2
+		if (player==players.get(1))
+		{
+			if(((option.getIndex()<34)&&(option.getIndex()>9))||(option.getIndex()<4))
+			{
+				target=vertices.get(option.getIndex()+diced);
+			}
+			else if (option.getIndex()==34)
+			{
+				if(diced < 6)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0);
+				}
+			}
+			else if (option.getIndex()==35)
+			{
+				if(diced < 5)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-5);
+				}
+			}
+			else if (option.getIndex()==36)
+			{
+				if(diced < 4)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-4);
+				}
+			}
+			else if (option.getIndex()==37)
+			{
+				if(diced < 3)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-3);
+				}
+			}
+			else if (option.getIndex()==38)
+			{
+				if(diced < 2)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-2);
+				}
+			}
+			else if (option.getIndex()==39)
+			{
+					target=vertices.get(0+diced-1);
+			}
+			
+			else if (option.getIndex()==4)
+			{
+				if(diced < 6)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(60);
+				}
+			}
+			else if (option.getIndex()==5)
+			{
+				if(diced < 5)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(60+diced-5);
+				}
+			}
+			else if (option.getIndex()==6)
+			{
+				if(diced < 4)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(60+diced-4);
+				}
+			}
+			else if (option.getIndex()==7)
+			{
+				if(diced < 3)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(60+diced-3);
+				}
+			}
+			else if (option.getIndex()==8)
+			{
+				if(diced < 2)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(60+diced-2);
+				}
+			}
+			else if (option.getIndex()==9)
+			{
+					target=vertices.get(60+diced-1);
+			}
+			else if ((option.getIndex()==44)||(option.getIndex()==45)||(option.getIndex()==46)||(option.getIndex()==47))
+			{
+					target=vertices.get(10);
+			}
+			else if ((option.getIndex()==60)||(option.getIndex()==61)||(option.getIndex()==62))
+			{
+				target=vertices.get(option.getIndex()+diced);
+			}
+		}
+		
+		//Spieler 3
+		if (player==players.get(2))
+		{
+			if(((option.getIndex()<34)&&(option.getIndex()>19))||(option.getIndex()<14))
+			{
+				target=vertices.get(option.getIndex()+diced);
+			}
+			else if (option.getIndex()==34)
+			{
+				if(diced < 6)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0);
+				}
+			}
+			else if (option.getIndex()==35)
+			{
+				if(diced < 5)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-5);
+				}
+			}
+			else if (option.getIndex()==36)
+			{
+				if(diced < 4)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-4);
+				}
+			}
+			else if (option.getIndex()==37)
+			{
+				if(diced < 3)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-3);
+				}
+			}
+			else if (option.getIndex()==38)
+			{
+				if(diced < 2)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-2);
+				}
+			}
+			else if (option.getIndex()==39)
+			{
+					target=vertices.get(0+diced-1);
+			}
+			
+			else if (option.getIndex()==14)
+			{
+				if(diced < 6)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(64);
+				}
+			}
+			else if (option.getIndex()==15)
+			{
+				if(diced < 5)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(64+diced-5);
+				}
+			}
+			else if (option.getIndex()==16)
+			{
+				if(diced < 4)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(64+diced-4);
+				}
+			}
+			else if (option.getIndex()==17)
+			{
+				if(diced < 3)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(64+diced-3);
+				}
+			}
+			else if (option.getIndex()==18)
+			{
+				if(diced < 2)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(64+diced-2);
+				}
+			}
+			else if (option.getIndex()==19)
+			{
+					target=vertices.get(64+diced-1);
+			}
+			else if ((option.getIndex()==48)||(option.getIndex()==49)||(option.getIndex()==50)||(option.getIndex()==51))
+			{
+					target=vertices.get(20);
+			}
+			else if ((option.getIndex()==64)||(option.getIndex()==65)||(option.getIndex()==66))
+			{
+				target=vertices.get(option.getIndex()+diced);
+			}
+		}
+		
+		//Spieler 4
+		if (player==players.get(3))
+		{
+			if(((option.getIndex()<34)&&(option.getIndex()>29))||(option.getIndex()<24))
+			{
+				target=vertices.get(option.getIndex()+diced);
+			}
+			else if (option.getIndex()==34)
+			{
+				if(diced < 6)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0);
+				}
+			}
+			else if (option.getIndex()==35)
+			{
+				if(diced < 5)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-5);
+				}
+			}
+			else if (option.getIndex()==36)
+			{
+				if(diced < 4)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-4);
+				}
+			}
+			else if (option.getIndex()==37)
+			{
+				if(diced < 3)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-3);
+				}
+			}
+			else if (option.getIndex()==38)
+			{
+				if(diced < 2)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(0+diced-2);
+				}
+			}
+			else if (option.getIndex()==39)
+			{
+					target=vertices.get(0+diced-1);
+			}
+			
+			else if (option.getIndex()==24)
+			{
+				if(diced < 6)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(68);
+				}
+			}
+			else if (option.getIndex()==25)
+			{
+				if(diced < 5)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(68+diced-5);
+				}
+			}
+			else if (option.getIndex()==26)
+			{
+				if(diced < 4)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(68+diced-4);
+				}
+			}
+			else if (option.getIndex()==27)
+			{
+				if(diced < 3)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(68+diced-3);
+				}
+			}
+			else if (option.getIndex()==28)
+			{
+				if(diced < 2)
+				{
+					target=vertices.get(option.getIndex()+diced);
+				}
+				else
+				{
+					target=vertices.get(68+diced-2);
+				}
+			}
+			else if (option.getIndex()==29)
+			{
+					target=vertices.get(68+diced-1);
+			}
+			else if ((option.getIndex()==52)||(option.getIndex()==53)||(option.getIndex()==54)||(option.getIndex()==55))
+			{
+					target=vertices.get(30);
+			}
+			else if ((option.getIndex()==68)||(option.getIndex()==69)||(option.getIndex()==70))
+			{
+				target=vertices.get(option.getIndex()+diced);
+			}
+		}		
+		return target;
+	}
+	
+	
+	
+	
+	/**
 	 * Gibt die Möglichleiten für den Spieler mit gewürfelter Zahl zurück (inform der pieceIDs)
 	 * Bei keinen Möglichkeiten return null;
 	 *
 	 * @param player
 	 * @param diced
-	 * @return
+	 * @param players
+	 * @return ArrayList
 	 */
 	
 	//erster Ansatz sollte funktionieren
@@ -117,7 +660,7 @@ public class Graph
 	
 	
 	/*
-	 * Die nächsten drei Funktionen sind Hilfsfunktionen für checkOptions()
+	 * Die nächsten vier Funktionen sind Hilfsfunktionen für checkOptions()
 	 */
 	
 	//Wenn auf dem Zielfeld eine Figur des aktiven Spielers steht, wird der zu bewegende Stein nicht als Option gezählt
