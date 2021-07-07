@@ -161,10 +161,10 @@ public class Panel_with_background extends JLayeredPane {
 						break;
 				}
 
-				// Zeige in den Spielbaren Spielfiguren die pieceID an
+				// Zeige in den spielbaren Spielfiguren die pieceID an
 				if(piece.isOption()) {
 					g.setColor(new Color (0,0,0,255));
-					g.drawString(String.valueOf(piece.getId()), x+15, y+15);
+					g.drawString(String.valueOf(piece.getId()), x+11, y+20);
 				}
 			}
 		}
