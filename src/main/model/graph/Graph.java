@@ -52,7 +52,7 @@ public class Graph
 		
 		System.out.println("Testausgabe Player 1 Options für Dice 6:");
 		getOptions(players.get(1), 6, players); //Debug
-		//performOption(players.get(1), vertices.get(47), 6, players); //debug
+		performOption(players.get(1), vertices.get(47), 6, players); //debug
 	}
 	
 	/**
@@ -73,15 +73,9 @@ public class Graph
 		Piece movingPiece = option.getPiece();
 		//int movingPieceID=movingPiece.getId();
 		
-		//Piece targetPiece = target.getPiece();
+		Piece targetPiece = target.getPiece();
 		
-		/*
-		if (targetPiece!=null)
-		{
-			int targetPieceID=targetPiece.getId();
-			Player targetPlayer = target.getPiece().getPlayer();
-		}
-		*/
+		
 		
 		//TODO: Anhand des Zielknotens ermitteln, ob Laufen und Schlagen ausgeführt wird
 		//TODO: Laufen oder Schlagen ausführen
@@ -94,6 +88,9 @@ public class Graph
 		
 		else //Schlagen
 		{
+			int targetPieceID=targetPiece.getId();
+			//Player targetPlayer = target.getPiece().getPlayer();
+			
 			vertices.get(targetIndex).setPiece(movingPiece);
 			vertices.get(targetIndex).getPiece().setPosition(target);
 			option.setPiece(null);
@@ -106,6 +103,7 @@ public class Graph
 					if (vertices.get(40+i).getPiece()==null)
 					{
 						vertices.get(40+i).setPiece(target.getPiece());
+						players.get(0).getPieces()[targetPieceID].setPosition(vertices.get(40+i));
 					}
 				}
 			}
@@ -116,6 +114,7 @@ public class Graph
 					if (vertices.get(44+i).getPiece()==null)
 					{
 						vertices.get(44+i).setPiece(target.getPiece());
+						players.get(1).getPieces()[targetPieceID].setPosition(vertices.get(44+i));
 					}
 				}
 			}
@@ -126,6 +125,7 @@ public class Graph
 					if (vertices.get(48+i).getPiece()==null)
 					{
 						vertices.get(48+i).setPiece(target.getPiece());
+						players.get(2).getPieces()[targetPieceID].setPosition(vertices.get(48+i));
 					}
 				}
 			}
@@ -136,6 +136,7 @@ public class Graph
 					if (vertices.get(52+i).getPiece()==null)
 					{
 						vertices.get(52+i).setPiece(target.getPiece());
+						players.get(3).getPieces()[targetPieceID].setPosition(vertices.get(52+i));
 					}
 				}
 			}
