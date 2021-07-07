@@ -156,6 +156,8 @@ public class GameModel extends Observable {
 		//        - Dann bekommt er THREE TIMES (return true; (THREE TIMES nicht setzen!) sonst immer return false;)
 		//    - Ob eigene Spielfigur übersprungen wurde muss NICHT überprüft werden, da es durch "keine Möglichkeit" auisgeschlossen
 
+		board.performOption(playerTurn, playerTurn.getPieces()[option].getPosition(), diced, INITIAL_PLAYERS);
+
 		// @Franziskus
 		// TODO board.hatGewonnenODERSO(Player playerTrun)
 		// - in performOption() eine Methode im Graph aufrufen, die überprüft, ob der
