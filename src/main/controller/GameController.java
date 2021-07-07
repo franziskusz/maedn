@@ -25,10 +25,13 @@ public class GameController implements Observer, ActionListener {
 		// set Listener für Buttons
 		view.getBtnWuerfel().addActionListener(this);
 		view.getBtnOption1().addActionListener(this);
+		view.getBtnOption1().setEnabled(false);
 		view.getBtnOption2().addActionListener(this);
+		view.getBtnOption2().setEnabled(false);
 		view.getBtnOption3().addActionListener(this);
+		view.getBtnOption3().setEnabled(false);
 		view.getBtnOption4().addActionListener(this);
-
+		view.getBtnOption4().setEnabled(false);
 
 		// mach Fenster sichtbar
 		view.setVisible(true);

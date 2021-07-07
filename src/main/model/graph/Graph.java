@@ -52,7 +52,7 @@ public class Graph
 		
 		System.out.println("Testausgabe Player 1 Options für Dice 6:");
 		getOptions(players.get(1), 6, players); //Debug
-		performOption(players.get(1), vertices.get(47), 6, players); //debug
+		//performOption(players.get(1), vertices.get(47), 6, players); //debug
 	}
 	
 	/**
