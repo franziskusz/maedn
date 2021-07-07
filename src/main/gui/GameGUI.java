@@ -45,16 +45,16 @@ public class GameGUI extends JFrame{
 	private Circle circle;
 	
 	public static final String WUERFELN = "WUERFELN";
+	public static final String OPTION_0 = "OPTION_0";
 	public static final String OPTION_1 = "OPTION_1";
 	public static final String OPTION_2 = "OPTION_2";
 	public static final String OPTION_3 = "OPTION_3";
-	public static final String OPTION_4 = "OPTION_4";
 
 	private JButton btnWuerfel = new JButton();
+	private JButton btnOption0 = new JButton();
 	private JButton btnOption1 = new JButton();
 	private JButton btnOption2 = new JButton();
 	private JButton btnOption3 = new JButton();
-	private JButton btnOption4 = new JButton();
 
 	private JTextField text = new JTextField();
 	private JTextField tfDiced = new JTextField("6");
@@ -142,6 +142,10 @@ public class GameGUI extends JFrame{
 		tfDiced.setEditable(false);
 		panel2.add(tfDiced);
 
+		btnOption0.setText("Option 0");
+		btnOption0.setActionCommand(OPTION_0);
+		panel2.add(btnOption0);
+
 		btnOption1.setText("Option 1");
 		btnOption1.setActionCommand(OPTION_1);
 		panel2.add(btnOption1);
@@ -153,10 +157,6 @@ public class GameGUI extends JFrame{
 		btnOption3.setText("Option 3");
 		btnOption3.setActionCommand(OPTION_3);
 		panel2.add(btnOption3);
-
-		btnOption4.setText("Option 4");
-		btnOption4.setActionCommand(OPTION_3);
-		panel2.add(btnOption4);
 		
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -170,19 +170,19 @@ public class GameGUI extends JFrame{
 	}
 
 	public JButton getBtnOption1() {
-		return btnOption1;
+		return btnOption0;
 	}
 
 	public JButton getBtnOption2() {
-		return btnOption2;
+		return btnOption1;
 	}
 
 	public JButton getBtnOption3() {
-		return btnOption3;
+		return btnOption2;
 	}
 
 	public JButton getBtnOption4() {
-		return btnOption4;
+		return btnOption3;
 	}
 
 	public JTextField getText() {

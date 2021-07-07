@@ -108,6 +108,9 @@ public class GameController implements Observer, ActionListener {
 			case GameGUI.WUERFELN:
 				gameModel.diceRoll();
 				break;
+			case GameGUI.OPTION_0:
+				gameModel.performOption(0);
+				break;
 			case GameGUI.OPTION_1:
 				gameModel.performOption(1);
 				break;
@@ -116,9 +119,6 @@ public class GameController implements Observer, ActionListener {
 				break;
 			case GameGUI.OPTION_3:
 				gameModel.performOption(3);
-				break;
-			case GameGUI.OPTION_4:
-				gameModel.performOption(4);
 				break;
 
 			default:
