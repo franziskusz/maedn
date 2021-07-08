@@ -36,7 +36,7 @@ public class Graph
 		getCoordinateXofVertex(40); 
 		getCoordinateYofVertex(40);
 		
-		testPrint(); //alle Kanten
+		//testPrint(); //alle Kanten
 		/*
 		for (int i = 0; i<16; i++)
 		{
@@ -1059,7 +1059,7 @@ public class Graph
 					re = false;
 				}
 			}
-			for(int i = 56; i<68; i++)
+			for(int i = 56; i<64; i++)
 			{
 				if (target==vertices.get(i))
 				{
