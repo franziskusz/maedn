@@ -52,7 +52,7 @@ public class Graph
 		
 		System.out.println("Testausgabe Player 1 Options für Dice 6:");
 		getOptions(players.get(1), 6, players); //Debug
-		performOption(players.get(1), vertices.get(47), 6, players); //debug
+		//performOption(players.get(1), vertices.get(47), 6, players); //debug
 	}
 	
 	/**
@@ -89,43 +89,53 @@ public class Graph
 		else //Schlagen
 		{
 			int targetPieceID=targetPiece.getId();
-			//Player targetPlayer = target.getPiece().getPlayer();
-			
-			vertices.get(targetIndex).setPiece(movingPiece);
-			vertices.get(targetIndex).getPiece().setPosition(target);
-			option.setPiece(null);
+			Player targetPlayer = target.getPiece().getPlayer();
+			boolean newPositionfound = false;
 			
 			//geschlagene Pieces gehen nach Hause
 			if (target.getPiece().getPlayer()==players.get(0))
 			{
 				for (int i = 0; i<4; i++)
 				{
-					if (vertices.get(40+i).getPiece()==null)
+					if (newPositionfound == false)
 					{
-						vertices.get(40+i).setPiece(target.getPiece());
-						players.get(0).getPieces()[targetPieceID].setPosition(vertices.get(40+i));
-					}
+						if (vertices.get(40+i).getPiece()==null)
+						{
+							vertices.get(40+i).setPiece(target.getPiece());
+							players.get(0).getPieces()[targetPieceID].setPosition(vertices.get(40+i));
+							newPositionfound = true;
+						}
+					}	
 				}
 			}
 			else if (target.getPiece().getPlayer()==players.get(1))
 			{
 				for (int i = 0; i<4; i++)
 				{
-					if (vertices.get(44+i).getPiece()==null)
+					if (newPositionfound == false)
 					{
-						vertices.get(44+i).setPiece(target.getPiece());
-						players.get(1).getPieces()[targetPieceID].setPosition(vertices.get(44+i));
+						if (vertices.get(44+i).getPiece()==null)
+						{
+							vertices.get(44+i).setPiece(target.getPiece());
+							players.get(1).getPieces()[targetPieceID].setPosition(vertices.get(44+i));
+							newPositionfound = true;
+						}
 					}
+					
 				}
 			}
 			else if (target.getPiece().getPlayer()==players.get(2))
 			{
 				for (int i = 0; i<4; i++)
 				{
-					if (vertices.get(48+i).getPiece()==null)
+					if (newPositionfound == false)
 					{
-						vertices.get(48+i).setPiece(target.getPiece());
-						players.get(2).getPieces()[targetPieceID].setPosition(vertices.get(48+i));
+						if (vertices.get(48+i).getPiece()==null)
+						{
+							vertices.get(48+i).setPiece(target.getPiece());
+							players.get(2).getPieces()[targetPieceID].setPosition(vertices.get(48+i));
+							newPositionfound = true;
+						}
 					}
 				}
 			}
@@ -133,13 +143,20 @@ public class Graph
 			{
 				for (int i = 0; i<4; i++)
 				{
-					if (vertices.get(52+i).getPiece()==null)
+					if (newPositionfound == false)
 					{
-						vertices.get(52+i).setPiece(target.getPiece());
-						players.get(3).getPieces()[targetPieceID].setPosition(vertices.get(52+i));
+						if (vertices.get(52+i).getPiece()==null)
+						{
+							vertices.get(52+i).setPiece(target.getPiece());
+							players.get(3).getPieces()[targetPieceID].setPosition(vertices.get(52+i));
+							newPositionfound = true;
+						}
 					}
 				}
 			}
+			vertices.get(targetIndex).setPiece(movingPiece);
+			vertices.get(targetIndex).getPiece().setPosition(target);
+			option.setPiece(null);
 			
 		}
 		
@@ -162,6 +179,11 @@ public class Graph
 	/*
 	 * Die nächsten x Funktionen sind Hilfsfunktionen für performOption()
 	 */
+	
+	private void sendTargetHome(Vertex target, ArrayList<Player> players, boolean newPositionfound)
+	{
+		
+	}
 	
 	private Vertex getTarget(Player player, Vertex option, int diced, ArrayList<Player> players)
 	{
@@ -804,8 +826,8 @@ public class Graph
 					||(option.getIndex()==(36))||(option.getIndex()==(35)))
 			{
 				if (((target.getIndex()==57)||(target.getIndex()==1))
-						&&(vertices.get(56).getPiece()!=null) // Ist das zu überspingende Feld frei?
-						||(vertices.get(57).getPiece()!=null)) //Ist das Zielfeld frei?
+						&&((vertices.get(56).getPiece()!=null) // Ist das zu überspingende Feld frei?
+						||(vertices.get(57).getPiece()!=null))) //Ist das Zielfeld frei?
 				{
 					re = false;
 				}
@@ -853,8 +875,8 @@ public class Graph
 					||(option.getIndex()==(6))||(option.getIndex()==(5)))
 			{
 				if (((target.getIndex()==61)||(target.getIndex()==11))
-						&&(vertices.get(60).getPiece()!=null)
-						||(vertices.get(61).getPiece()!=null))
+						&&((vertices.get(60).getPiece()!=null)
+						||(vertices.get(61).getPiece()!=null)))
 				{
 					re = false;
 				}
@@ -902,8 +924,8 @@ public class Graph
 					||(option.getIndex()==(16))||(option.getIndex()==(15)))
 			{
 				if (((target.getIndex()==65)||(target.getIndex()==21))
-						&&(vertices.get(64).getPiece()!=null)
-						||(vertices.get(65).getPiece()!=null))
+						&&((vertices.get(64).getPiece()!=null)
+						||(vertices.get(65).getPiece()!=null)))
 				{
 					re = false;
 				}
@@ -951,8 +973,8 @@ public class Graph
 					||(option.getIndex()==(26))||(option.getIndex()==(25)))
 			{
 				if (((target.getIndex()==69)||(target.getIndex()==31))
-						&&(vertices.get(68).getPiece()!=null)
-						||(vertices.get(69).getPiece()!=null))
+						&&((vertices.get(68).getPiece()!=null)
+						||(vertices.get(69).getPiece()!=null)))
 				{
 					re = false;
 				}
@@ -1037,7 +1059,7 @@ public class Graph
 					re = false;
 				}
 			}
-			for(int i = 56; i<68; i++)
+			for(int i = 56; i<64; i++)
 			{
 				if (target==vertices.get(i))
 				{
