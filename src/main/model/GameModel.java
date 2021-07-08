@@ -147,7 +147,7 @@ public class GameModel extends Observable {
 
 		// @Franziskus
 		// TODO isSuperSpecialCase = board.perfromODERSO(int option);
-		// - in performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
+		// - hier eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
 		//    und daraufhin bestimmte Sachen überprüft
 		//    - Wurde Geschlagen?
 		//        - Muss geschlagener Spieler THREE TIMES bekommen (gar keine Spielfiguren mehr
@@ -160,7 +160,7 @@ public class GameModel extends Observable {
 
 		// @Franziskus
 		// TODO board.hatGewonnenODERSO(Player playerTrun)
-		// - in performOption() eine Methode im Graph aufrufen, die überprüft, ob der
+		// - hier eine Methode im Graph aufrufen, die überprüft, ob der
 		//    mitgegebene Spieler (playerTrun) gewonnen hat
 		//    - Falls ja -> GameState END setzen
 		//
