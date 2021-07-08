@@ -46,7 +46,10 @@ public class Panel_with_background extends JLayeredPane {
 		 * 
 		 * Würfel anzeigen (Bild)
 		 * 
-		 * 
+		 * Gimmicideen
+		 * 		Spielsteine wenn aufgerückt thumbs up oder smileyface
+		 * 		Würfelgeräusche
+		 * 		Bowling Animation beim Schlagen
 		 */
 		
 		
@@ -55,7 +58,7 @@ public class Panel_with_background extends JLayeredPane {
 		
 		
 		//Spielfeld
-		g.setColor(new Color (0,0,0,150));
+		g.setColor(new Color (225,221,176,150));
 		//g.setColor(Color.black);
 		g.fillOval(220, 20, 40, 40);//0,4
 		g.fillOval(270, 20, 40, 40);//0,5
@@ -109,7 +112,7 @@ public class Panel_with_background extends JLayeredPane {
 		g.fillOval(170, 270, 40, 40); //5,3
 		g.fillOval(220, 270, 40, 40); //5,4
 
-		g.setColor(new Color (0,255,0,150));
+		g.setColor(new Color (35, 149, 0,170));
 		//g.setColor(Color.green);
 		//Haus
 		g.fillOval(470, 20, 40, 40);//0,9
@@ -125,7 +128,7 @@ public class Panel_with_background extends JLayeredPane {
 		g.fillOval(270, 220, 40, 40); //4,5
 		
 		
-		g.setColor(new Color (255,0,0,150));
+		g.setColor(new Color (118, 0, 0,150));
 		//g.setColor(Color.red);
 		//Haus
 		g.fillOval(20, 470, 40, 40);//9,0
@@ -140,7 +143,7 @@ public class Panel_with_background extends JLayeredPane {
 		g.fillOval(270, 370, 40, 40); //7,5
 		g.fillOval(270, 320, 40, 40);    //6,5
 
-		g.setColor(new Color (255,255,0,150));
+		g.setColor(new Color (255,215,0,150));
 		//g.setColor(Color.yellow);
 		//Haus
 		g.fillOval(470, 470, 40, 40); //9,9
@@ -165,7 +168,7 @@ public class Panel_with_background extends JLayeredPane {
 
 				switch(piece.getPlayer().getPlayerColor()) {
 					case RED:
-						g.setColor(new Color (118, 0, 0,255));
+						g.setColor(new Color (255,0,0,255));
 						g.fillOval(x, y, pieceSize, pieceSize);
 						break;
 					case BLUE:
@@ -173,7 +176,7 @@ public class Panel_with_background extends JLayeredPane {
 						g.fillOval(x, y, pieceSize, pieceSize);
 						break;
 					case GREEN:
-						g.setColor(new Color (35, 149, 0,255));
+						g.setColor(new Color (0,255,0,190));
 						g.fillOval(x, y, pieceSize, pieceSize);
 						break;
 					case YELLOW:
