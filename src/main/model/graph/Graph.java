@@ -826,8 +826,8 @@ public class Graph
 					||(option.getIndex()==(36))||(option.getIndex()==(35)))
 			{
 				if (((target.getIndex()==57)||(target.getIndex()==1))
-						&&(vertices.get(56).getPiece()!=null) // Ist das zu überspingende Feld frei?
-						||(vertices.get(57).getPiece()!=null)) //Ist das Zielfeld frei?
+						&&((vertices.get(56).getPiece()!=null) // Ist das zu überspingende Feld frei?
+						||(vertices.get(57).getPiece()!=null))) //Ist das Zielfeld frei?
 				{
 					re = false;
 				}
@@ -875,8 +875,8 @@ public class Graph
 					||(option.getIndex()==(6))||(option.getIndex()==(5)))
 			{
 				if (((target.getIndex()==61)||(target.getIndex()==11))
-						&&(vertices.get(60).getPiece()!=null)
-						||(vertices.get(61).getPiece()!=null))
+						&&((vertices.get(60).getPiece()!=null)
+						||(vertices.get(61).getPiece()!=null)))
 				{
 					re = false;
 				}
@@ -924,8 +924,8 @@ public class Graph
 					||(option.getIndex()==(16))||(option.getIndex()==(15)))
 			{
 				if (((target.getIndex()==65)||(target.getIndex()==21))
-						&&(vertices.get(64).getPiece()!=null)
-						||(vertices.get(65).getPiece()!=null))
+						&&((vertices.get(64).getPiece()!=null)
+						||(vertices.get(65).getPiece()!=null)))
 				{
 					re = false;
 				}
@@ -973,8 +973,8 @@ public class Graph
 					||(option.getIndex()==(26))||(option.getIndex()==(25)))
 			{
 				if (((target.getIndex()==69)||(target.getIndex()==31))
-						&&(vertices.get(68).getPiece()!=null)
-						||(vertices.get(69).getPiece()!=null))
+						&&((vertices.get(68).getPiece()!=null)
+						||(vertices.get(69).getPiece()!=null)))
 				{
 					re = false;
 				}
