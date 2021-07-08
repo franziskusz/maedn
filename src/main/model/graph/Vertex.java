@@ -77,7 +77,7 @@ public class Vertex
 	
 	public List<Edge> getSucc()
 	{
-		return predecessors;
+		return successors;
 	}
 	
 	@Override
