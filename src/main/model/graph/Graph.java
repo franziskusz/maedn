@@ -36,7 +36,7 @@ public class Graph
 		getCoordinateXofVertex(40); 
 		getCoordinateYofVertex(40);
 		
-		//testPrint(); //alle Kanten
+		testPrint(); //alle Kanten
 		/*
 		for (int i = 0; i<16; i++)
 		{
@@ -89,43 +89,53 @@ public class Graph
 		else //Schlagen
 		{
 			int targetPieceID=targetPiece.getId();
-			//Player targetPlayer = target.getPiece().getPlayer();
-			
-			vertices.get(targetIndex).setPiece(movingPiece);
-			vertices.get(targetIndex).getPiece().setPosition(target);
-			option.setPiece(null);
+			Player targetPlayer = target.getPiece().getPlayer();
+			boolean newPositionfound = false;
 			
 			//geschlagene Pieces gehen nach Hause
 			if (target.getPiece().getPlayer()==players.get(0))
 			{
 				for (int i = 0; i<4; i++)
 				{
-					if (vertices.get(40+i).getPiece()==null)
+					if (newPositionfound == false)
 					{
-						vertices.get(40+i).setPiece(target.getPiece());
-						players.get(0).getPieces()[targetPieceID].setPosition(vertices.get(40+i));
-					}
+						if (vertices.get(40+i).getPiece()==null)
+						{
+							vertices.get(40+i).setPiece(target.getPiece());
+							players.get(0).getPieces()[targetPieceID].setPosition(vertices.get(40+i));
+							newPositionfound = true;
+						}
+					}	
 				}
 			}
 			else if (target.getPiece().getPlayer()==players.get(1))
 			{
 				for (int i = 0; i<4; i++)
 				{
-					if (vertices.get(44+i).getPiece()==null)
+					if (newPositionfound == false)
 					{
-						vertices.get(44+i).setPiece(target.getPiece());
-						players.get(1).getPieces()[targetPieceID].setPosition(vertices.get(44+i));
+						if (vertices.get(44+i).getPiece()==null)
+						{
+							vertices.get(44+i).setPiece(target.getPiece());
+							players.get(1).getPieces()[targetPieceID].setPosition(vertices.get(44+i));
+							newPositionfound = true;
+						}
 					}
+					
 				}
 			}
 			else if (target.getPiece().getPlayer()==players.get(2))
 			{
 				for (int i = 0; i<4; i++)
 				{
-					if (vertices.get(48+i).getPiece()==null)
+					if (newPositionfound == false)
 					{
-						vertices.get(48+i).setPiece(target.getPiece());
-						players.get(2).getPieces()[targetPieceID].setPosition(vertices.get(48+i));
+						if (vertices.get(48+i).getPiece()==null)
+						{
+							vertices.get(48+i).setPiece(target.getPiece());
+							players.get(2).getPieces()[targetPieceID].setPosition(vertices.get(48+i));
+							newPositionfound = true;
+						}
 					}
 				}
 			}
@@ -133,13 +143,20 @@ public class Graph
 			{
 				for (int i = 0; i<4; i++)
 				{
-					if (vertices.get(52+i).getPiece()==null)
+					if (newPositionfound == false)
 					{
-						vertices.get(52+i).setPiece(target.getPiece());
-						players.get(3).getPieces()[targetPieceID].setPosition(vertices.get(52+i));
+						if (vertices.get(52+i).getPiece()==null)
+						{
+							vertices.get(52+i).setPiece(target.getPiece());
+							players.get(3).getPieces()[targetPieceID].setPosition(vertices.get(52+i));
+							newPositionfound = true;
+						}
 					}
 				}
 			}
+			vertices.get(targetIndex).setPiece(movingPiece);
+			vertices.get(targetIndex).getPiece().setPosition(target);
+			option.setPiece(null);
 			
 		}
 		
@@ -162,6 +179,11 @@ public class Graph
 	/*
 	 * Die nächsten x Funktionen sind Hilfsfunktionen für performOption()
 	 */
+	
+	private void sendTargetHome(Vertex target, ArrayList<Player> players, boolean newPositionfound)
+	{
+		
+	}
 	
 	private Vertex getTarget(Player player, Vertex option, int diced, ArrayList<Player> players)
 	{
