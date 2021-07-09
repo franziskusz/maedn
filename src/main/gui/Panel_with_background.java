@@ -46,6 +46,13 @@ public class Panel_with_background extends JLayeredPane {
 		 * 
 		 * Würfel anzeigen (Bild)
 		 * 
+		 * Farbe im Hintergrund hinzufügen (des spielers der gerade dran ist)
+		 * 
+		 * 
+		 * Eingabefeld auf dem schirm haben. 
+		 * Auch Admin Regeler ob Admin oder nicht in der setupGUI
+		 * 
+		 * 
 		 * Gimmicideen
 		 * 		Spielsteine wenn aufgerückt thumbs up oder smileyface
 		 * 		Würfelgeräusche
@@ -58,7 +65,7 @@ public class Panel_with_background extends JLayeredPane {
 		
 		
 		//Spielfeld
-		g.setColor(new Color (225,221,176,150));
+		g.setColor(new Color (225,221,176,200));
 		//g.setColor(Color.black);
 		g.fillOval(220, 20, 40, 40);//0,4
 		g.fillOval(270, 20, 40, 40);//0,5
@@ -176,11 +183,11 @@ public class Panel_with_background extends JLayeredPane {
 						g.fillOval(x, y, pieceSize, pieceSize);
 						break;
 					case GREEN:
-						g.setColor(new Color (0,255,0,190));
+						g.setColor(new Color (0,255,0,225));
 						g.fillOval(x, y, pieceSize, pieceSize);
 						break;
 					case YELLOW:
-						g.setColor(new Color (255,255,0,150));
+						g.setColor(new Color (255,255,0,225));
 						g.fillOval(x, y, pieceSize, pieceSize);
 						break;
 				}
