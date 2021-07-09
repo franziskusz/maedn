@@ -122,6 +122,7 @@ public class GameGUI extends JFrame{
 		//panel1.setBackground(Color.red);
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
+		
 
 		JPanel panel2 = new JPanel();
 		//panel2.setBackground(Color.red);
