@@ -46,7 +46,7 @@ Noch zu tun was Franziskus betrifft:
 -DONE- in diceRoll() board.getOptions() aufrufen, wo alle (max 4) Möglichkeiten
     ermittelt und im Model gesetzt werden
 
-- in performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
+- in Gamemodel.performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
     und daraufhin bestimmte Sachen überprüft
     - Wurde Geschlagen?
         - Muss geschlagener Spieler THREE TIMES bekommen (gar keine Spielfiguren mehr
@@ -55,7 +55,7 @@ Noch zu tun was Franziskus betrifft:
         - Dann bekommt er THREE TIMES (evt noch nicht setzen, sondern nur als FLAG)
     - Ob eigene Spielfigur übersprungen wurde muss NICHT überprüft werden, da es durch "keine Möglichkeit" auisgeschlossen
 
-- in performOption() eine Methode im Graph aufrufen, die überprüft, ob der
+- in Gamemodel.performOption() eine Methode im Graph aufrufen, die überprüft, ob der
     mitgegebene Spieler (playerTrun) gewonnen hat
     - Falls ja -> GameState END setzen
 
