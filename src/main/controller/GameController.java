@@ -3,6 +3,7 @@ package main.controller;
 import main.gui.GameGUI;
 import main.model.enums.GameState;
 import main.model.GameModel;
+import main.model.player.Bot;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,14 +25,16 @@ public class GameController implements Observer, ActionListener {
 
 		// set Listener für Buttons
 		view.getBtnWuerfel().addActionListener(this);
+		view.getBtnOption0().addActionListener(this);
 		view.getBtnOption1().addActionListener(this);
-		view.getBtnOption1().setEnabled(false);
 		view.getBtnOption2().addActionListener(this);
-		view.getBtnOption2().setEnabled(false);
 		view.getBtnOption3().addActionListener(this);
+
+		// Buttons disable
+		view.getBtnOption0().setEnabled(false);
+		view.getBtnOption1().setEnabled(false);
+		view.getBtnOption2().setEnabled(false);
 		view.getBtnOption3().setEnabled(false);
-		view.getBtnOption4().addActionListener(this);
-		view.getBtnOption4().setEnabled(false);
 
 		// mach Fenster sichtbar
 		view.setVisible(true);
@@ -53,54 +56,50 @@ public class GameController implements Observer, ActionListener {
 				view.getText().setText("Gewonnen hat " + gameModel.getPlayerTurn().getPlayerColor().toString());
 				//TODO evt Button sichtbar machen, der Wieder das Initiale JFrame aufruft für neue Runde
 			} else {
-				if(gameModel.hasOption()) {
-					//TODO aktiviere OPTION Buttons
-					//	deaktiviere Würfel Button
-					//	evt. admin Button deaktivieren
+				if(gameModel.getPlayerTurn() instanceof Bot) {
 					view.getBtnWuerfel().setEnabled(false);
-					if(gameModel.getOptions().contains(0)) view.getBtnOption1().setEnabled(true);
-					if(gameModel.getOptions().contains(1)) view.getBtnOption2().setEnabled(true);
-					if(gameModel.getOptions().contains(2)) view.getBtnOption3().setEnabled(true);
-					if(gameModel.getOptions().contains(3)) view.getBtnOption4().setEnabled(true);
-
-
-
-					// TODO setze neben die Pieces die Zuordnung der Buttons (pieceID)
-					//  kann wie das zeichnen der Pices passieren
-					//  view.getBoardLayeredPane().setOptionPieces(gameModel.getOPTIOEN);
-					//  Optionen dazu muss der Controller hier noch aus dem model.playerTurn die Piece Objekte raushole
-					//  undzwar nur die, die im gameModel.getOPTIOEN stehen, diese Pieces dann an die GUI geben wie
-					//  beim normalen Piece zeichen
-					//
-					//  ODER (Wah. besser)
-					//
-					//  in die Pices, die Ziehbare Spielsteine sind, entweder im Graph oder im Model FLAG OPTION setzen
-					//  dann kann die GUI beim normalen painten, einfach überprüfen
-					//  Wichtig, FLAG muss bei perform Action wieder entfernt werden
-
-//					gameModel.givePiecesOptionFlag(); // in Model?
-
-					view.getText().setText("Wähle Option");
-				} else {
-					//TODO deaktiviere OPTION Buttons
-					//	aktiviere Würfel Button
-					//	evt. admin Button aktivieren
-					view.getBtnWuerfel().setEnabled(true);
+					view.getBtnOption0().setEnabled(false);
 					view.getBtnOption1().setEnabled(false);
 					view.getBtnOption2().setEnabled(false);
 					view.getBtnOption3().setEnabled(false);
-					view.getBtnOption4().setEnabled(false);
 
-					view.getText().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+					view.getText().setText("Bot ist dran");
+				} else {
+					if(gameModel.hasOption()) {
+						//TODO aktiviere OPTION Buttons
+						//	deaktiviere Würfel Button
+						//	evt. admin Button deaktivieren
+						view.getBtnWuerfel().setEnabled(false);
+						if(gameModel.getOptions().contains(0)) view.getBtnOption0().setEnabled(true);
+						if(gameModel.getOptions().contains(1)) view.getBtnOption1().setEnabled(true);
+						if(gameModel.getOptions().contains(2)) view.getBtnOption2().setEnabled(true);
+						if(gameModel.getOptions().contains(3)) view.getBtnOption3().setEnabled(true);
+
+						view.getText().setText("Wähle Option");
+					} else {
+						//TODO deaktiviere OPTION Buttons
+						//	aktiviere Würfel Button
+						//	evt. admin Button aktivieren
+						view.getBtnWuerfel().setEnabled(true);
+						view.getBtnOption0().setEnabled(false);
+						view.getBtnOption1().setEnabled(false);
+						view.getBtnOption2().setEnabled(false);
+						view.getBtnOption3().setEnabled(false);
+
+						view.getText().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+					}
 				}
 			}
 
 			// TODO set Diced Würfelimage gameModel.getDiced();
 			view.getTfDiced().setText(String.valueOf(gameModel.getDiced()));
 
+			// TODO evt den Hindergrund der Pane wo die Buttons drauf sind in der Farbe des playerTurn Spielers
+
 			view.getBoardLayeredPane().setPieces(gameModel.getPieces());
 			view.getBoardLayeredPane().repaint();
 
+			//TODO entfernen
 			System.out.println("Updated GUI");
 		}
 	}

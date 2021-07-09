@@ -24,15 +24,15 @@ import javax.swing.JTextField;
 
 
 /*Probleme
- * 
+ *
  * 	Hintergrund+Spielfeld nicht möglich Warum?
  *
  */
 
 public class GameGUI extends JFrame{
 
-	
- 	private static final Graphics Graphics = null;
+
+	private static final Graphics Graphics = null;
 	private JLabel myLabel;
 	private JButton option1;
 	private JButton option2;
@@ -43,7 +43,7 @@ public class GameGUI extends JFrame{
 	private JPanel rightPanel;
 	private Panel_with_background content;
 	private Circle circle;
-	
+
 	public static final String WUERFELN = "WUERFELN";
 	public static final String OPTION_0 = "OPTION_0";
 	public static final String OPTION_1 = "OPTION_1";
@@ -60,9 +60,9 @@ public class GameGUI extends JFrame{
 	private JTextField tfDiced = new JTextField("6");
 
 	private Panel_with_background boardLayeredPane;
-	 
+
 	public GameGUI(ArrayList<Piece> pieces){
-		
+
 		this.setTitle("Mensch ärgere dich nicht!");
 
 
@@ -111,25 +111,25 @@ public class GameGUI extends JFrame{
 		pack();
 		
 		*/
-		
+
 		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
 		this.add(boardLayeredPane,BorderLayout.CENTER);
-		
-		
-		
+
+
+
 		JPanel panel1 = new JPanel();
 		//panel1.setBackground(Color.red);
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
-		
+
 		JPanel panel2 = new JPanel();
 		//panel2.setBackground(Color.red);
 		panel2.setPreferredSize(new Dimension(580, 50));
 		this.add(panel2, BorderLayout.SOUTH);
-		
-		
-		
+
+
+
 		text.setEditable(false);
 		text.setText("?");
 		text.setPreferredSize( new Dimension( 200, 24 ) );
@@ -157,31 +157,31 @@ public class GameGUI extends JFrame{
 		btnOption3.setText("Option 3");
 		btnOption3.setActionCommand(OPTION_3);
 		panel2.add(btnOption3);
-		
+
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.pack();
 		this.setVisible(true);
 	}
-	
+
 	public JButton getBtnWuerfel() {
 		return btnWuerfel;
 	}
 
-	public JButton getBtnOption1() {
+	public JButton getBtnOption0() {
 		return btnOption0;
 	}
 
-	public JButton getBtnOption2() {
+	public JButton getBtnOption1() {
 		return btnOption1;
 	}
 
-	public JButton getBtnOption3() {
+	public JButton getBtnOption2() {
 		return btnOption2;
 	}
 
-	public JButton getBtnOption4() {
+	public JButton getBtnOption3() {
 		return btnOption3;
 	}
 

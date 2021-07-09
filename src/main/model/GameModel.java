@@ -1,8 +1,11 @@
 package main.model;
 
+import main.SleepThread;
+import main.model.enums.BotAction;
 import main.model.enums.GameState;
 import main.model.enums.PlayerState;
 import main.model.graph.Graph;
+import main.model.player.Bot;
 import main.model.player.Piece;
 import main.model.player.Player;
 
@@ -44,6 +47,7 @@ public class GameModel extends Observable {
 
 		playerTurn = players.get(0);
 		changeGameState(GameState.DETERMINE_ORDER);
+		isBot_DoAction(BotAction.DICE);
 	}
 
 
@@ -114,13 +118,19 @@ public class GameModel extends Observable {
 			// else {
 			//	nextPlayer();
 			// }
+
+			isBot_DoAction(BotAction.PERFORM_OPTION);
 		} else {
 			// Der Spieler hat keine Möglichkeiten
+
+			// TODO Logik und verschachtelung prüfen, ist durch Bot verwirrend geworden.
 
 			// Hat der Spieler eine 6 gewürfelt? -> nochmal würfeln
 			if((diced == 6) && (gameState != GameState.DETERMINE_ORDER)) {
 				playerTurn.setPlayerState(PlayerState.DICE_AGAIN);
 				//TODO Hier könnte auch irgendeine Variable gesetzt werden, die in der GUI geprüft und dann "Nochmal würfeln" ausgibt
+
+				isBot_DoAction(BotAction.DICE);
 			}
 
 			// 3x hintereinander ohne Erfolg gewürfelt
@@ -128,6 +138,8 @@ public class GameModel extends Observable {
 			if(((playerTurn.getPlayerState() == PlayerState.DICE_THREE_TIMES) && (playerTurnDicedCount >= 3))
 					|| (playerTurn.getPlayerState() == PlayerState.NORMAL)){
 				nextPlayer();
+			} else {
+				isBot_DoAction(BotAction.DICE);
 			}
 		}
 
@@ -176,9 +188,7 @@ public class GameModel extends Observable {
 
 
 		if(gameState != GameState.END) {
-			if(playerTurn.getPlayerState() == PlayerState.NORMAL) {
-				nextPlayer();
-			}
+			// TODO unbedingt nochmal logik nachvollziehen, kann gut sein, dass hier noch was nicht richtig passiert
 
 			// TODO Wenn Spieler durch diesen Zug THREE TIMES bekommt und keine 6 gewürfelt hat
 			//  darf er erst nächste Runde wieder würfeln.
@@ -189,11 +199,19 @@ public class GameModel extends Observable {
 			if(isSuperSpecialCase) {
 				if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
 					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
+					isBot_DoAction(BotAction.DICE);
 				} else {
 					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
 					nextPlayer();
 				}
+			} else {
+				if(playerTurn.getPlayerState() == PlayerState.NORMAL) {
+					nextPlayer();
+				} else {
+					isBot_DoAction(BotAction.DICE);
+				}
 			}
+
 		}
 
 		updateGUI();
@@ -203,22 +221,7 @@ public class GameModel extends Observable {
 	 * @return ob playerTurn Möglichkeiten hat zu handeln
 	 */
 	public boolean hasOption() {
-		//TODO Wenn Mögöichkeiten vatiable eingebaut schauen, ob Möglichkeiten vorhanden sind
-		// NIHCT NOCHMAL board.getOptions(playerTurn, 0);
-		// auf lokale Möglichkeiten Variable zugreifen
 		return options.size() != 0 ;
-	}
-
-	public void givePiecesOptionFlag() {
-		for(Integer integer : getOptions()) {
-			getPlayerTurn().getPieces()[integer].setOption(true);
-		}
-	}
-
-	public void removePiecesOptionFlag() {
-		for(Piece piece : getPlayerTurn().getPieces()) {
-			piece.setOption(false);
-		}
 	}
 
 	public int getDiced() {
@@ -239,6 +242,10 @@ public class GameModel extends Observable {
 
 	public ArrayList<Integer> getOptions() {
 		return options;
+	}
+
+	public Random getRandom() {
+		return random;
 	}
 
 	//
@@ -315,6 +322,8 @@ public class GameModel extends Observable {
 	private void firstPlayer() {
 		playerTurn = players.get(0);
 		playerTurnDicedCount = 0;
+
+		isBot_DoAction(BotAction.DICE);
 	}
 
 
@@ -346,8 +355,9 @@ public class GameModel extends Observable {
 			playerTurn = players.get(0);
 		}
 
-
 		playerTurnDicedCount = 0;
+
+		isBot_DoAction(BotAction.DICE);
 	}
 
 	/**
@@ -358,6 +368,24 @@ public class GameModel extends Observable {
 		gameState = newGameState;
 	}
 
+	private void givePiecesOptionFlag() {
+		for(Integer integer : getOptions()) {
+			getPlayerTurn().getPieces()[integer].setOption(true);
+		}
+	}
+
+	private void removePiecesOptionFlag() {
+		for(Piece piece : getPlayerTurn().getPieces()) {
+			piece.setOption(false);
+		}
+	}
+
+	private void isBot_DoAction(BotAction botAction) {
+		if(playerTurn instanceof Bot) {
+			Thread diceThread = new Thread(new SleepThread(this, botAction));
+			diceThread.start();
+		}
+	}
 
 
 	//
