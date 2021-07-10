@@ -56,6 +56,11 @@ public class Graph
 		//performOption(players.get(1), vertices.get(47), 6, players); //debug
 	}
 	
+	public boolean isSuperSpecialCase()
+	{
+		return SuperSpecialCase;
+	}
+	
 	/**
 	 * 
 	 * führt für den gwünschten Spielstein eine Option aus 
