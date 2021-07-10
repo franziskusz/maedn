@@ -29,7 +29,7 @@ public class Panel_with_background extends JLayeredPane {
 		Image img = new ImageIcon("./images/background.png").getImage();
 		g.drawImage(img, 0, 0, null);
 		// 					(Zeile,Spalte)
-
+		
 		
 		
 		
