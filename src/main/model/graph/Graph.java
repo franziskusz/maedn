@@ -692,6 +692,8 @@ public class Graph
 	//Prüft ob Rundreise für den Spieler bereits beendet ist
 	//Prüft ob im Zielfeld eine eigene Figur übersprungen werden müsste
 	//Prüft ob die Figur in ein fremdes Zielfeld einlaufen würde
+	//Sortiert Optionen aus die nicht den folgenden Pflichten entsprechen:
+	// 1. Verlassen der Heimatfelder 2. Verlassen des Startfeldes 3. Schlagpflicht
 	
 	public ArrayList<Integer> getOptions(Player player, int diced, ArrayList<Player> players)
 	{
@@ -734,15 +736,144 @@ public class Graph
 				}					
 			}
 		}			
-	
+
+		//Hausverlasspflicht, Startverlasspflicht und Schlagpflicht prüfen
+		ArrayList<Integer> leaveHomeRuleOptions=new ArrayList<Integer>();
+		ArrayList<Integer> mustLeaveStartOptions=new ArrayList<Integer>();
+		ArrayList<Integer> mustHitOptions=new ArrayList<Integer>();
+		
+		leaveHomeRuleOptions=leaveHomeRule(options, diced, player);
+		options=leaveHomeRuleOptions;
+		//System.out.println(options.toString());//Testausgabe
+		
+		mustLeaveStartOptions=leaveStart(options, diced, player, players);
+		options=mustLeaveStartOptions;
+		//System.out.println(options.toString());//Testausgabe
+		
+		mustHitOptions=mustHit(options, diced, player, players);
+		options=mustHitOptions;
+		
 		System.out.println(options.toString());//Testausgabe	
 		return options;	
 	}
 	
 	
 	/*
-	 * Die nächsten vier Funktionen sind Hilfsfunktionen für checkOptions()
+	 * Die nächsten sieben Funktionen sind Hilfsfunktionen für checkOptions()
 	 */
+	
+	//Prüft, ob das Haus verlassen werden kann bzw. muss, wenn ja, bleibt nur die Option
+	private ArrayList<Integer> leaveStart(ArrayList<Integer> options, int diced, Player player, ArrayList<Player> players)
+	{
+		ArrayList<Integer> selectedOptions=new ArrayList<Integer>();
+		int sizeOptions=options.size();
+		for (int i =0; i<sizeOptions; i++)
+		{
+			if(player==players.get(0))
+			{
+				if((player.getPieces()[options.get(i)].getPosition().getIndex()==0)
+						&&((vertices.get(40).getPiece()!=null)
+						||(vertices.get(41).getPiece()!=null)
+						||(vertices.get(42).getPiece()!=null)
+						||(vertices.get(43).getPiece()!=null)))
+				{
+					selectedOptions.add(options.get(i));
+				}
+			}
+			else if(player==players.get(1))
+			{
+				if((player.getPieces()[options.get(i)].getPosition().getIndex()==10)
+						&&((vertices.get(44).getPiece()!=null)
+						||(vertices.get(45).getPiece()!=null)
+						||(vertices.get(46).getPiece()!=null)
+						||(vertices.get(47).getPiece()!=null)))
+				{
+					selectedOptions.add(options.get(i));
+				}
+			}
+			else if(player==players.get(2))
+			{
+				if((player.getPieces()[options.get(i)].getPosition().getIndex()==20)
+						&&((vertices.get(48).getPiece()!=null)
+						||(vertices.get(49).getPiece()!=null)
+						||(vertices.get(50).getPiece()!=null)
+						||(vertices.get(51).getPiece()!=null)))
+				{
+					selectedOptions.add(options.get(i));
+				}
+			}
+			else if(player==players.get(3))
+			{
+				if((player.getPieces()[options.get(i)].getPosition().getIndex()==30)
+						&&((vertices.get(52).getPiece()!=null)
+						||(vertices.get(53).getPiece()!=null)
+						||(vertices.get(54).getPiece()!=null)
+						||(vertices.get(55).getPiece()!=null)))
+				{
+					selectedOptions.add(options.get(i));
+				}
+			}
+		}
+		if (selectedOptions.size()>0)
+		{
+			options=selectedOptions;
+		}
+		
+		return options;
+	}
+	
+	
+	//Prüfen ob geschlagen werden kann – wenn ja, wird eine veränderte Liste zurückgegeben
+	private ArrayList<Integer> mustHit(ArrayList<Integer> options, int diced, Player player, ArrayList<Player> players)
+	{
+		ArrayList<Integer> selectedOptions=new ArrayList<Integer>();
+		int sizeOptions=options.size();
+		//System.out.println(options.toString()); //debug
+		//System.out.println(sizeOptions); //debug
+		for (int i=0; i<sizeOptions; i++)
+		{
+			//System.out.println(options.toString());//debug
+			Vertex option = player.getPieces()[options.get(i)].getPosition();
+			Vertex target = getTarget(player, option, diced, players);
+			
+			if(target.getPiece()!=null)
+			{
+				selectedOptions.add(options.get(i));
+			}
+		}
+		if (selectedOptions.size()>0)
+		{
+			options=selectedOptions;
+		}
+		return options;
+	}
+	
+	
+	//Prüfen ob mit gewürfelter 6 das Haus verlassen werden kann
+	// wenn ja, wird eine veränderte Options Liste zurückgegeben
+	private ArrayList<Integer> leaveHomeRule(ArrayList<Integer> options, int diced, Player player)
+	{
+		ArrayList<Integer> selectedOptions=new ArrayList<Integer>();
+		int sizeOptions=options.size();
+		if (diced == 6)
+		{
+			for (int i=0; i<sizeOptions; i++)
+			{
+				for(int j=40; j<56; j++)
+				{
+					if(player.getPieces()[options.get(i)].getPosition().getIndex()==j)
+					{
+						selectedOptions.add(options.get(i));
+					}
+				}
+			}
+			if (selectedOptions.size()>0)
+			{
+				options=selectedOptions;
+			}
+		}
+		return options;
+	}
 	
 	//Wenn auf dem Zielfeld eine Figur des aktiven Spielers steht, wird der zu bewegende Stein nicht als Option gezählt
 	private boolean checkTargetOccupation(Player movingPlayer, Piece targetPiece)
