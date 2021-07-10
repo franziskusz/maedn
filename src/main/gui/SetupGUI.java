@@ -35,11 +35,15 @@ public class SetupGUI extends JFrame {
 	private JButton buttonContinue = new JButton("Los!");
 
 	public SetupGUI() {
+		
+		
 		this.setTitle("Mensch ärgere dich nicht!");
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.setLocation(300, 300);
 		this.setSize(500, 500);
 
+		
+		new BorderLayout();
 		labelWhatToDo.setText("Hier steht eine Erklärung von dem ganzen Scheiß!");
 		this.add(labelWhatToDo);
 
@@ -67,7 +71,7 @@ public class SetupGUI extends JFrame {
 		this.add(buttonContinue);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.setResizable(false);
+     	this.setResizable(false);
 		this.pack();
 		this.setVisible(true);
 	}

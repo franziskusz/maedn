@@ -13,6 +13,7 @@ import java.awt.FlowLayout;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -57,14 +58,26 @@ public class GameGUI extends JFrame{
 	private JButton btnOption3 = new JButton();
 
 	private JTextField text = new JTextField();
-	private JTextField tfDiced = new JTextField("6");
+	private JTextField tfDiced = new JTextField("6");	
 
+	
 	private Panel_with_background boardLayeredPane;
+	
+	Icon icon1;
+	Icon icon2;
+	Icon icon3;
+	Icon icon4;
+	Icon icon5;
+	Icon icon6;
 
 	public GameGUI(ArrayList<Piece> pieces){
 
 		this.setTitle("Mensch ärgere dich nicht!");
+		
+		
 
+		
+		
 
 /*
 		JPLayeredPane layeredpane = new JPanel();
@@ -140,6 +153,8 @@ public class GameGUI extends JFrame{
 		btnWuerfel.setActionCommand(WUERFELN);
 		panel2.add(btnWuerfel);
 
+		
+		
 		tfDiced.setEditable(false);
 		panel2.add(tfDiced);
 
@@ -204,6 +219,41 @@ public class GameGUI extends JFrame{
 	// NEU ENDE
 	//
 
+	
+	public void Dice_Image() {
+		
+		icon1 = new ImageIcon (getClass(). getResource("./images/1.png"));
+		icon1 = new ImageIcon (getClass(). getResource("./images/2.png"));
+		icon1 = new ImageIcon (getClass(). getResource("./images/3.png"));
+		icon1 = new ImageIcon (getClass(). getResource("./images/4.png"));
+		icon1 = new ImageIcon (getClass(). getResource("./images/5.png"));
+		icon1 = new ImageIcon (getClass(). getResource("./images/6.png"));
+		
+		int i=1;
+		
+		switch(i) {
+		
+		case 1:
+			icon1 = new ImageIcon (getClass(). getResource("./images/1.png"));
+			
+		case 2: 
+			icon1 = new ImageIcon (getClass(). getResource("./images/2.png"));
+		
+		case 3: 
+			icon1 = new ImageIcon (getClass(). getResource("./images/3.png"));
+		
+		case 4: 
+			icon1 = new ImageIcon (getClass(). getResource("./images/4.png"));
+		
+		case 5: 
+			icon1 = new ImageIcon (getClass(). getResource("./images/5.png"));
+			
+		case 6: 
+			icon1 = new ImageIcon (getClass(). getResource("./images/6.png"));
+
+			
+		}
+	}
 }
 
 
