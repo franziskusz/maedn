@@ -15,6 +15,7 @@ public class Graph
 	private Map <Integer, Vertex> vertices = new HashMap<Integer, Vertex>();
 	private List<Edge> edges = new ArrayList<Edge>();
 	private int [][] guiRaster = new int [11][11];
+	private boolean SuperSpecialCase=false;
 
 	public Graph(ArrayList<Player> players)
 	{
@@ -84,6 +85,16 @@ public class Graph
 			vertices.get(targetIndex).setPiece(movingPiece);
 			vertices.get(targetIndex).getPiece().setPosition(target);
 			option.setPiece(null);
+			
+			if (targetIndex>55)
+			{
+				SuperSpecialCase=checkforSuperSpecialCase(player, players);
+				//debug
+				if(SuperSpecialCase==true)
+				{
+					System.out.println("SuperSpecialCase!!!");
+				}
+			}
 		}
 		
 		else //Schlagen
@@ -93,71 +104,19 @@ public class Graph
 			boolean newPositionfound = false;
 			
 			//geschlagene Pieces gehen nach Hause
-			if (target.getPiece().getPlayer()==players.get(0))
-			{
-				for (int i = 0; i<4; i++)
-				{
-					if (newPositionfound == false)
-					{
-						if (vertices.get(40+i).getPiece()==null)
-						{
-							vertices.get(40+i).setPiece(target.getPiece());
-							players.get(0).getPieces()[targetPieceID].setPosition(vertices.get(40+i));
-							newPositionfound = true;
-						}
-					}	
-				}
-			}
-			else if (target.getPiece().getPlayer()==players.get(1))
-			{
-				for (int i = 0; i<4; i++)
-				{
-					if (newPositionfound == false)
-					{
-						if (vertices.get(44+i).getPiece()==null)
-						{
-							vertices.get(44+i).setPiece(target.getPiece());
-							players.get(1).getPieces()[targetPieceID].setPosition(vertices.get(44+i));
-							newPositionfound = true;
-						}
-					}
-					
-				}
-			}
-			else if (target.getPiece().getPlayer()==players.get(2))
-			{
-				for (int i = 0; i<4; i++)
-				{
-					if (newPositionfound == false)
-					{
-						if (vertices.get(48+i).getPiece()==null)
-						{
-							vertices.get(48+i).setPiece(target.getPiece());
-							players.get(2).getPieces()[targetPieceID].setPosition(vertices.get(48+i));
-							newPositionfound = true;
-						}
-					}
-				}
-			}
-			else if (target.getPiece().getPlayer()==players.get(3))
-			{
-				for (int i = 0; i<4; i++)
-				{
-					if (newPositionfound == false)
-					{
-						if (vertices.get(52+i).getPiece()==null)
-						{
-							vertices.get(52+i).setPiece(target.getPiece());
-							players.get(3).getPieces()[targetPieceID].setPosition(vertices.get(52+i));
-							newPositionfound = true;
-						}
-					}
-				}
-			}
+			sendTargetHome(target, players, newPositionfound, targetPieceID);
+			
 			vertices.get(targetIndex).setPiece(movingPiece);
 			vertices.get(targetIndex).getPiece().setPosition(target);
 			option.setPiece(null);
 			
+			//SuperSpecialCase prüfen: Wenn true, wird die gleichnamige boolsche Variable auf true gesetzt
+			SuperSpecialCase=checkforSuperSpecialCase(targetPlayer, players);
+			//debug
+			if(SuperSpecialCase==true)
+			{
+				System.out.println("SuperSpecialCase!!!");
+			}
 		}
 		
 		
@@ -180,9 +139,201 @@ public class Graph
 	 * Die nächsten x Funktionen sind Hilfsfunktionen für performOption()
 	 */
 	
-	private void sendTargetHome(Vertex target, ArrayList<Player> players, boolean newPositionfound)
+	//Prüft, ob SuperSpecialCase eintritt
+	private boolean checkforSuperSpecialCase(Player specialPlayer, ArrayList<Player> players)
 	{
-		
+		boolean re=false;
+		if (specialPlayer==players.get(0))
+		{
+			if ((vertices.get(40).getPiece()!=null)&&(vertices.get(41).getPiece()!=null)
+				&&(vertices.get(42).getPiece()!=null)&&(vertices.get(43).getPiece()!=null))
+				{
+					re=true;
+				}
+			else
+			{
+				int count = 0;
+				for(int i=0; i<4; i++)
+				{
+					if (vertices.get(40+i).getPiece()==null)
+					{
+						count=count+1;
+					}
+				}
+				for (int j=0; j<count; j++)
+				{
+					if(vertices.get(59-j).getPiece()!=null)
+					{
+						re=true;
+					}
+					else
+					{
+						re=false;
+						break;
+					}
+				}
+			}	
+		}
+		if (specialPlayer==players.get(1))
+		{
+			if ((vertices.get(44).getPiece()!=null)&&(vertices.get(45).getPiece()!=null)
+				&&(vertices.get(46).getPiece()!=null)&&(vertices.get(47).getPiece()!=null))
+				{
+					re=true;
+				}
+			else
+			{
+				int count = 0;
+				for(int i=0; i<4; i++)
+				{
+					if (vertices.get(44+i).getPiece()==null)
+					{
+						count=count+1;
+					}
+				}
+				for (int j=0; j<count; j++)
+				{
+					if(vertices.get(63-j).getPiece()!=null)
+					{
+						re=true;
+					}
+					else
+					{
+						re=false;
+						break;
+					}
+				}
+			}	
+		}
+		if (specialPlayer==players.get(2))
+		{
+			if ((vertices.get(48).getPiece()!=null)&&(vertices.get(49).getPiece()!=null)
+				&&(vertices.get(50).getPiece()!=null)&&(vertices.get(51).getPiece()!=null))
+				{
+					re=true;
+				}
+			else
+			{
+				int count = 0;
+				for(int i=0; i<4; i++)
+				{
+					if (vertices.get(48+i).getPiece()==null)
+					{
+						count=count+1;
+					}
+				}
+				for (int j=0; j<count; j++)
+				{
+					if(vertices.get(67-j).getPiece()!=null)
+					{
+						re=true;
+					}
+					else
+					{
+						re=false;
+						break;
+					}
+				}
+			}	
+		}
+		if (specialPlayer==players.get(3))
+		{
+			if ((vertices.get(52).getPiece()!=null)&&(vertices.get(53).getPiece()!=null)
+				&&(vertices.get(54).getPiece()!=null)&&(vertices.get(55).getPiece()!=null))
+				{
+					re=true;
+				}
+			else
+			{
+				int count = 0;
+				for(int i=0; i<4; i++)
+				{
+					if (vertices.get(52+i).getPiece()==null)
+					{
+						count=count+1;
+					}
+				}
+				for (int j=0; j<count; j++)
+				{
+					if(vertices.get(71-j).getPiece()!=null)
+					{
+						re=true;
+					}
+					else
+					{
+						re=false;
+						break;
+					}
+				}
+			}	
+		}
+		return re;
+	}
+	
+	//Schickt geschlagene Figuren auf ein freies Heimatfeld
+	private void sendTargetHome(Vertex target, ArrayList<Player> players, boolean newPositionfound, int targetPieceID)
+	{
+		if (target.getPiece().getPlayer()==players.get(0))
+		{
+			for (int i = 0; i<4; i++)
+			{
+				if (newPositionfound == false)
+				{
+					if (vertices.get(40+i).getPiece()==null)
+					{
+						vertices.get(40+i).setPiece(target.getPiece());
+						players.get(0).getPieces()[targetPieceID].setPosition(vertices.get(40+i));
+						newPositionfound = true;
+					}
+				}	
+			}
+		}
+		else if (target.getPiece().getPlayer()==players.get(1))
+		{
+			for (int i = 0; i<4; i++)
+			{
+				if (newPositionfound == false)
+				{
+					if (vertices.get(44+i).getPiece()==null)
+					{
+						vertices.get(44+i).setPiece(target.getPiece());
+						players.get(1).getPieces()[targetPieceID].setPosition(vertices.get(44+i));
+						newPositionfound = true;
+					}
+				}
+				
+			}
+		}
+		else if (target.getPiece().getPlayer()==players.get(2))
+		{
+			for (int i = 0; i<4; i++)
+			{
+				if (newPositionfound == false)
+				{
+					if (vertices.get(48+i).getPiece()==null)
+					{
+						vertices.get(48+i).setPiece(target.getPiece());
+						players.get(2).getPieces()[targetPieceID].setPosition(vertices.get(48+i));
+						newPositionfound = true;
+					}
+				}
+			}
+		}
+		else if (target.getPiece().getPlayer()==players.get(3))
+		{
+			for (int i = 0; i<4; i++)
+			{
+				if (newPositionfound == false)
+				{
+					if (vertices.get(52+i).getPiece()==null)
+					{
+						vertices.get(52+i).setPiece(target.getPiece());
+						players.get(3).getPieces()[targetPieceID].setPosition(vertices.get(52+i));
+						newPositionfound = true;
+					}
+				}
+			}
+		}
 	}
 	
 	private Vertex getTarget(Player player, Vertex option, int diced, ArrayList<Player> players)
@@ -697,6 +848,7 @@ public class Graph
 	
 	public ArrayList<Integer> getOptions(Player player, int diced, ArrayList<Player> players)
 	{
+		SuperSpecialCase=false; //reinitialiserung vor jedem Zug
 		ArrayList<Integer> options=new ArrayList<Integer>();
 		Vertex[] optionVertices=new Vertex[4];
 		
@@ -721,10 +873,10 @@ public class Graph
 			{	
 				//Prüfen, welche Felder erreichbar sind
 				if((optionVertices[j].getSucc().get(k).getWeight()==diced)
-						&&(checkTargetOccupation(player, optionVertices[j].getSucc().get(k).getTo().getPiece()))
+						&&(checkTargetOccupation(player, optionVertices[j].getSucc().get(k).getTo().getPiece())
 						&&(checkJourneyEnd(player, optionVertices[j], players, diced))
 						&&(somethingInTheWay(player, optionVertices[j], optionVertices[j].getSucc().get(k).getTo(), players))
-						&&(excludeOpponentsGoal(player, optionVertices[j].getSucc().get(k).getTo(), players)))
+						&&(excludeOpponentsGoal(player, optionVertices[j].getSucc().get(k).getTo(), players))))
 				{
 					System.out.println(optionVertices[j]+" Successors: "+optionVertices[j].getSucc()); //debug
 					//options.add(optionVertices[j].getSucc().get(k).getTo().getIndex());
@@ -1675,21 +1827,6 @@ public class Graph
 					}	
 				}
 			}	
-
-			//Falsche Implementierung
-			/*
-			else // das letzte Feld wird mit den ersten verbunden
-			{
-				for (int j=39; j>=34; j--)
-				{	
-					w = 0;
-					to = i-j;
-					w = i-j+1;
-					Edge e = new Edge(this, from, to, w);
-					edges.add(e);
-				}
-			}
-			*/
 		}
 	}
 	
