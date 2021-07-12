@@ -109,7 +109,9 @@ public class GameModel extends Observable {
 		// board.getOptions(playerTurn, diced);
 		// !! Option: "Keine Möglichkeiten" beachten z.B. wenn Figuren vor dem Haus und keine passende Zahl
 		options = board.getOptions(playerTurn, diced, INITIAL_PLAYERS);
-		givePiecesOptionFlag();
+		if(!(playerTurn instanceof Bot)) {
+			givePiecesOptionFlag();
+		}
 
 
 		// Gibt es eine oder mehrere Möglichkeiten, unter der der Spieler auswählen kann
