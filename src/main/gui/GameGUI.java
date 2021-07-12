@@ -11,6 +11,7 @@ import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -60,18 +61,18 @@ public class GameGUI extends JFrame{
 	private JButton btnAdmin = new JButton();
 
 	private JTextField text = new JTextField();
-	private JTextField tfDiced = new JTextField("6");	
+	private JLabel labelDiced;
 	private JTextField tfAdmin = new JTextField();
 
 	
 	private Panel_with_background boardLayeredPane;
-	
-	Icon icon1;
-	Icon icon2;
-	Icon icon3;
-	Icon icon4;
-	Icon icon5;
-	Icon icon6;
+
+	ImageIcon imageIcon1 = new ImageIcon ("./images/1.png");
+	ImageIcon imageIcon2 = new ImageIcon ("./images/2.png");
+	ImageIcon imageIcon3 = new ImageIcon ("./images/3.png");
+	ImageIcon imageIcon4 = new ImageIcon ("./images/4.png");
+	ImageIcon imageIcon5 = new ImageIcon ("./images/5.png");
+	ImageIcon imageIcon6 = new ImageIcon ("./images/6.png");
 
 	public GameGUI(ArrayList<Piece> pieces, boolean admin){
 
@@ -157,10 +158,10 @@ public class GameGUI extends JFrame{
 		btnWuerfel.setActionCommand(WUERFELN);
 		panel2.add(btnWuerfel);
 
-		
-		
-		tfDiced.setEditable(false);
-		panel2.add(tfDiced);
+		labelDiced = new JLabel("", imageIcon6,JLabel.CENTER);
+		// @Toni Hier mit der Größe Rumspielen
+		labelDiced.setPreferredSize(new Dimension(30, 30));
+		panel2.add(labelDiced);
 
 		btnOption0.setText("Option 0");
 		btnOption0.setActionCommand(OPTION_0);
@@ -222,10 +223,6 @@ public class GameGUI extends JFrame{
 		return text;
 	}
 
-	public JTextField getTfDiced() {
-		return tfDiced;
-	}
-
 	public JTextField getTfAdmin() {
 		return tfAdmin;
 	}
@@ -235,38 +232,26 @@ public class GameGUI extends JFrame{
 	}
 
 	
-	public void Dice_Image() {
-		
-		icon1 = new ImageIcon (getClass(). getResource("./images/1.png"));
-		icon1 = new ImageIcon (getClass(). getResource("./images/2.png"));
-		icon1 = new ImageIcon (getClass(). getResource("./images/3.png"));
-		icon1 = new ImageIcon (getClass(). getResource("./images/4.png"));
-		icon1 = new ImageIcon (getClass(). getResource("./images/5.png"));
-		icon1 = new ImageIcon (getClass(). getResource("./images/6.png"));
-		
-		int i=1;
-		
-		switch(i) {
-		
+	public void setDicedImage(int diced) {
+		switch(diced) {
 		case 1:
-			icon1 = new ImageIcon (getClass(). getResource("./images/1.png"));
-			
-		case 2: 
-			icon1 = new ImageIcon (getClass(). getResource("./images/2.png"));
-		
-		case 3: 
-			icon1 = new ImageIcon (getClass(). getResource("./images/3.png"));
-		
-		case 4: 
-			icon1 = new ImageIcon (getClass(). getResource("./images/4.png"));
-		
-		case 5: 
-			icon1 = new ImageIcon (getClass(). getResource("./images/5.png"));
-			
-		case 6: 
-			icon1 = new ImageIcon (getClass(). getResource("./images/6.png"));
-
-			
+			labelDiced.setIcon(imageIcon1);
+			break;
+		case 2:
+			labelDiced.setIcon(imageIcon2);
+			break;
+		case 3:
+			labelDiced.setIcon(imageIcon3);
+			break;
+		case 4:
+			labelDiced.setIcon(imageIcon4);
+			break;
+		case 5:
+			labelDiced.setIcon(imageIcon5);
+			break;
+		case 6:
+			labelDiced.setIcon(imageIcon6);
+			break;
 		}
 	}
 }
