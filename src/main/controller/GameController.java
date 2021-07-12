@@ -29,6 +29,7 @@ public class GameController implements Observer, ActionListener {
 		view.getBtnOption1().addActionListener(this);
 		view.getBtnOption2().addActionListener(this);
 		view.getBtnOption3().addActionListener(this);
+		view.getBtnAdmin().addActionListener(this);
 
 		// Buttons disable
 		view.getBtnOption0().setEnabled(false);
@@ -43,9 +44,17 @@ public class GameController implements Observer, ActionListener {
 	}
 
 	private void initGUI() {
-		view.getText().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
-		view.getBtnWuerfel().setEnabled(true);
-		System.out.println("Updated GUI");
+		if(gameModel.getPlayerTurn() instanceof Bot) {
+			view.getBtnWuerfel().setEnabled(false);
+			view.getBtnAdmin().setEnabled(false);
+			view.getText().setText("Bot ist dran");
+		} else {
+			view.getBtnWuerfel().setEnabled(true);
+			view.getBtnAdmin().setEnabled(true);
+			view.getText().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+		}
+
+		System.out.println("Init GUI");
 	}
 
 
@@ -62,6 +71,7 @@ public class GameController implements Observer, ActionListener {
 					view.getBtnOption1().setEnabled(false);
 					view.getBtnOption2().setEnabled(false);
 					view.getBtnOption3().setEnabled(false);
+					view.getBtnAdmin().setEnabled(false);
 
 					view.getText().setText("Bot ist dran");
 				} else {
@@ -70,6 +80,7 @@ public class GameController implements Observer, ActionListener {
 						//	deaktiviere Würfel Button
 						//	evt. admin Button deaktivieren
 						view.getBtnWuerfel().setEnabled(false);
+						view.getBtnAdmin().setEnabled(false);
 						if(gameModel.getOptions().contains(0)) view.getBtnOption0().setEnabled(true);
 						if(gameModel.getOptions().contains(1)) view.getBtnOption1().setEnabled(true);
 						if(gameModel.getOptions().contains(2)) view.getBtnOption2().setEnabled(true);
@@ -81,6 +92,7 @@ public class GameController implements Observer, ActionListener {
 						//	aktiviere Würfel Button
 						//	evt. admin Button aktivieren
 						view.getBtnWuerfel().setEnabled(true);
+						view.getBtnAdmin().setEnabled(true);
 						view.getBtnOption0().setEnabled(false);
 						view.getBtnOption1().setEnabled(false);
 						view.getBtnOption2().setEnabled(false);
@@ -121,6 +133,10 @@ public class GameController implements Observer, ActionListener {
 				break;
 			case GameGUI.OPTION_3:
 				gameModel.performOption(3);
+				break;
+			case GameGUI.ADMIN:
+				gameModel.perfromAdminCommand(view, view.getTfAdmin().getText());
+				view.getTfAdmin().setText("");
 				break;
 
 			default:

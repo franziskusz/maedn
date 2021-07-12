@@ -50,15 +50,18 @@ public class GameGUI extends JFrame{
 	public static final String OPTION_1 = "OPTION_1";
 	public static final String OPTION_2 = "OPTION_2";
 	public static final String OPTION_3 = "OPTION_3";
+	public static final String ADMIN = "ADMIN";
 
 	private JButton btnWuerfel = new JButton();
 	private JButton btnOption0 = new JButton();
 	private JButton btnOption1 = new JButton();
 	private JButton btnOption2 = new JButton();
 	private JButton btnOption3 = new JButton();
+	private JButton btnAdmin = new JButton();
 
 	private JTextField text = new JTextField();
 	private JTextField tfDiced = new JTextField("6");	
+	private JTextField tfAdmin = new JTextField();
 
 	
 	private Panel_with_background boardLayeredPane;
@@ -70,14 +73,10 @@ public class GameGUI extends JFrame{
 	Icon icon5;
 	Icon icon6;
 
-	public GameGUI(ArrayList<Piece> pieces){
+	public GameGUI(ArrayList<Piece> pieces, boolean admin){
 
 		this.setTitle("Mensch ärgere dich nicht!");
-		
-		
 
-		
-		
 
 /*
 		JPLayeredPane layeredpane = new JPanel();
@@ -139,7 +138,12 @@ public class GameGUI extends JFrame{
 
 		JPanel panel2 = new JPanel();
 		//panel2.setBackground(Color.red);
-		panel2.setPreferredSize(new Dimension(580, 50));
+		if(admin) {
+			// Höhe des Panels anpasse, damit Buttons noch angezeigt werden
+			panel2.setPreferredSize(new Dimension(580, 100));
+		} else {
+			panel2.setPreferredSize(new Dimension(580, 50));
+		}
 		this.add(panel2, BorderLayout.SOUTH);
 
 
@@ -174,6 +178,15 @@ public class GameGUI extends JFrame{
 		btnOption3.setActionCommand(OPTION_3);
 		panel2.add(btnOption3);
 
+		if(admin) {
+			// Admin Elemente anzeigen
+			tfAdmin.setPreferredSize(new Dimension(200, 30));
+			tfAdmin.setText(" ");
+			panel2.add(tfAdmin);
+
+			btnAdmin.setText("ADMIN");
+			panel2.add(btnAdmin);
+		}
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -201,6 +214,10 @@ public class GameGUI extends JFrame{
 		return btnOption3;
 	}
 
+	public JButton getBtnAdmin() {
+		return btnAdmin;
+	}
+
 	public JTextField getText() {
 		return text;
 	}
@@ -209,15 +226,13 @@ public class GameGUI extends JFrame{
 		return tfDiced;
 	}
 
-	//
-	// NEU
-	//
+	public JTextField getTfAdmin() {
+		return tfAdmin;
+	}
+
 	public Panel_with_background getBoardLayeredPane() {
 		return boardLayeredPane;
 	}
-	//
-	// NEU ENDE
-	//
 
 	
 	public void Dice_Image() {

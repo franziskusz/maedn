@@ -38,7 +38,37 @@ Testen:
     hat die Möglichkeit mit Überspingen seiner Spielfigur weiter aufzurücken.
     -> Unterbinden, keine Möglichkeit!!
 
--
+
+
+FUNKTIONSWEISE ADMIN:
+- Befehle durch Eingabe in das vorgesehne Feld mit Button ausführen
+- Befehlausführung nur möglich, wenn Button aktiviert
+    - Nicht, wenn Bots dran sind oder Optionen auswahl nötig ist
+
+
+BEFEHLE:
+    SKIP_DETERMINE_BEGINNER
+        - Überspringt den Beginner auswürfelprozess (ROT beginnt)
+        - kann nur Ausgeführt werden, wenn der Auswürfelprozess noch nciht beeandet
+
+    DICE [ZAHL]
+        - Imitiert den WürfelButton-Drück (gibt Ergebnis mit)
+        - kann nur wärend ein Mensch dran ist ausgeführt werden und nur, wenn der Würfeln Button aktiviert ist
+
+    MOVE [PICE_ID] [FELD]
+        - Bewegt den angegebenen Spielstein (des Spielers der dran ist) zum angegebenen Feld
+        - Kann nicht beim Beginner ermitteln ausgeführt werden
+        - kann nur wärend ein Mensch dran ist ausgeführt werden und nur, wenn der Würfeln Button aktiviert ist
+
+    SHOW_ID
+        - Zeigt die IDs auf den Spielsteinen des aktuellen Spiels an
+        -
+
+    NEXT_PLAYER
+        - Überspringt den aktuellen Spieler
+        - Kann auch nach einmal 6 Würfeln ausgwführt werden
+        - kann nur wärend ein Mensch dran ist ausgeführt werden und nur, wenn der Würfeln Button aktiviert ist
+        - Kann nicht beim Beginner ermitteln ausgeführt werden
 
 
 
@@ -58,7 +88,11 @@ Noch zu tun was Franziskus betrifft:
 - in Gamemodel.performOption() eine Methode im Graph aufrufen, die überprüft, ob der
     mitgegebene Spieler (playerTrun) gewonnen hat
     - Falls ja -> GameState END setzen
-
+- in  Graph Methode einbauen (movePieceODERSO(Piece piece, int VertexID)), die spielstein verschiebt und gleiche Abfragen macht wie beim
+  normalen ziehen (Schlagen, Three-Times, Gewonnen) und auch SuperSpecialCase Methode aufrufem dass Model gucken,
+  ob dieser Fall auftritt Abfrage theoretisch außerdem muss geguckt werden, dass man nicht auf ein Feld moved,
+  wo man eig. gar nicht hindarf (fremdes Haus z.B.)
+  -> Für Admin, dass er "MOVE [pieceID] [VertexID]" eingeben kann.
 
 -DONE- Pieces in den Graphen einfügen und bei jedem Piece den Vertex setzen
 -DONE- In jeden Vertex die Koordinaten, des Feldes (für GUI berechnung)
@@ -82,8 +116,9 @@ Noch zu tun was Toni betrifft:
 
 
 Noch zu tun was Johanes betrifft:
-- Extra Fenster für die Initialisierung der Spieler mit Bot auswahl
-- Bots
-- 1 Möglichkkeit Züge automatisch machen
-- Bei Bot und automatischen Zügen Zeitverzögernugen, damit alles nachvollziehbar bleibt
+- DONE- Extra Fenster für die Initialisierung der Spieler mit Bot auswahl
+- DONE-Bots
+- Intelligente Bots
+- (1 Möglichkkeit Züge automatisch machen)
+- DONE- Bei Bot und automatischen Zügen Zeitverzögernugen, damit alles nachvollziehbar bleibt
 - Evt. Text INPUT FIELD, um bestimmte Konstalationen zu testen
