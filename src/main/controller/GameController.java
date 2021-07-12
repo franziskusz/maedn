@@ -44,6 +44,8 @@ public class GameController implements Observer, ActionListener {
 	}
 
 	private void initGUI() {
+		view.setBackgroundColor(gameModel.getPlayerTurn().getPlayerColor());
+
 		if(gameModel.getPlayerTurn() instanceof Bot) {
 			view.getBtnWuerfel().setEnabled(false);
 			view.getBtnAdmin().setEnabled(false);
@@ -65,6 +67,7 @@ public class GameController implements Observer, ActionListener {
 				view.getText().setText("Gewonnen hat " + gameModel.getPlayerTurn().getPlayerColor().toString());
 				//TODO evt Button sichtbar machen, der Wieder das Initiale JFrame aufruft für neue Runde
 			} else {
+				view.setBackgroundColor(gameModel.getPlayerTurn().getPlayerColor());
 				if(gameModel.getPlayerTurn() instanceof Bot) {
 					view.getBtnWuerfel().setEnabled(false);
 					view.getBtnOption0().setEnabled(false);

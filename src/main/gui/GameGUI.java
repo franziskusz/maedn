@@ -1,5 +1,6 @@
 package main.gui;
 
+import main.model.enums.PlayerColor;
 import main.model.player.Piece;
 import main.model.player.Player;
 
@@ -53,12 +54,16 @@ public class GameGUI extends JFrame{
 	public static final String OPTION_3 = "OPTION_3";
 	public static final String ADMIN = "ADMIN";
 
+	JPanel panel1 = new JPanel();
+
 	private JButton btnWuerfel = new JButton();
 	private JButton btnOption0 = new JButton();
 	private JButton btnOption1 = new JButton();
 	private JButton btnOption2 = new JButton();
 	private JButton btnOption3 = new JButton();
 	private JButton btnAdmin = new JButton();
+
+	JPanel panel2 = new JPanel();
 
 	private JTextField text = new JTextField();
 	private JLabel labelDiced;
@@ -130,15 +135,10 @@ public class GameGUI extends JFrame{
 		this.add(boardLayeredPane,BorderLayout.CENTER);
 
 
-
-		JPanel panel1 = new JPanel();
-		//panel1.setBackground(Color.red);
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
 		
 
-		JPanel panel2 = new JPanel();
-		//panel2.setBackground(Color.red);
 		if(admin) {
 			// Höhe des Panels anpasse, damit Buttons noch angezeigt werden
 			panel2.setPreferredSize(new Dimension(580, 100));
@@ -231,7 +231,7 @@ public class GameGUI extends JFrame{
 		return boardLayeredPane;
 	}
 
-	
+
 	public void setDicedImage(int diced) {
 		switch(diced) {
 		case 1:
@@ -252,6 +252,27 @@ public class GameGUI extends JFrame{
 		case 6:
 			labelDiced.setIcon(imageIcon6);
 			break;
+		}
+	}
+
+	public void setBackgroundColor(PlayerColor playerColor) {
+		switch(playerColor) {
+			case RED:
+				panel1.setBackground(new Color(255, 61, 61,255));
+				panel2.setBackground(new Color(255, 61, 61,255));
+				break;
+			case BLUE:
+				panel1.setBackground(new Color(61, 139, 255,255));
+				panel2.setBackground(new Color(61, 139, 255,255));
+				break;
+			case GREEN:
+				panel1.setBackground(new Color(138, 243, 67,255));
+				panel2.setBackground(new Color(138, 243, 67,255));
+				break;
+			case YELLOW:
+				panel1.setBackground(new Color(222, 201, 21,255));
+				panel2.setBackground(new Color(222, 201, 21,255));
+				break;
 		}
 	}
 }
