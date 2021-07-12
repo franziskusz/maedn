@@ -1,6 +1,7 @@
 package main.model;
 
 import main.SleepThread;
+import main.controller.AdminCommand;
 import main.model.enums.BotAction;
 import main.model.enums.GameState;
 import main.model.enums.PlayerState;
@@ -9,6 +10,7 @@ import main.model.player.Bot;
 import main.model.player.Piece;
 import main.model.player.Player;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
@@ -34,7 +36,7 @@ public class GameModel extends Observable {
 
 	public GameModel(ArrayList<Player> INITIAL_PLAYERS) {
 		this.INITIAL_PLAYERS = INITIAL_PLAYERS;
-		players = new ArrayList<>(INITIAL_PLAYERS);
+		setPlayerOrderINITIAL();
 
 		pieces = new ArrayList<Piece>();
 		for(Player player : players) {
@@ -56,10 +58,14 @@ public class GameModel extends Observable {
 	//
 
 	/**
-	 * Wird durch Buttonclick auf Würfeln aufgerufen
+	 * Wird durch Buttonclick auf Würfeln aufgerufen oder durch Bot oder durch AdminButton mit Würfelzahl
 	 */
-	public void diceRoll() {
-		diced = random.nextInt(6)+1;
+	public void diceRoll(int ...setDiced) {
+		if(setDiced.length == 0) {
+			diced = random.nextInt(6)+1;
+		} else {
+			diced = setDiced[0];
+		}
 		playerTurnDicedCount += 1;
 
 		if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
@@ -146,16 +152,13 @@ public class GameModel extends Observable {
 		updateGUI();
 	}
 
-
 	/**
-	 * Wird durch Buttonclick auf Option Buttons aufgerufen
+	 * Wird durch Buttonclick auf Option Buttons aufgerufen oder durch Bot
 	 * Wählt eine der Optionen aus, die aus dem Graph zur Verfügung gestellt wurden
 	 *
 	 * @param option 0-3 entspricht der Option und somit auch PieceID
 	 */
 	public void performOption(int option) {
-
-		boolean isSuperSpecialCase = false;
 
 		// @Franziskus
 		// TODO isSuperSpecialCase = board.perfromODERSO(int option);
@@ -196,7 +199,7 @@ public class GameModel extends Observable {
 			//  darf er direkt weiter 3x würfeln!
 			//  !!!!Wird durch folgendes gelöst (wahrscheinlich)!!!
 
-			if(isSuperSpecialCase) {
+			if(board.isSuperSpecialCase()) {
 				if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
 					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
 					isBot_DoAction(BotAction.DICE);
@@ -246,6 +249,63 @@ public class GameModel extends Observable {
 
 	public Random getRandom() {
 		return random;
+	}
+
+	public void perfromAdminCommand(JFrame view, String command) {
+		if(!command.trim().equals("")) {
+			String[] args = command.trim().split(" ");
+			switch(args[0]) {
+				case "DICE":
+					if(AdminCommand.checkDice(args[1])) {
+						diceRoll(Integer.parseInt(args[1]));
+					} else {
+						JOptionPane.showMessageDialog(view, "Diese Zahl gibts aufm Würfel nicht");
+					}
+					return;
+				case "MOVE":
+					if(gameState != GameState.DETERMINE_ORDER) {
+						if(AdminCommand.checkPieceID(args[1]) && AdminCommand.checkVertex(args[2])) {
+							// TODO in  Graph Methode einbauen, die spielstein verschiebt und gleiche Abfragen macht wie beim
+							//   normalen ziehen (Schlagen, Three-Times, Gewonnen) und auch SuperSpecialCase Abfrage theoretisch
+							//   außerdem muss geguckt werden, dass man nicht auf ein Feld moved, wo man eig. gar nicht hindarf (fremdes Haus z.B.)
+
+//						if(!board.movePiece()) {
+//							JOptionPane.showMessageDialog(view, "Diesen Spielstein kannst du nicht dort hinbewegen!");
+//						}
+						} else {
+							JOptionPane.showMessageDialog(view, "Diesen Spielstein oder dieses Feld gibts nicht.");
+						}
+					} else {
+						JOptionPane.showMessageDialog(view, "Dieser Befehl Funktioniert zu diesem Zeitpunkt nicht");
+					}
+					return;
+				case "SKIP_DETERMINE_BEGINNER":
+					if(gameState == GameState.DETERMINE_ORDER) {
+						setPlayerOrderINITIAL();
+						clearPlayerLastDice();
+						changeGameState(GameState.IN_GAME);
+						firstPlayer();
+						updateGUI();
+					} else {
+						JOptionPane.showMessageDialog(view, "Dieser Befehl Funktioniert zu diesem Zeitpunkt nicht");
+					}
+					return;
+				case "SHOW_ID":
+					givePiecesOptionFlagALL();
+					updateGUI();
+					return;
+				case "NEXT_PLAYER":
+					if(gameState != GameState.DETERMINE_ORDER) {
+						nextPlayer();
+						updateGUI();
+					} else {
+						JOptionPane.showMessageDialog(view, "Dieser Befehl Funktioniert zu diesem Zeitpunkt nicht");
+					}
+					return;
+			}
+		}
+
+		JOptionPane.showMessageDialog(view, "Diesen Admin-Befehl gibts nicht.");
 	}
 
 	//
@@ -308,6 +368,13 @@ public class GameModel extends Observable {
 	}
 
 	/**
+	 * Füllt players mit Spielern im Uhrzeigersinn beginnend bei ROT (INITAL_PLAYERS)
+	 */
+	private void setPlayerOrderINITIAL() {
+		players = new ArrayList<>(INITIAL_PLAYERS);
+	}
+
+	/**
 	 * Setzt bei allen Spielern Letzter Würfel 0
 	 */
 	private void clearPlayerLastDice() {
@@ -337,6 +404,10 @@ public class GameModel extends Observable {
 	 * Setzt playerTurnDicedCount 0
 	 */
 	private void nextPlayer() {
+
+		// Falls durch Admin angezeigt muss entfernt werden
+		removePiecesOptionFlag();
+
 		if(gameState == GameState.IN_GAME) {
 			playerTurn.setLastDiced(0);
 		}
@@ -371,6 +442,12 @@ public class GameModel extends Observable {
 	private void givePiecesOptionFlag() {
 		for(Integer integer : getOptions()) {
 			getPlayerTurn().getPieces()[integer].setOption(true);
+		}
+	}
+
+	private void givePiecesOptionFlagALL() {
+		for(Piece piece : getPlayerTurn().getPieces()) {
+			piece.setOption(true);
 		}
 	}
 

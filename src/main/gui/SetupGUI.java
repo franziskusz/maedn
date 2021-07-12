@@ -21,6 +21,7 @@ public class SetupGUI extends JFrame {
 	private JPanel panel2 = new JPanel();
 	private JPanel panel3 = new JPanel();
 	private JPanel panel4 = new JPanel();
+	private JPanel panel5 = new JPanel();
 
 	private JComboBox comboBox1 = new JComboBox(playerOptions);
 	private JComboBox comboBox2 = new JComboBox(playerOptions);
@@ -32,6 +33,8 @@ public class SetupGUI extends JFrame {
 	private JLabel jLabel3 = new JLabel("Grün");
 	private JLabel jLabel4 = new JLabel("Gelb");
 
+	private JCheckBox cbAdmin = new JCheckBox("Admin", false);
+
 	private JButton buttonContinue = new JButton("Los!");
 
 	public SetupGUI() {
@@ -42,8 +45,6 @@ public class SetupGUI extends JFrame {
 		this.setLocation(300, 300);
 		this.setSize(500, 500);
 
-		
-		new BorderLayout();
 		labelWhatToDo.setText("Hier steht eine Erklärung von dem ganzen Scheiß!");
 		this.add(labelWhatToDo);
 
@@ -67,8 +68,11 @@ public class SetupGUI extends JFrame {
 		panel4.add(jLabel4);
 		this.add(panel4);
 
+		panel5.setLayout(new FlowLayout());
 		buttonContinue.addActionListener(e -> startGame());
-		this.add(buttonContinue);
+		panel5.add(buttonContinue);
+		panel5.add(cbAdmin);
+		this.add(panel5);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      	this.setResizable(false);
@@ -103,7 +107,7 @@ public class SetupGUI extends JFrame {
 		}
 
 		GameModel gameModel = new GameModel(INITIAL_PLAYERS);
-		GameGUI gameGui = new GameGUI(gameModel.getPieces());
+		GameGUI gameGui = new GameGUI(gameModel.getPieces(), cbAdmin.isSelected());
 		GameController gameController = new GameController(gameModel, gameGui);
 
 		this.setVisible(false);
