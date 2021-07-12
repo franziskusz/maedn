@@ -104,7 +104,8 @@ public class GameController implements Observer, ActionListener {
 			}
 
 			// TODO set Diced Würfelimage gameModel.getDiced();
-			view.getTfDiced().setText(String.valueOf(gameModel.getDiced()));
+//			view.getTfDiced().setText(String.valueOf(gameModel.getDiced()));
+			view.setDicedImage(gameModel.getDiced());
 
 			// TODO evt den Hindergrund der Pane wo die Buttons drauf sind in der Farbe des playerTurn Spielers
 
