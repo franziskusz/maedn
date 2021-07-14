@@ -7,6 +7,7 @@ import main.model.player.Player;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Dimension;
@@ -68,7 +69,7 @@ public class GameGUI extends JFrame{
 	private JTextField text = new JTextField();
 	private JLabel labelDiced;
 	private JTextField tfAdmin = new JTextField();
-
+	
 	
 	private Panel_with_background boardLayeredPane;
 
@@ -130,6 +131,7 @@ public class GameGUI extends JFrame{
 		
 		*/
 
+		
 		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
 		this.add(boardLayeredPane,BorderLayout.CENTER);
@@ -137,7 +139,8 @@ public class GameGUI extends JFrame{
 
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
-		
+		panel1.setLayout(new GridBagLayout());
+		panel2.setLayout(new GridLayout());
 		
 
 		if(admin) {
@@ -148,7 +151,7 @@ public class GameGUI extends JFrame{
 		}
 		this.add(panel2, BorderLayout.SOUTH);
 
-
+		
 
 		text.setEditable(false);
 		text.setText("?");
@@ -179,6 +182,8 @@ public class GameGUI extends JFrame{
 		btnOption3.setText("Option 3");
 		btnOption3.setActionCommand(OPTION_3);
 		panel2.add(btnOption3);
+		
+		
 
 		if(admin) {
 			// Admin Elemente anzeigen
@@ -189,6 +194,8 @@ public class GameGUI extends JFrame{
 			btnAdmin.setText("ADMIN");
 			panel2.add(btnAdmin);
 		}
+		
+
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
