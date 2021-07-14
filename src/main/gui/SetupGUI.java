@@ -81,6 +81,7 @@ public class SetupGUI extends JFrame {
 	}
 
 	private void startGame() {
+		
 		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
 		if(comboBox1.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
