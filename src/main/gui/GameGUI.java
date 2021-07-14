@@ -138,6 +138,7 @@ public class GameGUI extends JFrame{
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
 		
+		
 
 		if(admin) {
 			// Höhe des Panels anpasse, damit Buttons noch angezeigt werden
@@ -259,19 +260,19 @@ public class GameGUI extends JFrame{
 		switch(playerColor) {
 			case RED:
 				panel1.setBackground(new Color(255, 61, 61,255));
-				panel2.setBackground(new Color(255, 61, 61,255));
+				//panel2.setBackground(new Color(255, 61, 61,255));
 				break;
 			case BLUE:
 				panel1.setBackground(new Color(61, 139, 255,255));
-				panel2.setBackground(new Color(61, 139, 255,255));
+				//panel2.setBackground(new Color(61, 139, 255,255));
 				break;
 			case GREEN:
 				panel1.setBackground(new Color(138, 243, 67,255));
-				panel2.setBackground(new Color(138, 243, 67,255));
+				//panel2.setBackground(new Color(138, 243, 67,255));
 				break;
 			case YELLOW:
 				panel1.setBackground(new Color(222, 201, 21,255));
-				panel2.setBackground(new Color(222, 201, 21,255));
+				//panel2.setBackground(new Color(222, 201, 21,255));
 				break;
 		}
 	}
