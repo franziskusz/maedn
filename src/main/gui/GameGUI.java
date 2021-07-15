@@ -70,7 +70,6 @@ public class GameGUI extends JFrame{
 	private JLabel labelDiced;
 	private JTextField tfAdmin = new JTextField();
 	
-	
 	private Panel_with_background boardLayeredPane;
 
 	ImageIcon imageIcon1 = new ImageIcon ("./images/1.png");
@@ -140,9 +139,8 @@ public class GameGUI extends JFrame{
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
 		panel1.setLayout(new GridBagLayout());
-		panel2.setLayout(new GridLayout());
+		panel2.setLayout(new GridLayout());	
 		
-
 		if(admin) {
 			// Höhe des Panels anpasse, damit Buttons noch angezeigt werden
 			panel2.setPreferredSize(new Dimension(580, 100));
@@ -152,11 +150,12 @@ public class GameGUI extends JFrame{
 		this.add(panel2, BorderLayout.SOUTH);
 
 		
-
+		text.setHorizontalAlignment(JTextField.CENTER);
 		text.setEditable(false);
 		text.setText("?");
 		text.setPreferredSize( new Dimension( 200, 24 ) );
 		panel1.add(text);
+		text.setBackground(new Color(227,227,227,255));
 
 		btnWuerfel.setText("Würfeln");
 		btnWuerfel.setActionCommand(WUERFELN);
@@ -164,7 +163,7 @@ public class GameGUI extends JFrame{
 
 		labelDiced = new JLabel("", imageIcon6,JLabel.CENTER);
 		// @Toni Hier mit der Größe Rumspielen
-		labelDiced.setPreferredSize(new Dimension(30, 30));
+		labelDiced.setPreferredSize(new Dimension(40, 40));
 		panel2.add(labelDiced);
 
 		btnOption0.setText("Option 0");
