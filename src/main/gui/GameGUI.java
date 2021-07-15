@@ -65,6 +65,8 @@ public class GameGUI extends JFrame{
 	private JButton btnAdmin = new JButton();
 
 	JPanel panel2 = new JPanel();
+	JPanel panel3 = new JPanel();
+	JPanel panelbox = new JPanel();
 
 	private JTextField text = new JTextField();
 	private JLabel labelDiced;
@@ -139,24 +141,35 @@ public class GameGUI extends JFrame{
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
 		panel1.setLayout(new GridBagLayout());
-		panel2.setLayout(new GridLayout());	
+		
+		panel3.setLayout( new GridLayout());
+		
+		panelbox.setLayout(new BorderLayout());
+		panelbox.add(panel2, BorderLayout.NORTH);
+		panelbox.add(panel3, BorderLayout.SOUTH);
+		
 		
 		if(admin) {
 			// Höhe des Panels anpasse, damit Buttons noch angezeigt werden
-			panel2.setPreferredSize(new Dimension(580, 100));
+			panel3.setPreferredSize(new Dimension(580, 50));
+			
 		} else {
-			panel2.setPreferredSize(new Dimension(580, 50));
+			panel3.setPreferredSize(new Dimension(580, 0));
 		}
-		this.add(panel2, BorderLayout.SOUTH);
+		this.add(panelbox, BorderLayout.SOUTH);
 
 		
 		text.setHorizontalAlignment(JTextField.CENTER);
 		text.setEditable(false);
 		text.setText("?");
-		text.setPreferredSize( new Dimension( 200, 24 ) );
-		panel1.add(text);
+		text.setPreferredSize( new Dimension( 200, 24 ));
 		text.setBackground(new Color(227,227,227,255));
+		panel1.add(text);
+		
 
+		panel2.setLayout(new GridLayout());
+		panel2.setPreferredSize(new Dimension(580,60));
+		
 		btnWuerfel.setText("Würfeln");
 		btnWuerfel.setActionCommand(WUERFELN);
 		panel2.add(btnWuerfel);
@@ -188,13 +201,11 @@ public class GameGUI extends JFrame{
 			// Admin Elemente anzeigen
 			tfAdmin.setPreferredSize(new Dimension(200, 30));
 			tfAdmin.setText(" ");
-			panel2.add(tfAdmin);
+			panel3.add(tfAdmin);
 
 			btnAdmin.setText("ADMIN");
-			panel2.add(btnAdmin);
+			panel3.add(btnAdmin);
 		}
-		
-
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);

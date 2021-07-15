@@ -8,6 +8,8 @@ import main.model.player.Gamer;
 import main.model.player.Player;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -77,40 +79,45 @@ public class SetupGUI extends JFrame {
 
 		panel1.setLayout(new GridLayout());
 		panel1.add(jtf1);
+		jtf1.setHorizontalAlignment(JTextField.CENTER);
 		jtf1.setEditable(false);
-		jtf1.setBackground(new Color (255,0,0,255));
+		jtf1.setBackground(new Color (255,0,0,155));
 		panel1.add(comboBox1);
-		
+		panel1.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel1);
 
 		panel2.setLayout(new GridLayout());
 		panel2.add(jtf2);
+		jtf2.setHorizontalAlignment(JTextField.CENTER);
 		jtf2.setEditable(false);
-		jtf2.setBackground(new Color (30,144,255,255));
+		jtf2.setBackground(new Color (30,144,255,155));
 		panel2.add(comboBox2);
-		
+		panel2.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel2);
 
 		panel3.setLayout(new GridLayout());
 		panel3.add(jtf3);
+		jtf3.setHorizontalAlignment(JTextField.CENTER);
 		jtf3.setEditable(false);
 		jtf3.setBackground(new Color (0,255,0,225));
 		panel3.add(comboBox3);
-		
+		panel3.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel3);
 
 		panel4.setLayout(new GridLayout());
 		panel4.add(jtf4);
+		jtf4.setHorizontalAlignment(JTextField.CENTER);
 		jtf4.setEditable(false);
 		jtf4.setBackground(new Color (255,255,0,225));
 		panel4.add(comboBox4);
-		
+		panel4.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel4);
 
 		panel5.setLayout(new GridLayout());
 		buttonContinue.addActionListener(e -> startGame());
 		panel5.add(buttonContinue);
 		panel5.add(cbAdmin);
+		panel5.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel5);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
