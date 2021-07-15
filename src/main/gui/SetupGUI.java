@@ -38,37 +38,38 @@ public class SetupGUI extends JFrame {
 	private JButton buttonContinue = new JButton("Los!");
 
 	public SetupGUI() {
-		
+	
 		
 		this.setTitle("Mensch ärgere dich nicht!");
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.setLocation(300, 300);
 		this.setSize(500, 500);
 
+		labelWhatToDo.setLayout(new GridLayout());
 		labelWhatToDo.setText("Hier steht eine Erklärung von dem ganzen Scheiß!");
-		this.add(labelWhatToDo);
+		this.add(labelWhatToDo, BorderLayout.CENTER);
 
-		panel1.setLayout(new FlowLayout());
+		panel1.setLayout(new GridLayout());
 		panel1.add(comboBox1);
 		panel1.add(jLabel1);
 		this.add(panel1);
 
-		panel2.setLayout(new FlowLayout());
+		panel2.setLayout(new GridLayout());
 		panel2.add(comboBox2);
 		panel2.add(jLabel2);
 		this.add(panel2);
 
-		panel3.setLayout(new FlowLayout());
+		panel3.setLayout(new GridLayout());
 		panel3.add(comboBox3);
 		panel3.add(jLabel3);
 		this.add(panel3);
 
-		panel4.setLayout(new FlowLayout());
+		panel4.setLayout(new GridLayout());
 		panel4.add(comboBox4);
 		panel4.add(jLabel4);
 		this.add(panel4);
 
-		panel5.setLayout(new FlowLayout());
+		panel5.setLayout(new GridLayout());
 		buttonContinue.addActionListener(e -> startGame());
 		panel5.add(buttonContinue);
 		panel5.add(cbAdmin);
