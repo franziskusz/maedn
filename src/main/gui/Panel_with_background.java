@@ -63,7 +63,6 @@ public class Panel_with_background extends JLayeredPane {
 		
 		
 		
-		
 		//Spielfeld
 		g.setColor(new Color (225,221,176,200));
 		//g.setColor(Color.black);
