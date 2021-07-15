@@ -31,8 +31,8 @@ public class Panel_with_background extends JLayeredPane {
 		// 					(Zeile,Spalte)
 		
 		
-		
-		
+		//Idee!!!
+		//setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		/* Meine TO-DO's
 		 * 
