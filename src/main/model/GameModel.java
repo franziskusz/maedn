@@ -33,7 +33,6 @@ public class GameModel extends Observable {
 	private ArrayList<Integer> options = new ArrayList<>();
 
 
-
 	public GameModel(ArrayList<Player> INITIAL_PLAYERS) {
 		this.INITIAL_PLAYERS = INITIAL_PLAYERS;
 		setPlayerOrderINITIAL();
@@ -60,9 +59,9 @@ public class GameModel extends Observable {
 	/**
 	 * Wird durch Buttonclick auf Würfeln aufgerufen oder durch Bot oder durch AdminButton mit Würfelzahl
 	 */
-	public void diceRoll(int ...setDiced) {
+	public void diceRoll(int... setDiced) {
 		if(setDiced.length == 0) {
-			diced = random.nextInt(6)+1;
+			diced = random.nextInt(6) + 1;
 		} else {
 			diced = setDiced[0];
 		}
@@ -144,7 +143,7 @@ public class GameModel extends Observable {
 			// 3x hintereinander ohne Erfolg gewürfelt
 			// oder Normaler Status aber keine Möglichkeiten (z.B. alle vor dem Ziel, keiner mehr im Haus)
 			if(((playerTurn.getPlayerState() == PlayerState.DICE_THREE_TIMES) && (playerTurnDicedCount >= 3))
-					|| (playerTurn.getPlayerState() == PlayerState.NORMAL)){
+					|| (playerTurn.getPlayerState() == PlayerState.NORMAL)) {
 				nextPlayer();
 			} else {
 				isBot_DoAction(BotAction.DICE);
@@ -181,9 +180,9 @@ public class GameModel extends Observable {
 		//    mitgegebene Spieler (playerTrun) gewonnen hat
 		//    - Falls ja -> GameState END setzen
 		//
-		// if(board.hatGewonnen(playerTurn)) {
-		//   changeGameState(GameState.END);
-		// }
+		if(board.isGoalAchieved()) {
+			changeGameState(GameState.END);
+		}
 
 
 		//TODO Auswahloptionen zurücksetzen, sodass auf GUI OPTION bUTTONS deaktiviert werden
@@ -226,7 +225,7 @@ public class GameModel extends Observable {
 	 * @return ob playerTurn Möglichkeiten hat zu handeln
 	 */
 	public boolean hasOption() {
-		return options.size() != 0 ;
+		return options.size() != 0;
 	}
 
 	public int getDiced() {
@@ -271,9 +270,13 @@ public class GameModel extends Observable {
 							//   normalen ziehen (Schlagen, Three-Times, Gewonnen) und auch SuperSpecialCase Abfrage theoretisch
 							//   außerdem muss geguckt werden, dass man nicht auf ein Feld moved, wo man eig. gar nicht hindarf (fremdes Haus z.B.)
 
-//						if(!board.movePiece()) {
-//							JOptionPane.showMessageDialog(view, "Diesen Spielstein kannst du nicht dort hinbewegen!");
-//						}
+							// TODO ob das so passt und an besten von Franziskus noch nen Booleans anfordern, damit Fehlermeldung, falls nicht möglich.
+							board.adminMove(playerTurn, Integer.parseInt(args[1]), board.getVertices().get(Integer.parseInt(args[2])), INITIAL_PLAYERS);
+
+//							if(){
+//								JOptionPane.showMessageDialog(view, "Diesen Spielstein kannst du nicht dort hinbewegen!");
+//							}
+							updateGUI();
 						} else {
 							JOptionPane.showMessageDialog(view, "Diesen Spielstein oder dieses Feld gibts nicht.");
 						}
@@ -435,6 +438,7 @@ public class GameModel extends Observable {
 
 	/**
 	 * Ändert Game Status
+	 *
 	 * @param newGameState neuer Game Status
 	 */
 	private void changeGameState(GameState newGameState) {

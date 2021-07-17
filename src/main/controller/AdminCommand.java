@@ -8,7 +8,7 @@ public class AdminCommand {
 
 	public static boolean checkPieceID(String arg) {
 		int num = Integer.parseInt(arg);
-		return checkNum(1, 4, num);
+		return checkNum(0, 3, num);
 	}
 
 
