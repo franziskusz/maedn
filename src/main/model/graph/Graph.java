@@ -113,9 +113,9 @@ public class Graph
 			
 			if (goalAchieved)
 			{
-				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz "+place+ ". SuperSpecialCase ist false"); //debug
 				SuperSpecialCase=false;
 				place=place+1;
+				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz "+place+ ". SuperSpecialCase ist false"); //debug
 			}
 		}
 		
@@ -186,9 +186,9 @@ public class Graph
 			
 			if (goalAchieved)
 			{
-				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Zielund belegt Platz " +place+ ". SuperSpecialCase ist false"); //debug
 				SuperSpecialCase=false;
 				place=place+1;
+				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz " +place+ ". SuperSpecialCase ist false"); //debug
 			}
 		}
 		
