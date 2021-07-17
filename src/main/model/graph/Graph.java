@@ -118,7 +118,8 @@ public class Graph
 			
 			if (goalAchieved)
 			{
-				System.out.println("Spieler " +player.getPlayerColor()+ "ist im Ziel");
+				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel. SuperSpecialCase ist false"); //debug
+				SuperSpecialCase=false;
 				place=place+1;
 			}
 		}
@@ -183,8 +184,8 @@ public class Graph
 			add=add+12;
 		}
 		
-		if ((vertices.get(40+add).getPiece()!=null)&&(vertices.get(41+add).getPiece()!=null)
-				&&(vertices.get(42+add).getPiece()!=null)&&(vertices.get(43+add).getPiece()!=null))
+		if ((vertices.get(56+add).getPiece()!=null)&&(vertices.get(57+add).getPiece()!=null)
+				&&(vertices.get(58+add).getPiece()!=null)&&(vertices.get(59+add).getPiece()!=null))
 		{
 			re = true;
 		}
