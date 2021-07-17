@@ -212,6 +212,7 @@ public class GameGUI extends JFrame{
 			panel3.add(tfAdmin);
 
 			btnAdmin.setText("Admin");
+			btnAdmin.setActionCommand(ADMIN);
 			btnAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 			panel3.add(btnAdmin);
 		}
