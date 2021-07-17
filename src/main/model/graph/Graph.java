@@ -74,6 +74,74 @@ public class Graph
 		return SuperSpecialCase;
 	}
 	
+	//
+	
+	/**
+	 * 
+	 * Klon der performOption(), nur dass man statt Vertex Option und diced Vertex target und int PieceID mitgibt 
+	 *
+	 * @param player
+	 * @param pieceID
+	 * @param target
+	 * @param players
+	 * @return
+	 */
+	public void adminMove(Player player, int pieceID, Vertex target, ArrayList<Player> players)
+	{
+		int targetIndex=target.getIndex();
+		Piece movingPiece=player.getPieces()[pieceID];
+		Vertex option=player.getPieces()[pieceID].getPosition();
+		Piece targetPiece=target.getPiece();
+		
+		if (target.getPiece()==null) // Laufen
+		{
+			vertices.get(targetIndex).setPiece(movingPiece);
+			vertices.get(targetIndex).getPiece().setPosition(target);
+			option.setPiece(null);
+			
+			if (targetIndex>55)
+			{
+				SuperSpecialCase=checkforSuperSpecialCase(player, players);
+				//debug
+				if(SuperSpecialCase==true)
+				{
+					System.out.println("SuperSpecialCase!!!");
+				}
+			}
+			
+			goalAchieved=checkGoal(player, players);
+			
+			if (goalAchieved)
+			{
+				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz "+place+ ". SuperSpecialCase ist false"); //debug
+				SuperSpecialCase=false;
+				place=place+1;
+			}
+		}
+		
+		else //Schlagen
+		{
+			int targetPieceID=targetPiece.getId();
+			Player targetPlayer = target.getPiece().getPlayer();
+			boolean newPositionfound = false;
+			
+			//geschlagene Pieces gehen nach Hause
+			sendTargetHome(target, players, newPositionfound, targetPieceID);
+			
+			vertices.get(targetIndex).setPiece(movingPiece);
+			vertices.get(targetIndex).getPiece().setPosition(target);
+			option.setPiece(null);
+			
+			//SuperSpecialCase prüfen: Wenn true, wird die gleichnamige boolsche Variable auf true gesetzt
+			SuperSpecialCase=checkforSuperSpecialCase(targetPlayer, players);
+			//debug
+			if(SuperSpecialCase==true)
+			{
+				System.out.println("SuperSpecialCase!!!");
+			}
+		}
+	}
+	
 	/**
 	 * 
 	 * führt für den gwünschten Spielstein eine Option aus 
@@ -118,7 +186,7 @@ public class Graph
 			
 			if (goalAchieved)
 			{
-				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel. SuperSpecialCase ist false"); //debug
+				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Zielund belegt Platz " +place+ ". SuperSpecialCase ist false"); //debug
 				SuperSpecialCase=false;
 				place=place+1;
 			}
