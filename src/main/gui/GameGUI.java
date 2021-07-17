@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -164,6 +165,7 @@ public class GameGUI extends JFrame{
 		text.setText("?");
 		text.setPreferredSize( new Dimension( 200, 24 ));
 		text.setBackground(new Color(227,227,227,255));
+		text.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel1.add(text);
 		
 
@@ -172,6 +174,7 @@ public class GameGUI extends JFrame{
 		
 		btnWuerfel.setText("Würfeln");
 		btnWuerfel.setActionCommand(WUERFELN);
+		btnWuerfel.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel2.add(btnWuerfel);
 
 		labelDiced = new JLabel("", imageIcon6,JLabel.CENTER);
@@ -181,18 +184,22 @@ public class GameGUI extends JFrame{
 
 		btnOption0.setText("Option 0");
 		btnOption0.setActionCommand(OPTION_0);
+		btnOption0.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel2.add(btnOption0);
 
 		btnOption1.setText("Option 1");
 		btnOption1.setActionCommand(OPTION_1);
+		btnOption1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel2.add(btnOption1);
 
 		btnOption2.setText("Option 2");
 		btnOption2.setActionCommand(OPTION_2);
+		btnOption2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel2.add(btnOption2);
 
 		btnOption3.setText("Option 3");
 		btnOption3.setActionCommand(OPTION_3);
+		btnOption3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel2.add(btnOption3);
 		
 		
@@ -201,9 +208,11 @@ public class GameGUI extends JFrame{
 			// Admin Elemente anzeigen
 			tfAdmin.setPreferredSize(new Dimension(200, 30));
 			tfAdmin.setText(" ");
+			tfAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 			panel3.add(tfAdmin);
 
-			btnAdmin.setText("ADMIN");
+			btnAdmin.setText("Admin");
+			btnAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 			panel3.add(btnAdmin);
 		}
 

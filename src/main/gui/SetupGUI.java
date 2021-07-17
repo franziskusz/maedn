@@ -9,6 +9,7 @@ import main.model.player.Player;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -50,10 +51,22 @@ public class SetupGUI extends JFrame {
 
 	private JCheckBox cbAdmin = new JCheckBox("Admin", false);
 
-	private JButton buttonContinue = new JButton("Los!");
+	private JButton buttonContinue = new JButton("Los !");
+	
 
 	public SetupGUI() {
 	
+		buttonContinue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		
+		jtf1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		jtf2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		jtf3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		jtf4.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		
+		comboBox1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		comboBox2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		comboBox3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		comboBox4.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		
 		this.setTitle("Mensch ärgere dich nicht!");
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
@@ -76,12 +89,15 @@ public class SetupGUI extends JFrame {
 		this.add(labelWhatToDo, BorderLayout.CENTER);
 		this.add(labelWhatToDo2, BorderLayout.CENTER);
 		this.add(labelWhatToDo3, BorderLayout.CENTER);
-
+		
+/*
 		panel1.setLayout(new GridLayout());
 		panel1.add(jtf1);
 		jtf1.setHorizontalAlignment(JTextField.CENTER);
 		jtf1.setEditable(false);
 		jtf1.setBackground(new Color (255,0,0,155));
+		jtf1.setBorder(BorderFactory.createLoweredBevelBorder());
+		comboBox1.setBorder(BorderFactory.createLoweredBevelBorder());
 		panel1.add(comboBox1);
 		panel1.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel1);
@@ -91,6 +107,8 @@ public class SetupGUI extends JFrame {
 		jtf2.setHorizontalAlignment(JTextField.CENTER);
 		jtf2.setEditable(false);
 		jtf2.setBackground(new Color (30,144,255,155));
+		jtf2.setBorder(BorderFactory.createLoweredBevelBorder());
+		comboBox2.setBorder(BorderFactory.createLoweredBevelBorder());
 		panel2.add(comboBox2);
 		panel2.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel2);
@@ -100,6 +118,8 @@ public class SetupGUI extends JFrame {
 		jtf3.setHorizontalAlignment(JTextField.CENTER);
 		jtf3.setEditable(false);
 		jtf3.setBackground(new Color (0,255,0,225));
+		jtf3.setBorder(BorderFactory.createLoweredBevelBorder());
+		comboBox3.setBorder(BorderFactory.createLoweredBevelBorder());
 		panel3.add(comboBox3);
 		panel3.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel3);
@@ -109,9 +129,49 @@ public class SetupGUI extends JFrame {
 		jtf4.setHorizontalAlignment(JTextField.CENTER);
 		jtf4.setEditable(false);
 		jtf4.setBackground(new Color (255,255,0,225));
+		jtf4.setBorder(BorderFactory.createLoweredBevelBorder());
+		comboBox4.setBorder(BorderFactory.createLoweredBevelBorder());
 		panel4.add(comboBox4);
 		panel4.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel4);
+*/
+		
+		
+		
+		
+		
+		panel1.setLayout(new GridLayout());
+		panel1.setBackground(new Color(255,0,0,155));
+		panel1.add(comboBox1);
+		comboBox1.setBorder(BorderFactory.createTitledBorder("Rot"));
+		comboBox1.setBackground(new Color(255,0,0,155));
+		panel1.setBorder(new EmptyBorder(2,5,5,5));
+		this.add(panel1);
+		
+		panel2.setLayout(new GridLayout());
+		panel2.setBackground(new Color (30,144,255,155));
+		panel2.add(comboBox2);
+		comboBox2.setBorder(BorderFactory.createTitledBorder("Blau"));
+		comboBox2.setBackground(new Color(20,44,255,155));
+		panel2.setBorder(new EmptyBorder(2,5,5,5));
+		this.add(panel2);
+		
+		panel3.setLayout(new GridLayout());
+		panel3.setBackground(new Color (0,225,0,225));
+		panel3.add(comboBox3);
+		comboBox3.setBorder(BorderFactory.createTitledBorder("Grün"));
+		comboBox3.setBackground(new Color(0,125,0,225));
+		panel3.setBorder(new EmptyBorder(2,5,5,5));
+		this.add(panel3);
+		
+		panel4.setLayout(new GridLayout());
+		panel4.setBackground(new Color (255,225,0,225));
+		panel4.add(comboBox4);
+		comboBox4.setBorder(BorderFactory.createTitledBorder("Gelb"));
+		comboBox4.setBackground(new Color(125,125,0,225));
+		panel4.setBorder(new EmptyBorder(2,5,5,5));
+		this.add(panel4);
+		
 
 		panel5.setLayout(new GridLayout());
 		buttonContinue.addActionListener(e -> startGame());
@@ -119,7 +179,8 @@ public class SetupGUI extends JFrame {
 		panel5.add(cbAdmin);
 		panel5.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel5);
-
+		
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      	this.setResizable(false);
 		this.pack();
