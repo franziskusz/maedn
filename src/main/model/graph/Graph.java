@@ -16,6 +16,8 @@ public class Graph
 	private List<Edge> edges = new ArrayList<Edge>();
 	private int [][] guiRaster = new int [11][11];
 	private boolean SuperSpecialCase=false;
+	private boolean goalAchieved = false;
+	private int place = 0;
 
 	public Graph(ArrayList<Player> players)
 	{
@@ -54,6 +56,17 @@ public class Graph
 		System.out.println("Testausgabe Player 1 Options für Dice 6:");
 		getOptions(players.get(1), 6, players); //Debug
 		//performOption(players.get(1), vertices.get(47), 6, players); //debug
+	}
+	
+	
+	public boolean isGoalAchieved()
+	{
+		return goalAchieved;
+	}
+	
+	public int getPlace()
+	{
+		return place;
 	}
 	
 	public boolean isSuperSpecialCase()
@@ -100,6 +113,14 @@ public class Graph
 					System.out.println("SuperSpecialCase!!!");
 				}
 			}
+			
+			goalAchieved=checkGoal(player, players);
+			
+			if (goalAchieved)
+			{
+				System.out.println("Spieler " +player.getPlayerColor()+ "ist im Ziel");
+				place=place+1;
+			}
 		}
 		
 		else //Schlagen
@@ -143,6 +164,34 @@ public class Graph
 	/*
 	 * Die nächsten x Funktionen sind Hilfsfunktionen für performOption()
 	 */
+	
+	private boolean checkGoal(Player player, ArrayList<Player> players)
+	{
+		boolean re = false;
+		int add=0;
+		
+		if (player==players.get(1))
+		{
+			add=add+4;
+		}
+		else if (player==players.get(2))
+		{
+			add=add+8;
+		}
+		else if (player==players.get(3))
+		{
+			add=add+12;
+		}
+		
+		if ((vertices.get(40+add).getPiece()!=null)&&(vertices.get(41+add).getPiece()!=null)
+				&&(vertices.get(42+add).getPiece()!=null)&&(vertices.get(43+add).getPiece()!=null))
+		{
+			re = true;
+		}
+		
+		return re;
+	}
+	
 	
 	//Prüft, ob SuperSpecialCase eintritt
 	private boolean checkforSuperSpecialCase(Player specialPlayer, ArrayList<Player> players)
@@ -878,7 +927,8 @@ public class Graph
 			{	
 				//Prüfen, welche Felder erreichbar sind
 				if((optionVertices[j].getSucc().get(k).getWeight()==diced)
-						&&(checkTargetOccupation(player, optionVertices[j].getSucc().get(k).getTo().getPiece())
+						//&&(checkTargetOccupation(player, optionVertices[j].getSucc().get(k).getTo().getPiece()) //ALT Anfällig für Fehler, da beim Zieleinlauf eventuell die falschen Zielfelder geprüft wurden
+						&&(checkTargetOccupation(player, optionVertices[j], diced, players) //NEU verwendet getTarget()
 						&&(checkJourneyEnd(player, optionVertices[j], players, diced))
 						&&(somethingInTheWay(player, optionVertices[j], optionVertices[j].getSucc().get(k).getTo(), players))
 						&&(excludeOpponentsGoal(player, optionVertices[j].getSucc().get(k).getTo(), players))))
@@ -899,6 +949,7 @@ public class Graph
 		ArrayList<Integer> mustLeaveStartOptions=new ArrayList<Integer>();
 		ArrayList<Integer> mustHitOptions=new ArrayList<Integer>();
 		
+		//TODO nur an einer Stelle überschreiben
 		leaveHomeRuleOptions=leaveHomeRule(options, diced, player);
 		options=leaveHomeRuleOptions;
 		//System.out.println(options.toString());//Testausgabe
@@ -993,11 +1044,16 @@ public class Graph
 			Vertex option = player.getPieces()[options.get(i)].getPosition();
 			Vertex target = getTarget(player, option, diced, players);
 			
-			if(target.getPiece()!=null)
+			if(target!=null)
 			{
-				selectedOptions.add(options.get(i));
+				if(target.getPiece()!=null)
+				{
+					selectedOptions.add(options.get(i));
+				}
 			}
+			
 		}
+		
 		if (selectedOptions.size()>0)
 		{
 			options=selectedOptions;
@@ -1033,8 +1089,19 @@ public class Graph
 	}
 	
 	//Wenn auf dem Zielfeld eine Figur des aktiven Spielers steht, wird der zu bewegende Stein nicht als Option gezählt
-	private boolean checkTargetOccupation(Player movingPlayer, Piece targetPiece)
+	private boolean checkTargetOccupation(Player movingPlayer, Vertex option, int diced, ArrayList<Player> players)
 	{
+		Piece targetPiece;
+		if (getTarget(movingPlayer, option, diced, players)!=null)
+		{
+			targetPiece=getTarget(movingPlayer, option, diced, players).getPiece();
+		}
+		else
+		{
+			targetPiece=null;
+		}
+		
+		
 		if(targetPiece==null)
 		{
 			return true;
