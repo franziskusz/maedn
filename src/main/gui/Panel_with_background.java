@@ -85,7 +85,7 @@ public class Panel_with_background extends JLayeredPane {
 		g.fillOval(370, 220, 40, 40);//4,7
 		g.fillOval(420, 220, 40, 40);//4,8
 		g.fillOval(470, 220, 40, 40);//4,9
-		g.fillOval(70, 320, 40, 40);//6,1
+		g.fillOval( 70, 320, 40, 40);//6,1
 		g.fillOval(120, 320, 40, 40);//6,2
 		g.fillOval(170, 320, 40, 40);//6,3
 		g.fillOval(220, 320, 40, 40);//6,4
