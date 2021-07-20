@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -146,7 +147,6 @@ public class GameGUI extends JFrame{
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
 		panel1.setLayout(new GridBagLayout());
-		
 		panel3.setLayout( new GridLayout());
 		
 		panelbox.setLayout(new BorderLayout());
@@ -173,13 +173,14 @@ public class GameGUI extends JFrame{
 		panel1.add(text);
 		
 
-		panel2.setLayout(new GridLayout());
+		panel2.setLayout(new GridLayout(1,6,10,0));
 		panel2.setPreferredSize(new Dimension(580,80));
 		panel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		btnWuerfel.setText("Dice");
 		btnWuerfel.setActionCommand(WUERFELN);
 		btnWuerfel.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		btnWuerfel.setBorder(new EmptyBorder(0,0,0,0)); //ganzer Button orange bei klick, nicht nur rahmen
 		//btnWuerfel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnWuerfel);
 		
@@ -191,24 +192,32 @@ public class GameGUI extends JFrame{
 		btnOption0.setText("0");
 		btnOption0.setActionCommand(OPTION_0);
 		btnOption0.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		btnOption0.setBorder(new EmptyBorder(0,0,0,0));
 		//btnOption0.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption0);
+		
+		
 
 		btnOption1.setText("1");
 		btnOption1.setActionCommand(OPTION_1);
 		btnOption1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		btnOption1.setBorder(new EmptyBorder(5,5,5,5));
+		btnOption1.setBorder(new EmptyBorder(0,0,0,0));
 		panel2.add(btnOption1);
+		//panel2.add( Box.createRigidArea( new Dimension( 1 , 0 ) )  ); für den Abstand zwischen den Buttons, hat nicht geklappt
 
 		btnOption2.setText("2");
 		btnOption2.setActionCommand(OPTION_2);
 		btnOption2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		btnOption2.setBorder(new EmptyBorder(0,0,0,0));
 		//btnOption2.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption2);
+	
 
 		btnOption3.setText("3");
 		btnOption3.setActionCommand(OPTION_3);
 		btnOption3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		btnOption3.setBorder(new EmptyBorder(0,0,0,0));
+		//btnOption3.setBorder(new EmptyBorder(0,10,0,0));
 		//btnOption3.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption3);
 		
@@ -224,6 +233,7 @@ public class GameGUI extends JFrame{
 			btnAdmin.setText("Admin");
 			btnAdmin.setActionCommand(ADMIN);
 			btnAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+			btnAdmin.setBorder(new EmptyBorder(0,0,0,0));
 			panel3.add(btnAdmin);
 		}
 
