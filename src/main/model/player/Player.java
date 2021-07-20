@@ -10,9 +10,16 @@ public class Player {
 	private Piece[] pieces = {new Piece(this, 0), new Piece(this, 1), new Piece(this, 2),new Piece(this, 3)};
 	private PlayerColor playerColor;
 
+	private static int nextPlace = 1;
+
+	private boolean goalAchieved;
+	private Integer place;
+
 
 	public Player() {
 		playerState = PlayerState.DICE_THREE_TIMES;
+		goalAchieved = false;
+		place = null;
 	}
 
 
@@ -42,5 +49,19 @@ public class Player {
 
 	public Piece[] getPieces() {
 		return pieces;
+	}
+
+	public boolean isGoalAchieved() {
+		return goalAchieved;
+	}
+
+	public void setGoalAchieved() {
+		this.goalAchieved = true;
+		place = nextPlace;
+		nextPlace++;
+	}
+
+	public Integer getPlace() {
+		return place;
 	}
 }

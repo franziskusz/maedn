@@ -16,8 +16,6 @@ public class Graph
 	private List<Edge> edges = new ArrayList<Edge>();
 	private int [][] guiRaster = new int [11][11];
 	private boolean SuperSpecialCase=false;
-	private boolean goalAchieved = false;
-	private int place = 0;
 
 	public Graph(ArrayList<Player> players)
 	{
@@ -59,15 +57,7 @@ public class Graph
 	}
 	
 	
-	public boolean isGoalAchieved()
-	{
-		return goalAchieved;
-	}
-	
-	public int getPlace()
-	{
-		return place;
-	}
+
 	
 	public boolean isSuperSpecialCase()
 	{
@@ -108,14 +98,18 @@ public class Graph
 					System.out.println("SuperSpecialCase!!!");
 				}
 			}
+
+			if(checkGoal(player, players))
+			{
+				player.setGoalAchieved();
+			}
+//			goalAchieved=checkGoal(player, players);
 			
-			goalAchieved=checkGoal(player, players);
-			
-			if (goalAchieved)
+			if (player.isGoalAchieved())
 			{
 				SuperSpecialCase=false;
-				place=place+1;
-				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz "+place+ ". SuperSpecialCase ist false"); //debug
+//				place=place+1;
+//				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz "+place+ ". SuperSpecialCase ist false"); //debug
 			}
 		}
 		
@@ -181,14 +175,18 @@ public class Graph
 					System.out.println("SuperSpecialCase!!!");
 				}
 			}
-			
-			goalAchieved=checkGoal(player, players);
-			
-			if (goalAchieved)
+
+			if(checkGoal(player, players))
+			{
+				player.setGoalAchieved();
+			}
+//			goalAchieved=checkGoal(player, players);
+
+			if (player.isGoalAchieved())
 			{
 				SuperSpecialCase=false;
-				place=place+1;
-				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz " +place+ ". SuperSpecialCase ist false"); //debug
+//				place=place+1;
+//				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz "+place+ ". SuperSpecialCase ist false"); //debug
 			}
 		}
 		
@@ -1008,7 +1006,7 @@ public class Graph
 				
 					options.add(optionVertices[j].getPiece().getId());
 					
-					System.out.println(options.toString()); //debug	
+					System.out.println(options.toString()); //debug
 				}					
 			}
 		}			
@@ -1030,7 +1028,7 @@ public class Graph
 		mustHitOptions=mustHit(options, diced, player, players);
 		options=mustHitOptions;
 		
-		System.out.println(options.toString());//Testausgabe	
+		System.out.println(options.toString());//Testausgabe
 		return options;	
 	}
 	
@@ -1710,7 +1708,7 @@ public class Graph
 		for (Edge edge : edges)
 		{
 			++count;
-			System.out.println("Edge #"+count+" "+edge);	
+			System.out.println("Edge #"+count+" "+edge);
 		}
 	}
 	

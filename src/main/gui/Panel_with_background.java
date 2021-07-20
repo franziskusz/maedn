@@ -196,6 +196,12 @@ public class Panel_with_background extends JLayeredPane {
 					g.setColor(new Color (0,0,0,255));
 					g.drawString(String.valueOf(piece.getId()), x+11, y+20);
 				}
+
+				// Zeige den Platz an, wenn feritg
+				if(piece.getPlayer().isGoalAchieved()) {
+					g.setColor(new Color (0,0,0,255));
+					g.drawString(String.valueOf(piece.getPlayer().getPlace()), x+11, y+20);
+				}
 			}
 		}
 
