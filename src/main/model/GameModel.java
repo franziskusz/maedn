@@ -33,6 +33,13 @@ public class GameModel extends Observable {
 	private ArrayList<Integer> options = new ArrayList<>();
 
 
+	/**
+	 * Konstruktor
+	 * Initialisiert player, pieces, board, playerTurn, Gamestate
+	 * Falls erster Spieler Bot, wird dieser zum Würfeln gezwungen
+	 *
+	 * @param INITIAL_PLAYERS
+	 */
 	public GameModel(ArrayList<Player> INITIAL_PLAYERS) {
 		this.INITIAL_PLAYERS = INITIAL_PLAYERS;
 		setPlayerOrderINITIAL();
@@ -101,12 +108,6 @@ public class GameModel extends Observable {
 			return;
 		}
 
-
-		// @Franziskus
-		//TODO über den Spielbrett-Graph die Möglichkeiten für den Spieler, mit Würfelzahl ermitteln und irgendwie im Model
-		// speichern, damit beim GUI Update die OPTION Buttons aktivieert werden können
-		// board.getOptions(playerTurn, diced);
-		// !! Option: "Keine Möglichkeiten" beachten z.B. wenn Figuren vor dem Haus und keine passende Zahl
 		options = board.getOptions(playerTurn, diced, INITIAL_PLAYERS);
 		//TODO entfernen
 		System.out.println(playerTurn.getPlayerColor().toString() + " hat " + options.size() + " optionen");
@@ -121,17 +122,11 @@ public class GameModel extends Observable {
 
 			if((diced == 6) && (gameState != GameState.DETERMINE_ORDER)) {
 				playerTurn.setPlayerState(PlayerState.DICE_AGAIN);
-				//TODO Hier könnte auch irgendeine Variable gesetzt werden, die in der GUI geprüft und dann "Nochmal würfeln" ausgibt
 			}
-			// TODO Wahrscheinlich falsch an dieser Stelle! (Sollte erst in performOption aufgerufen werden, da Möglichkeit zum auswählen)
-			// else {
-			//	nextPlayer();
-			// }
 
 			isBot_DoAction(BotAction.PERFORM_OPTION);
 		} else {
 			// Der Spieler hat keine Möglichkeiten
-
 
 			// Wenn der Spieler 6 gewürfelt hat, dann darf er nochmal und bekommt DICE_AGAIN
 			// sonst, Wenn er DICE THREE TIMES hat und 3x gewürfelt oder NORMAL hat, dann nächster Spieler
@@ -146,32 +141,11 @@ public class GameModel extends Observable {
 			} else {
 				isBot_DoAction(BotAction.DICE);
 			}
-
-
-
-//			// Hat der Spieler eine 6 gewürfelt? -> nochmal würfeln
-//			if((diced == 6) && (gameState != GameState.DETERMINE_ORDER)) {
-//				playerTurn.setPlayerState(PlayerState.DICE_AGAIN);
-//				//TODO Hier könnte auch irgendeine Variable gesetzt werden, die in der GUI geprüft und dann "Nochmal würfeln" ausgibt
-//
-//				isBot_DoAction(BotAction.DICE);
-//			}
-//
-//			// 3x hintereinander ohne Erfolg gewürfelt
-//			// oder Normaler Status aber keine Möglichkeiten (z.B. alle vor dem Ziel, keiner mehr im Haus)
-//			if(((playerTurn.getPlayerState() == PlayerState.DICE_THREE_TIMES) && (playerTurnDicedCount >= 3))
-//					|| (playerTurn.getPlayerState() == PlayerState.NORMAL)) {
-//				nextPlayer();
-//			} else {
-//				isBot_DoAction(BotAction.DICE);
-//			}
-
-
-
 		}
 
 		updateGUI();
 	}
+
 
 	/**
 	 * Wird durch Buttonclick auf Option Buttons aufgerufen oder durch Bot
@@ -196,12 +170,6 @@ public class GameModel extends Observable {
 		System.out.println(playerTurn.getPlayerColor().toString() + " will Option " + option);
 		board.performOption(playerTurn, playerTurn.getPieces()[option].getPosition(), diced, INITIAL_PLAYERS);
 
-		// @Franziskus
-		// TODO board.hatGewonnenODERSO(Player playerTrun)
-		// - hier eine Methode im Graph aufrufen, die überprüft, ob der
-		//    mitgegebene Spieler (playerTrun) gewonnen hat
-		//    - Falls ja -> GameState END setzen
-		//
 		if(playerTurn.isGoalAchieved()) {
 			players.remove(playerTurn);
 			if(players.size() <= 1) {
@@ -210,16 +178,11 @@ public class GameModel extends Observable {
 			}
 		}
 
-
-		//TODO Auswahloptionen zurücksetzen, sodass auf GUI OPTION bUTTONS deaktiviert werden
-		//TODO Überprüfen, ob es hier an der richtigen Stelle ist
 		options.clear();
 		removePiecesOptionFlag();
 
-
 		if(gameState != GameState.END) {
 			// TODO unbedingt nochmal logik nachvollziehen, kann gut sein, dass hier noch was nicht richtig passiert
-
 			// TODO Wenn Spieler durch diesen Zug THREE TIMES bekommt und keine 6 gewürfelt hat
 			//  darf er erst nächste Runde wieder würfeln.
 			//  Wenn er allerdings durch diesen Zug THREE TIMES bekommt und eine 6 gewürfelt hat,
@@ -230,7 +193,6 @@ public class GameModel extends Observable {
 				if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
 					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
 					isBot_DoAction(BotAction.DICE);
-					//Nichts machen, wenn Mensch, da durch GUI update klar wird, was zu tun ist
 				} else {
 					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
 					nextPlayer();
@@ -248,6 +210,7 @@ public class GameModel extends Observable {
 		updateGUI();
 	}
 
+
 	/**
 	 * @return ob playerTurn Möglichkeiten hat zu handeln
 	 */
@@ -255,30 +218,54 @@ public class GameModel extends Observable {
 		return options.size() != 0;
 	}
 
+
 	public int getDiced() {
 		return diced;
 	}
+
 
 	public ArrayList<Piece> getPieces() {
 		return pieces;
 	}
 
+
 	public Player getPlayerTurn() {
 		return playerTurn;
 	}
+
 
 	public GameState getGameState() {
 		return gameState;
 	}
 
+
 	public ArrayList<Integer> getOptions() {
 		return options;
 	}
+
 
 	public Random getRandom() {
 		return random;
 	}
 
+
+	public ArrayList<Player> getINITIAL_PLAYERS() {
+		return INITIAL_PLAYERS;
+	}
+
+
+	public int getPlayerTurnDicedCount() {
+		return playerTurnDicedCount;
+	}
+
+
+	/**
+	 * Führt den mitgelieferten Admin-Befehl aus oder gibt Fehlermeldung aus.
+	 * Wird vom Controller bei Buttonclick auf "Admin-Button" aufgerufen
+	 *
+	 * @param view    Spiel JFrame
+	 * @param command eingegebener Befehl
+	 */
 	public void perfromAdminCommand(JFrame view, String command) {
 		if(!command.trim().equals("")) {
 			String[] args = command.trim().split(" ");
@@ -340,6 +327,7 @@ public class GameModel extends Observable {
 		JOptionPane.showMessageDialog(view, "Diesen Admin-Befehl gibts nicht.");
 	}
 
+
 	//
 	// Methoden fürs Auswüfeln des Beginners
 	//
@@ -368,6 +356,7 @@ public class GameModel extends Observable {
 
 		return players.size() <= 1;
 	}
+
 
 	/**
 	 * Füllt players mit Spielern im Uhrzeigersinn
@@ -399,12 +388,14 @@ public class GameModel extends Observable {
 		}
 	}
 
+
 	/**
 	 * Füllt players mit Spielern im Uhrzeigersinn beginnend bei ROT (INITAL_PLAYERS)
 	 */
 	private void setPlayerOrderINITIAL() {
 		players = new ArrayList<>(INITIAL_PLAYERS);
 	}
+
 
 	/**
 	 * Setzt bei allen Spielern Letzter Würfel 0
@@ -414,6 +405,7 @@ public class GameModel extends Observable {
 			player.setLastDiced(0);
 		}
 	}
+
 
 	/**
 	 * Setzt playerTurn auf den Beginner
@@ -464,6 +456,7 @@ public class GameModel extends Observable {
 		isBot_DoAction(BotAction.DICE);
 	}
 
+
 	/**
 	 * Ändert Game Status
 	 *
@@ -473,24 +466,42 @@ public class GameModel extends Observable {
 		gameState = newGameState;
 	}
 
+
+	/**
+	 * Gibt allen Spielsteinen des playerTurn, die eine Spielbare Option sind das option Flag (für GUI pieceID anzeige)
+	 */
 	private void givePiecesOptionFlag() {
 		for(Integer integer : getOptions()) {
 			getPlayerTurn().getPieces()[integer].setOption(true);
 		}
 	}
 
+
+	/**
+	 * Gibt allen Spielsteinen des playerTurn das option Flag (für GUI pieceID anzeige)
+	 */
 	private void givePiecesOptionFlagALL() {
 		for(Piece piece : getPlayerTurn().getPieces()) {
 			piece.setOption(true);
 		}
 	}
 
+
+	/**
+	 * Entfernt bei allen Spielsteinen des playerTurn das option Flag (für GUI pieceID anzeige)
+	 */
 	private void removePiecesOptionFlag() {
 		for(Piece piece : getPlayerTurn().getPieces()) {
 			piece.setOption(false);
 		}
 	}
 
+
+	/**
+	 * Wenn playerTurn ist Bot, dann muss der Bot arbeiten
+	 *
+	 * @param botAction Enum BotAction - Was der Bot machen soll
+	 */
 	private void isBot_DoAction(BotAction botAction) {
 		if(playerTurn instanceof Bot) {
 			Thread thread = new Thread(new SleepThread(this, botAction));

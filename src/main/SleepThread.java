@@ -16,7 +16,7 @@ public class SleepThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Thread.sleep(50);
+			Thread.sleep(200);
 
 			switch(botAction) {
 				case DICE:
