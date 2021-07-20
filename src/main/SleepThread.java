@@ -1,13 +1,12 @@
 package main;
 
-import main.gui.GameGUI;
 import main.model.GameModel;
 import main.model.enums.BotAction;
 
 public class SleepThread implements Runnable {
 
-	GameModel gameModel;
-	BotAction botAction;
+	private GameModel gameModel;
+	private BotAction botAction;
 
 	public SleepThread(GameModel gameModel, BotAction botAction) {
 		this.gameModel = gameModel;
@@ -17,7 +16,7 @@ public class SleepThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Thread.sleep(100);
+			Thread.sleep(50);
 
 			switch(botAction) {
 				case DICE:
@@ -29,7 +28,7 @@ public class SleepThread implements Runnable {
 			}
 
 		} catch(Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 }

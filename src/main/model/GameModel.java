@@ -108,6 +108,8 @@ public class GameModel extends Observable {
 		// board.getOptions(playerTurn, diced);
 		// !! Option: "Keine Möglichkeiten" beachten z.B. wenn Figuren vor dem Haus und keine passende Zahl
 		options = board.getOptions(playerTurn, diced, INITIAL_PLAYERS);
+		//TODO entfernen
+		System.out.println(playerTurn.getPlayerColor().toString() + " hat " + options.size() + " optionen");
 		if(!(playerTurn instanceof Bot)) {
 			givePiecesOptionFlag();
 		}
@@ -130,24 +132,42 @@ public class GameModel extends Observable {
 		} else {
 			// Der Spieler hat keine Möglichkeiten
 
-			// TODO Logik und verschachtelung prüfen, ist durch Bot verwirrend geworden.
 
-			// Hat der Spieler eine 6 gewürfelt? -> nochmal würfeln
-			if((diced == 6) && (gameState != GameState.DETERMINE_ORDER)) {
+			// Wenn der Spieler 6 gewürfelt hat, dann darf er nochmal und bekommt DICE_AGAIN
+			// sonst, Wenn er DICE THREE TIMES hat und 3x gewürfelt oder NORMAL hat, dann nächster Spieler
+			// sonst nochmal würfeln
+
+			if(diced == 6) {
 				playerTurn.setPlayerState(PlayerState.DICE_AGAIN);
-				//TODO Hier könnte auch irgendeine Variable gesetzt werden, die in der GUI geprüft und dann "Nochmal würfeln" ausgibt
-
 				isBot_DoAction(BotAction.DICE);
-			}
-
-			// 3x hintereinander ohne Erfolg gewürfelt
-			// oder Normaler Status aber keine Möglichkeiten (z.B. alle vor dem Ziel, keiner mehr im Haus)
-			if(((playerTurn.getPlayerState() == PlayerState.DICE_THREE_TIMES) && (playerTurnDicedCount >= 3))
+			} else if(((playerTurn.getPlayerState() == PlayerState.DICE_THREE_TIMES) && (playerTurnDicedCount >= 3))
 					|| (playerTurn.getPlayerState() == PlayerState.NORMAL)) {
 				nextPlayer();
 			} else {
 				isBot_DoAction(BotAction.DICE);
 			}
+
+
+
+//			// Hat der Spieler eine 6 gewürfelt? -> nochmal würfeln
+//			if((diced == 6) && (gameState != GameState.DETERMINE_ORDER)) {
+//				playerTurn.setPlayerState(PlayerState.DICE_AGAIN);
+//				//TODO Hier könnte auch irgendeine Variable gesetzt werden, die in der GUI geprüft und dann "Nochmal würfeln" ausgibt
+//
+//				isBot_DoAction(BotAction.DICE);
+//			}
+//
+//			// 3x hintereinander ohne Erfolg gewürfelt
+//			// oder Normaler Status aber keine Möglichkeiten (z.B. alle vor dem Ziel, keiner mehr im Haus)
+//			if(((playerTurn.getPlayerState() == PlayerState.DICE_THREE_TIMES) && (playerTurnDicedCount >= 3))
+//					|| (playerTurn.getPlayerState() == PlayerState.NORMAL)) {
+//				nextPlayer();
+//			} else {
+//				isBot_DoAction(BotAction.DICE);
+//			}
+
+
+
 		}
 
 		updateGUI();
@@ -172,6 +192,8 @@ public class GameModel extends Observable {
 		//        - Dann bekommt er THREE TIMES (return true; (THREE TIMES nicht setzen!) sonst immer return false;)
 		//    - Ob eigene Spielfigur übersprungen wurde muss NICHT überprüft werden, da es durch "keine Möglichkeit" auisgeschlossen
 
+		// TODO entfernen
+		System.out.println(playerTurn.getPlayerColor().toString() + " will Option " + option);
 		board.performOption(playerTurn, playerTurn.getPieces()[option].getPosition(), diced, INITIAL_PLAYERS);
 
 		// @Franziskus
@@ -180,8 +202,12 @@ public class GameModel extends Observable {
 		//    mitgegebene Spieler (playerTrun) gewonnen hat
 		//    - Falls ja -> GameState END setzen
 		//
-		if(board.isGoalAchieved()) {
-			changeGameState(GameState.END);
+		if(playerTurn.isGoalAchieved()) {
+			players.remove(playerTurn);
+			if(players.size() <= 1) {
+				players.get(0).setGoalAchieved();
+				changeGameState(GameState.END);
+			}
 		}
 
 
@@ -204,6 +230,7 @@ public class GameModel extends Observable {
 				if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
 					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
 					isBot_DoAction(BotAction.DICE);
+					//Nichts machen, wenn Mensch, da durch GUI update klar wird, was zu tun ist
 				} else {
 					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
 					nextPlayer();
@@ -425,6 +452,7 @@ public class GameModel extends Observable {
 			try {
 				playerTurn = players.get(indexOfPlayerTurn + 1);
 			} catch(Exception ex) {
+				System.out.println("Gewollter Fehler, der abgefangen wird.");
 				playerTurn = players.get(0);
 			}
 		} else {
@@ -465,8 +493,8 @@ public class GameModel extends Observable {
 
 	private void isBot_DoAction(BotAction botAction) {
 		if(playerTurn instanceof Bot) {
-			Thread diceThread = new Thread(new SleepThread(this, botAction));
-			diceThread.start();
+			Thread thread = new Thread(new SleepThread(this, botAction));
+			thread.start();
 		}
 	}
 
