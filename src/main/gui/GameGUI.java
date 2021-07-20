@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 
 
 
@@ -65,6 +67,8 @@ public class GameGUI extends JFrame{
 	private JButton btnOption3 = new RoundButton("", 20, false);
 	private JButton btnAdmin = new RoundButton("", 20, false);
 
+	EmptyBorder eBorder = new EmptyBorder(2, 10, 2, 10); // oben, rechts, unten, links 
+	 
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
 	JPanel panelbox = new JPanel();
@@ -170,12 +174,13 @@ public class GameGUI extends JFrame{
 		
 
 		panel2.setLayout(new GridLayout());
-		panel2.setPreferredSize(new Dimension(580,60));
+		panel2.setPreferredSize(new Dimension(580,80));
+		panel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
-		btnWuerfel.setText("Würfeln");
+		btnWuerfel.setText("Dice");
 		btnWuerfel.setActionCommand(WUERFELN);
 		btnWuerfel.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		
+		//btnWuerfel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnWuerfel);
 		
 		labelDiced = new JLabel("", imageIcon6,JLabel.CENTER);
@@ -183,24 +188,28 @@ public class GameGUI extends JFrame{
 		labelDiced.setPreferredSize(new Dimension(40, 40));
 		panel2.add(labelDiced);
 
-		btnOption0.setText("Option 0");
+		btnOption0.setText("0");
 		btnOption0.setActionCommand(OPTION_0);
 		btnOption0.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		//btnOption0.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption0);
 
-		btnOption1.setText("Option 1");
+		btnOption1.setText("1");
 		btnOption1.setActionCommand(OPTION_1);
 		btnOption1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		btnOption1.setBorder(new EmptyBorder(5,5,5,5));
 		panel2.add(btnOption1);
 
-		btnOption2.setText("Option 2");
+		btnOption2.setText("2");
 		btnOption2.setActionCommand(OPTION_2);
 		btnOption2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		//btnOption2.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption2);
 
-		btnOption3.setText("Option 3");
+		btnOption3.setText("3");
 		btnOption3.setActionCommand(OPTION_3);
 		btnOption3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		//btnOption3.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption3);
 		
 		
