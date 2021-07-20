@@ -11,21 +11,20 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
-public class RoundButton extends JButton {
+public class RoundButton2 extends JButton {
 
     private Shape shape;
     private int arc;
     private boolean isQuadratic;
 
-    public RoundButton(String text, int arc) {
+    public RoundButton2(String text, int arc) {
         this(text, arc, true);
     }
 
-    public RoundButton(String text, int arc, boolean isQuadratic) {
+    public RoundButton2(String text, int arc, boolean isQuadratic) {
         super(text);
         this.arc = arc;
         this.isQuadratic= isQuadratic;
-        
 
         initComponent();
     }
@@ -35,6 +34,8 @@ public class RoundButton extends JButton {
             final Dimension size = getPreferredSize();
             size.width = size.height = Math.max(size.width, size.height);
             setPreferredSize(size);
+            
+            
         }
         setContentAreaFilled(false);
         setFocusable(false);

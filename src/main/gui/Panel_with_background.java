@@ -8,11 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+
+
 public class Panel_with_background extends JLayeredPane {
 
 	private Image img;
 	private ArrayList<Piece> pieces;
-
 
 	public Panel_with_background(Image img, ArrayList<Piece> pieces) {
 		this.pieces = pieces;
@@ -25,6 +26,8 @@ public class Panel_with_background extends JLayeredPane {
 		setLayout(null);
 	}
 
+	
+	
 	public void paintComponent(Graphics g) {
 		Image img = new ImageIcon("./images/background.png").getImage();
 		g.drawImage(img, 0, 0, null);

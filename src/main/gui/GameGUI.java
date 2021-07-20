@@ -67,6 +67,8 @@ public class GameGUI extends JFrame{
 	private JButton btnOption2 = new RoundButton("", 20, false);
 	private JButton btnOption3 = new RoundButton("", 20, false);
 	private JButton btnAdmin = new RoundButton("", 20, false);
+	private RoundButton s1 = new RoundButton("",40,false);
+	private RoundButton s2 = new RoundButton("",40,false);
 	 
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
@@ -137,11 +139,22 @@ public class GameGUI extends JFrame{
 		*/
 
 		
+		
+		s1.setEnabled(false);
+		s1.setBounds(290, 290, 40, 40);
+		
+		s2.setEnabled(false);
+		s2.setBounds(270, 270, 40, 40);
+
+		
 		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
+		boardLayeredPane.add(s1);
+		boardLayeredPane.add(s2);
 		this.add(boardLayeredPane,BorderLayout.CENTER);
 
-
+		
+		
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
 		panel1.setLayout(new GridBagLayout());
@@ -170,7 +183,7 @@ public class GameGUI extends JFrame{
 		text.setEditable(false);
 		text.setText("?");
 		text.setPreferredSize( new Dimension( 200, 24 ));
-		text.setBackground(new Color(227,227,227,255));
+		text.setBackground(new Color(255,255,255,255));
 		text.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel1.add(text);
 		
@@ -196,6 +209,7 @@ public class GameGUI extends JFrame{
 		btnOption0.setActionCommand(OPTION_0);
 		btnOption0.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption0.setBorder(new EmptyBorder(0,0,0,0));
+		btnOption0.setBackground(new Color(255,255,255,255));
 		//btnOption0.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption0);
 		
@@ -205,6 +219,7 @@ public class GameGUI extends JFrame{
 		btnOption1.setActionCommand(OPTION_1);
 		btnOption1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption1.setBorder(new EmptyBorder(0,0,0,0));
+		btnOption1.setBackground(new Color(255,255,255,255));
 		panel2.add(btnOption1);
 		//panel2.add( Box.createRigidArea( new Dimension( 1 , 0 ) )  ); für den Abstand zwischen den Buttons, hat nicht geklappt
 
@@ -212,6 +227,8 @@ public class GameGUI extends JFrame{
 		btnOption2.setActionCommand(OPTION_2);
 		btnOption2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption2.setBorder(new EmptyBorder(0,0,0,0));
+		btnOption2.setBackground(new Color(255,255,255,255));
+
 		//btnOption2.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption2);
 	
@@ -220,6 +237,8 @@ public class GameGUI extends JFrame{
 		btnOption3.setActionCommand(OPTION_3);
 		btnOption3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption3.setBorder(new EmptyBorder(0,0,0,0));
+		btnOption3.setBackground(new Color(255,255,255,255));
+
 		//btnOption3.setBorder(new EmptyBorder(0,10,0,0));
 		//btnOption3.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption3);
