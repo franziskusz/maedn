@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
@@ -68,8 +69,7 @@ public class GameGUI extends JFrame{
 	private JButton btnOption3 = new RoundButton("", 20, false);
 	private JButton btnAdmin = new RoundButton("", 20, false);
 	private RoundButton s1 = new RoundButton("",40,false);
-	private RoundButton s2 = new RoundButton("",40,false);
-	 
+	
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
 	JPanel panelbox = new JPanel();
@@ -138,19 +138,17 @@ public class GameGUI extends JFrame{
 		
 		*/
 
-		
-		
+		/*
 		s1.setEnabled(false);
-		s1.setBounds(290, 290, 40, 40);
-		
-		s2.setEnabled(false);
-		s2.setBounds(270, 270, 40, 40);
-
+		s1.setBackground(new Color (225,221,176,200));
+		s1.setBorder(BorderFactory.createLoweredBevelBorder());
+		s1.setBounds(270, 270, 40, 40);
+		 */
 		
 		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
 		boardLayeredPane.add(s1);
-		boardLayeredPane.add(s2);
+	
 		this.add(boardLayeredPane,BorderLayout.CENTER);
 
 		
