@@ -61,14 +61,12 @@ public class GameGUI extends JFrame{
 
 	JPanel panel1 = new JPanel();
 	
-	private JButton btnWuerfel = new RoundButton("", 20, false);
+	private JButton btnWuerfel = new RoundButton("", 20, false); 
 	private JButton btnOption0 = new RoundButton("", 20, false);
 	private JButton btnOption1 = new RoundButton("", 20, false);
 	private JButton btnOption2 = new RoundButton("", 20, false);
 	private JButton btnOption3 = new RoundButton("", 20, false);
 	private JButton btnAdmin = new RoundButton("", 20, false);
-
-	EmptyBorder eBorder = new EmptyBorder(2, 10, 2, 10); // oben, rechts, unten, links 
 	 
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
@@ -76,7 +74,7 @@ public class GameGUI extends JFrame{
 
 	private JTextField text = new JTextField();
 	private JLabel labelDiced;
-	private JTextField tfAdmin = new JTextField();
+	private JTextField tfAdmin = new RoundJTextField(20);
 	
 	private Panel_with_background boardLayeredPane;
 
@@ -147,7 +145,11 @@ public class GameGUI extends JFrame{
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
 		panel1.setLayout(new GridBagLayout());
-		panel3.setLayout( new GridLayout());
+		panel2.setLayout(new GridLayout(1,6,10,0));
+		panel2.setPreferredSize(new Dimension(580,80));
+		panel2.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panel3.setLayout(new GridLayout(1,6,10,0));
+		panel3.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		panelbox.setLayout(new BorderLayout());
 		panelbox.add(panel2, BorderLayout.NORTH);
@@ -155,7 +157,7 @@ public class GameGUI extends JFrame{
 		
 		
 		if(admin) {
-			// Höhe des Panels anpasse, damit Buttons noch angezeigt werden
+			// Höhe des Panels anpassen, damit Buttons noch angezeigt werden
 			panel3.setPreferredSize(new Dimension(580, 50));
 			
 		} else {
@@ -173,9 +175,9 @@ public class GameGUI extends JFrame{
 		panel1.add(text);
 		
 
-		panel2.setLayout(new GridLayout(1,6,10,0));
-		panel2.setPreferredSize(new Dimension(580,80));
-		panel2.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		
+		
 		
 		btnWuerfel.setText("Dice");
 		btnWuerfel.setActionCommand(WUERFELN);
@@ -228,12 +230,14 @@ public class GameGUI extends JFrame{
 			tfAdmin.setPreferredSize(new Dimension(200, 30));
 			tfAdmin.setText(" ");
 			tfAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+			tfAdmin.setBorder(BorderFactory.createLineBorder(Color.black));
 			panel3.add(tfAdmin);
 
 			btnAdmin.setText("Admin");
 			btnAdmin.setActionCommand(ADMIN);
 			btnAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 			btnAdmin.setBorder(new EmptyBorder(0,0,0,0));
+			btnAdmin.setBackground(new Color(255,255,255,255));
 			panel3.add(btnAdmin);
 		}
 
