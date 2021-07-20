@@ -57,13 +57,13 @@ public class GameGUI extends JFrame{
 	public static final String ADMIN = "ADMIN";
 
 	JPanel panel1 = new JPanel();
-
-	private JButton btnWuerfel = new JButton();
-	private JButton btnOption0 = new JButton();
-	private JButton btnOption1 = new JButton();
-	private JButton btnOption2 = new JButton();
-	private JButton btnOption3 = new JButton();
-	private JButton btnAdmin = new JButton();
+	
+	private JButton btnWuerfel = new RoundButton("", 20, false);
+	private JButton btnOption0 = new RoundButton("", 20, false);
+	private JButton btnOption1 = new RoundButton("", 20, false);
+	private JButton btnOption2 = new RoundButton("", 20, false);
+	private JButton btnOption3 = new RoundButton("", 20, false);
+	private JButton btnAdmin = new RoundButton("", 20, false);
 
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
@@ -175,8 +175,9 @@ public class GameGUI extends JFrame{
 		btnWuerfel.setText("Würfeln");
 		btnWuerfel.setActionCommand(WUERFELN);
 		btnWuerfel.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		
 		panel2.add(btnWuerfel);
-
+		
 		labelDiced = new JLabel("", imageIcon6,JLabel.CENTER);
 		// @Toni Hier mit der Größe Rumspielen
 		labelDiced.setPreferredSize(new Dimension(40, 40));

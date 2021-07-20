@@ -70,13 +70,16 @@ public class SetupGUI extends JFrame {
 		
 		this.setTitle("Mensch ärgere dich nicht!");
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		this.setLocation(300, 300);
+		this.setLocation(300,300);
 		this.setSize(500, 500);
 
 		//labelWhatToDo.setLayout(new GridLayout());
 		labelWhatToDo.setText(" Bitte wähle hier 'Mensch', wenn du selbst spielen möchtest und ");
 		labelWhatToDo2.setText(" wähle 'Bot' wenn du möchtest, dass der Computer spielen soll. ");
 		labelWhatToDo3.setText(" Auf 'Los!' startet das Spiel.");
+		labelWhatToDo.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		labelWhatToDo2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		labelWhatToDo3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		labelWhatToDo.setEditable(false);
 		labelWhatToDo2.setEditable(false);
 		labelWhatToDo3.setEditable(false);
@@ -144,7 +147,7 @@ public class SetupGUI extends JFrame {
 		panel1.setBackground(new Color(255,0,0,155));
 		panel1.add(comboBox1);
 		comboBox1.setBorder(BorderFactory.createTitledBorder("Rot"));
-		comboBox1.setBackground(new Color(255,0,0,155));
+		//comboBox1.setBackground(new Color(255,0,0,155));
 		panel1.setBorder(new EmptyBorder(2,5,5,5));
 		this.add(panel1);
 		
@@ -152,7 +155,7 @@ public class SetupGUI extends JFrame {
 		panel2.setBackground(new Color (30,144,255,155));
 		panel2.add(comboBox2);
 		comboBox2.setBorder(BorderFactory.createTitledBorder("Blau"));
-		comboBox2.setBackground(new Color(20,44,255,155));
+		//comboBox2.setBackground(new Color(20,44,255,155));
 		panel2.setBorder(new EmptyBorder(2,5,5,5));
 		this.add(panel2);
 		
@@ -160,7 +163,7 @@ public class SetupGUI extends JFrame {
 		panel3.setBackground(new Color (0,225,0,225));
 		panel3.add(comboBox3);
 		comboBox3.setBorder(BorderFactory.createTitledBorder("Grün"));
-		comboBox3.setBackground(new Color(0,125,0,225));
+		//comboBox3.setBackground(new Color(0,125,0,225));
 		panel3.setBorder(new EmptyBorder(2,5,5,5));
 		this.add(panel3);
 		
@@ -168,7 +171,7 @@ public class SetupGUI extends JFrame {
 		panel4.setBackground(new Color (255,225,0,225));
 		panel4.add(comboBox4);
 		comboBox4.setBorder(BorderFactory.createTitledBorder("Gelb"));
-		comboBox4.setBackground(new Color(125,125,0,225));
+		//comboBox4.setBackground(new Color(125,125,0,225));
 		panel4.setBorder(new EmptyBorder(2,5,5,5));
 		this.add(panel4);
 		
