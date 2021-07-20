@@ -72,9 +72,22 @@ BEFEHLE:
 
 
 
+Fragen die sich noch Stellen:
+- Wie wird das Ergebnis angezeigt? Im Moment steht einfach nur da "RED 3. BLUE 2. GREEN 1. YELLOW 4."
+- Was machen wir, wenn das Spiel vorbei ist? Beenden oder Neustartmöglichkeit?
+- Sollen 1 Optionen Züge Automatische gemacht werden oder sollen Sie Button Klick erfordern?
+- Wer schreibt Kurzanleitung, wer Testfall Dokumentation (Testbeispiele), wer Entwurfskizze?
+
+
+
+
+
 Noch zu tun was Franziskus betrifft:
 -DONE- in diceRoll() board.getOptions() aufrufen, wo alle (max 4) Möglichkeiten
     ermittelt und im Model gesetzt werden
+-DONE- Pieces in den Graphen einfügen und bei jedem Piece den Vertex setzen
+-DONE- In jeden Vertex die Koordinaten, des Feldes (für GUI berechnung)
+    - mit getX() und getY() versehen
 
 - in Gamemodel.performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
     und daraufhin bestimmte Sachen überprüft
@@ -93,10 +106,7 @@ Noch zu tun was Franziskus betrifft:
   ob dieser Fall auftritt Abfrage theoretisch außerdem muss geguckt werden, dass man nicht auf ein Feld moved,
   wo man eig. gar nicht hindarf (fremdes Haus z.B.)
   -> Für Admin, dass er "MOVE [pieceID] [VertexID]" eingeben kann.
-
--DONE- Pieces in den Graphen einfügen und bei jedem Piece den Vertex setzen
--DONE- In jeden Vertex die Koordinaten, des Feldes (für GUI berechnung)
-    - mit getX() und getY() versehen
+- bei adminMove() einen Boolean zurückgeben, dass Fehlermeldung angezeigt werden kann, wenn z.B. ein MOVE auf ein gegnerisches Haus gemacht wird
 
 
 
@@ -109,6 +119,8 @@ Noch zu tun was Toni betrifft:
     entspricht. Dann immer die anderen Buttons unsichtbar machen
 -DONE- Überlegen, wie man die einzelnen Möglichkeiten Zuordnet (evt Image, was auch im Button ist
     neben die entsprechende Spielfigur zeichnen)
+- Dateizugriff auf für nicht UNIX Systeme möglich machen bzw. probieren obs auch so geht
+- Dateien und Klassen löschen, die nicht verwendet werden
 
 
 
@@ -118,7 +130,8 @@ Noch zu tun was Toni betrifft:
 Noch zu tun was Johanes betrifft:
 - DONE- Extra Fenster für die Initialisierung der Spieler mit Bot auswahl
 - DONE-Bots
-- Intelligente Bots
-- (1 Möglichkkeit Züge automatisch machen)
 - DONE- Bei Bot und automatischen Zügen Zeitverzögernugen, damit alles nachvollziehbar bleibt
+- Intelligente Bots
 - Evt. Text INPUT FIELD, um bestimmte Konstalationen zu testen
+- Die Graph Klasse mal angucken, ob was einfacher geht
+- (1 Möglichkkeit Züge automatisch machen)
