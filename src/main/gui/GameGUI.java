@@ -72,7 +72,7 @@ public class GameGUI extends JFrame{
 	JPanel panel3 = new JPanel();
 	JPanel panelbox = new JPanel();
 
-	private JTextField text = new JTextField();
+	private JTextField text = new RoundJTextField(20);
 	private JLabel labelDiced;
 	private JTextField tfAdmin = new RoundJTextField(20);
 	
@@ -183,6 +183,7 @@ public class GameGUI extends JFrame{
 		btnWuerfel.setActionCommand(WUERFELN);
 		btnWuerfel.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnWuerfel.setBorder(new EmptyBorder(0,0,0,0)); //ganzer Button orange bei klick, nicht nur rahmen
+		btnWuerfel.setBackground(new Color(255,255,255,255));
 		//btnWuerfel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnWuerfel);
 		
@@ -231,6 +232,7 @@ public class GameGUI extends JFrame{
 			tfAdmin.setText(" ");
 			tfAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 			tfAdmin.setBorder(BorderFactory.createLineBorder(Color.black));
+			tfAdmin.setHorizontalAlignment(RoundJTextField.CENTER);
 			panel3.add(tfAdmin);
 
 			btnAdmin.setText("Admin");

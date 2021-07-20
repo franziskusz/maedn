@@ -104,10 +104,10 @@ Noch zu tun was Franziskus betrifft:
 
 Noch zu tun was Toni betrifft:
 -DONE- Spielfiguren zeichnen
-- Würfel Ausgabe einbinden (Image?!?)
-- Option Buttons in ein Flout Layout, damit der Button Option 0 immer dem Piece mit pieceID = 0
+-DONE- Würfel Ausgabe einbinden (Image?!?)
+-DONE- Option Buttons in ein Flout Layout, damit der Button Option 0 immer dem Piece mit pieceID = 0
     entspricht. Dann immer die anderen Buttons unsichtbar machen
-- Überlegen, wie man die einzelnen Möglichkeiten Zuordnet (evt Image, was auch im Button ist
+-DONE- Überlegen, wie man die einzelnen Möglichkeiten Zuordnet (evt Image, was auch im Button ist
     neben die entsprechende Spielfigur zeichnen)
 
 
