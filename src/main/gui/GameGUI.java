@@ -27,6 +27,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -151,9 +152,15 @@ public class GameGUI extends JFrame{
 		s1.setBounds(270, 270, 40, 40);
 		 */
 		
+		
+		
+		
+		
 		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
 		boardLayeredPane.add(s1);
+		
+		
 	
 		this.add(boardLayeredPane,BorderLayout.CENTER);
 
@@ -232,6 +239,7 @@ button.setEffect(shadow);
 		slider.setOrientation(SwingConstants.HORIZONTAL);
 		slider.addChangeListener(e -> setbotpace());
 
+		
 		int i=500;
 		SleepThread.setPace(i);	
 		panel4.add(left);
@@ -240,15 +248,6 @@ button.setEffect(shadow);
 
 		
 		
-		btnWuerfel.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		        btnWuerfel.setBackground(Color.GREEN);
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		        btnWuerfel.setBackground(getForeground());
-		    }
-		});
 
 		
 		
@@ -355,6 +354,7 @@ button.setEffect(shadow);
 		}
  */
 		
+		done(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.pack();
@@ -450,6 +450,35 @@ button.setEffect(shadow);
 				break;
 		}
 	}
+	
+	public void done(PlayerColor[] winner) {
+		
+		
+		RoundButton black = new RoundButton("", 0, false);
+		black.setEnabled(false);
+		black.setPreferredSize(new Dimension(700,700));
+		black.setBounds(0,0,700,700);
+		black.setBorder(new EmptyBorder(0,0,0,0));
+		black.setBackground(new Color(0,0,0,75));
+		black.setVisible(true);
+		boardLayeredPane.add(black);
+		
+		
+		for (int i=1;i<=4;i++) {
+			
+		}
+				
+		int first= 1;
+		int second=2;
+		int third=3;
+		int fourth=4;
+		
+		
+		
+		
+	}
+	
+	
 }
 
 
