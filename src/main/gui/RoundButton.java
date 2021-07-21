@@ -56,16 +56,16 @@ public class RoundButton extends JButton {
         switch(color){
         
         case RED:
-        	g2d.setColor(getModel().isArmed() ? Color.red: getBackground());
+        	g2d.setColor(getModel().isArmed() ? new Color (255,0,0,255): getBackground());
         	break;
         case BLUE:
-        	g2d.setColor(getModel().isArmed() ? Color.blue: getBackground());
+        	g2d.setColor(getModel().isArmed() ? new Color (30,144,255,255): getBackground());
         	break;
         case GREEN:
-        	g2d.setColor(getModel().isArmed() ? Color.green: getBackground());
+        	g2d.setColor(getModel().isArmed() ? new Color (0,255,0,225): getBackground());
         	break;
         case YELLOW:
-        	g2d.setColor(getModel().isArmed() ? Color.yellow: getBackground());
+        	g2d.setColor(getModel().isArmed() ? new Color (255,255,0,225): getBackground());
         	break;
         	
         }

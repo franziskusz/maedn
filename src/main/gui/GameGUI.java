@@ -64,6 +64,8 @@ public class GameGUI extends JFrame{
 	private JButton btnAdmin = new RoundButton("", 20, false);
 	private RoundButton s1 = new RoundButton("",40,false);
 	
+	
+	
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
 	JPanel panel4 = new JPanel();
@@ -73,12 +75,14 @@ public class GameGUI extends JFrame{
 	static final int FPS_MAX = 30;
 	static final int FPS_INIT = 15;
 	
-	private JSlider slider = new JSlider(0,100,5);
+	private JSlider slider = new JSlider(10,1010,510);
 	
 
 	private JTextField text = new RoundJTextField(20);
 	private JLabel labelDiced;
 	private JTextField tfAdmin = new RoundJTextField(20);
+	private JTextField left = new JTextField("fast");
+	private JTextField right = new JTextField("slow");
 	
 	private Panel_with_background boardLayeredPane;
 
@@ -190,6 +194,12 @@ public class GameGUI extends JFrame{
 		
 		
 		/*
+		 * 
+		 * 
+
+DropShadow shadow = new DropShadow();
+Button button = new Button();
+button.setEffect(shadow);
 		slider.setMajorTickSpacing(10);
 		slider.setMinorTickSpacing(1);
 		slider.setPaintTicks(true);
@@ -198,23 +208,48 @@ public class GameGUI extends JFrame{
 		panel4.add(slider);
 		*/
 		
-		slider.setSize(new Dimension(1000,200));
+		panel4.setLayout(new GridLayout());
+		panel4.setBorder(new EmptyBorder(0,0,10,0));
+		left.setEditable(false);
+		left.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		left.setHorizontalAlignment(JTextField.RIGHT);
+		left.setBackground(getForeground());
+		left.setBorder(new EmptyBorder(0,0,0,0));
+		
+		
+		
+		right.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		right.setEditable(false);
+		right.setBackground(getForeground());
+		right.setBorder(new EmptyBorder(0,0,0,0));
+		
 		slider.setPaintTicks(true);
-		slider.setMinorTickSpacing(5);
+		slider.setMinorTickSpacing(25);
 		slider.setPaintTrack(true);
-		slider.setMajorTickSpacing(25);
-		slider.setPaintLabels(true);
+		slider.setMajorTickSpacing(100);
+		//slider.setPaintLabels(true);
 		slider.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		slider.setOrientation(SwingConstants.HORIZONTAL);
-		// slider.addChangeListener((ChangeListener) this);
-	/*
-		int i=200;
-		SleepThread.setPace(i);
-	*/
+		slider.addChangeListener(e -> setbotpace());
+
+		int i=500;
+		SleepThread.setPace(i);	
+		panel4.add(left);
 		panel4.add(slider);
+		panel4.add(right);
 
 		
 		
+		btnWuerfel.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		        btnWuerfel.setBackground(Color.GREEN);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		        btnWuerfel.setBackground(getForeground());
+		    }
+		});
+
 		
 		
 		btnWuerfel.setText("Dice");
@@ -328,6 +363,12 @@ public class GameGUI extends JFrame{
 
 		
 	
+	private void setbotpace() {
+		SleepThread.setPace(slider.getValue());
+	}
+
+
+
 	public JButton getBtnWuerfel() {
 		return btnWuerfel;
 	}

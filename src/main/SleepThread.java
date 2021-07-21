@@ -7,7 +7,7 @@ public class SleepThread implements Runnable {
 
 	private GameModel gameModel;
 	private BotAction botAction;
-	private static int pace=200;
+	private static int pace=500;
 
 	public SleepThread(GameModel gameModel, BotAction botAction) {
 		this.gameModel = gameModel;
