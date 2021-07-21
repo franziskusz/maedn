@@ -1,6 +1,7 @@
 package main.controller;
 
 import main.gui.GameGUI;
+import main.gui.RoundButton;
 import main.model.enums.GameState;
 import main.model.GameModel;
 import main.model.player.Bot;
@@ -99,6 +100,7 @@ public class GameController implements Observer, ActionListener {
 
 			} else {
 				gameGUI.setBackgroundColor(gameModel.getPlayerTurn().getPlayerColor());
+				RoundButton.hierhastewas(gameModel.getPlayerTurn().getPlayerColor());
 				if(gameModel.getPlayerTurn() instanceof Bot) {
 					gameGUI.getBtnWuerfel().setEnabled(false);
 					gameGUI.getBtnOption0().setEnabled(false);

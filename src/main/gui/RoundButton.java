@@ -18,7 +18,7 @@ public class RoundButton extends JButton {
     private Shape shape;
     private int arc;
     private boolean isQuadratic;
-    private PlayerColor color = PlayerColor.RED;
+    private static PlayerColor color = PlayerColor.RED;
 
     public RoundButton(String text, int arc) {
         this(text, arc, true);
@@ -94,8 +94,8 @@ public class RoundButton extends JButton {
         return shape.contains(x, y);
     }
     
-    public void hierhastewas(PlayerColor color) {	
-    	this.color=color;
+    public static void hierhastewas(PlayerColor color) {
+    	RoundButton.color=color;
     }
 }
 
