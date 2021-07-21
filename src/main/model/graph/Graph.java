@@ -1,5 +1,6 @@
 package main.model.graph;
 
+import main.model.enums.PlayerState;
 import main.model.player.Piece;
 import main.model.player.Player;
 
@@ -132,6 +133,8 @@ public class Graph
 			if(SuperSpecialCase==true)
 			{
 				System.out.println("SuperSpecialCase!!!");
+				target.getPiece().getPlayer().setPlayerState(PlayerState.DICE_THREE_TIMES);
+				SuperSpecialCase=false;
 			}
 		}
 	}
@@ -206,9 +209,12 @@ public class Graph
 			//SuperSpecialCase prüfen: Wenn true, wird die gleichnamige boolsche Variable auf true gesetzt
 			SuperSpecialCase=checkforSuperSpecialCase(targetPlayer, players);
 			//debug
+			
 			if(SuperSpecialCase==true)
 			{
 				System.out.println("SuperSpecialCase!!!");
+				target.getPiece().getPlayer().setPlayerState(PlayerState.DICE_THREE_TIMES);
+				SuperSpecialCase=false;
 			}
 		}
 		
