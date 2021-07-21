@@ -51,7 +51,7 @@ public class GameModel extends Observable {
 			}
 		}
 
-		board = new Graph(players);
+		board = new Graph(INITIAL_PLAYERS);
 
 		playerTurn = players.get(0);
 		changeGameState(GameState.DETERMINE_ORDER);
