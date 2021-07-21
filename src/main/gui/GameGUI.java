@@ -290,13 +290,41 @@ public class GameGUI extends JFrame{
 			btnAdmin.setBackground(new Color(255,255,255,255));
 			panel3.add(btnAdmin);
 		}
-
+		
+	
+		if (btnOption0.isEnabled()==true) {
+			btnOption0.setBackground(new Color(136,136,136,200));
+		} if (btnOption0.isEnabled()==false) {
+			btnOption0.setBackground(new Color(255,255,255,255));
+		}
+		
+		if (btnOption1.isEnabled()== true) {
+			btnOption1.setBackground(new Color(136,136,136,200));
+		} if (btnOption1.isEnabled()== false) {
+			btnOption1.setBackground(new Color(255,255,255,255));
+		}
+		
+		if (btnOption2.isEnabled()==true) {
+			btnOption2.setBackground(new Color(136,136,136,200));
+		} if  (btnOption2.isEnabled()==false){
+			btnOption2.setBackground(new Color(255,255,255,255));
+		}
+		
+		if (btnOption3.isEnabled()==true) {
+			btnOption3.setBackground(new Color(136,136,136,200));
+		} if (btnOption3.isEnabled()==false){
+			btnOption3.setBackground(new Color(255,255,255,255));
+		}
+ 
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.pack();
 		this.setVisible(true);
 	}
 
+		
+	
 	public JButton getBtnWuerfel() {
 		return btnWuerfel;
 	}

@@ -119,7 +119,24 @@ Noch zu tun was Toni betrifft:
     entspricht. Dann immer die anderen Buttons unsichtbar machen
 -DONE- Überlegen, wie man die einzelnen Möglichkeiten Zuordnet (evt Image, was auch im Button ist
     neben die entsprechende Spielfigur zeichnen)
+-DONE- Spielsteine perfekt rund machen, verpixelung lösen (Entweder durch Buttons oder anders)
+
+
+- Siegesfanfare (eventuell neues Fenster nachdem Spiel beendet ist mit den Platzerungen und Pokalsymbol etc.)
+
+- Würfelsound einbinden
+
+- eventuell Spielhintegrundmusik
+	- erweiterte Einstellungen für das Spiel vielleicht 
+	* Helligkeit
+	* Spielsteinfarben
+	* Spielbrettfarben
+	* Hintergrundbild
+	* Musik an/aus
+	* Würfelsound an/aus
+	
 - Dateizugriff auf für nicht UNIX Systeme möglich machen bzw. probieren obs auch so geht
+
 - Dateien und Klassen löschen, die nicht verwendet werden
 
 
