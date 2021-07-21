@@ -7,6 +7,7 @@ public class SleepThread implements Runnable {
 
 	private GameModel gameModel;
 	private BotAction botAction;
+	private static int pace=200;
 
 	public SleepThread(GameModel gameModel, BotAction botAction) {
 		this.gameModel = gameModel;
@@ -16,7 +17,7 @@ public class SleepThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Thread.sleep(200);
+			Thread.sleep(pace);
 
 			switch(botAction) {
 				case DICE:
@@ -30,5 +31,9 @@ public class SleepThread implements Runnable {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void setPace(int speed) {
+		pace = speed;
 	}
 }

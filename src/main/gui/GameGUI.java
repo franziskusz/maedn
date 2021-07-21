@@ -1,42 +1,36 @@
 package main.gui;
 
+
+import main.SleepThread;
 import main.model.enums.PlayerColor;
 import main.model.player.Piece;
-import main.model.player.Player;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Objects;
 
+import javax.management.timer.Timer;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
-
-/*Probleme
- *
- * 	Hintergrund+Spielfeld nicht möglich Warum?
- *
- */
 
 public class GameGUI extends JFrame{
 
@@ -72,7 +66,16 @@ public class GameGUI extends JFrame{
 	
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
+	JPanel panel4 = new JPanel();
 	JPanel panelbox = new JPanel();
+	
+	
+	static final int FPS_MIN = 0;
+	static final int FPS_MAX = 30;
+	static final int FPS_INIT = 15;
+	
+	private JSlider slider = new JSlider(0,100,5);
+	
 
 	private JTextField text = new RoundJTextField(20);
 	private JLabel labelDiced;
@@ -164,7 +167,8 @@ public class GameGUI extends JFrame{
 		
 		panelbox.setLayout(new BorderLayout());
 		panelbox.add(panel2, BorderLayout.NORTH);
-		panelbox.add(panel3, BorderLayout.SOUTH);
+		panelbox.add(panel3, BorderLayout.CENTER);
+		panelbox.add(panel4, BorderLayout.SOUTH);
 		
 		
 		if(admin) {
@@ -185,6 +189,30 @@ public class GameGUI extends JFrame{
 		text.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel1.add(text);
 		
+		
+		/*
+		slider.setMajorTickSpacing(10);
+		slider.setMinorTickSpacing(1);
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
+		slider.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		panel4.add(slider);
+		*/
+		
+		slider.setSize(new Dimension(1000,200));
+		slider.setPaintTicks(true);
+		slider.setMinorTickSpacing(5);
+		slider.setPaintTrack(true);
+		slider.setMajorTickSpacing(25);
+		slider.setPaintLabels(true);
+		slider.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		slider.setOrientation(SwingConstants.HORIZONTAL);
+		// slider.addChangeListener((ChangeListener) this);
+	/*
+		int i=200;
+		SleepThread.setPace(i);
+	*/
+		panel4.add(slider);
 
 		
 		
@@ -240,6 +268,9 @@ public class GameGUI extends JFrame{
 		//btnOption3.setBorder(new EmptyBorder(0,10,0,0));
 		//btnOption3.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption3);
+		
+		
+      
 		
 		
 
