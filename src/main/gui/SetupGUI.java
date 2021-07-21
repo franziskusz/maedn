@@ -32,6 +32,7 @@ public class SetupGUI extends JFrame {
 	private JTextField jtf2 = new JTextField("Blau");
 	private JTextField jtf3 = new JTextField("Grün");
 	private JTextField jtf4 = new JTextField("Gelb");
+	private JTextField jtf5 = new JTextField("Admin");
 
 	private JComboBox comboBox1 = new JComboBox(playerOptions);
 	private JComboBox comboBox2 = new JComboBox(playerOptions);
@@ -51,6 +52,8 @@ public class SetupGUI extends JFrame {
 
 	private JCheckBox cbAdmin = new JCheckBox("Admin", false);
 
+	//ToggleSwitch ts = new ToggleSwitch();
+	
 	private JButton buttonContinue = new JButton("Los !");
 	
 
@@ -139,8 +142,11 @@ public class SetupGUI extends JFrame {
 		this.add(panel4);
 */
 		
-		
-		
+	/*
+		ts.setPreferredSize(new Dimension(100,30));
+		ts.setLayout(new BorderLayout());
+		ts.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+	*/	
 		
 		
 		panel1.setLayout(new GridLayout());
@@ -179,7 +185,11 @@ public class SetupGUI extends JFrame {
 		panel5.setLayout(new GridLayout());
 		buttonContinue.addActionListener(e -> startGame());
 		panel5.add(buttonContinue);
+		jtf5.setBackground(getForeground());
+		jtf5.setBorder(new EmptyBorder(5,5,5,5));
+		jtf5.setEditable(false);
 		panel5.add(cbAdmin);
+		//panel5.add(jtf5);
 		panel5.setBorder(new EmptyBorder(5,5,5,5));
 		this.add(panel5);
 		

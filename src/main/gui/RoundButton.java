@@ -11,11 +11,14 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
+import main.model.enums.PlayerColor;
+
 public class RoundButton extends JButton {
 
     private Shape shape;
     private int arc;
     private boolean isQuadratic;
+    private PlayerColor color = PlayerColor.RED;
 
     public RoundButton(String text, int arc) {
         this(text, arc, true);
@@ -39,14 +42,37 @@ public class RoundButton extends JButton {
         setContentAreaFilled(false);
         setFocusable(false);
     }
+    
+    
 
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        g2d.setColor(getModel().isArmed() ? Color.orange: getBackground());
+        //g2d.setColor(getModel().isArmed() ? Color.orange: getBackground());
+       
+        
+        switch(color){
+        
+        case RED:
+        	g2d.setColor(getModel().isArmed() ? Color.red: getBackground());
+        	break;
+        case BLUE:
+        	g2d.setColor(getModel().isArmed() ? Color.blue: getBackground());
+        	break;
+        case GREEN:
+        	g2d.setColor(getModel().isArmed() ? Color.green: getBackground());
+        	break;
+        case YELLOW:
+        	g2d.setColor(getModel().isArmed() ? Color.yellow: getBackground());
+        	break;
+        	
+        }
         g2d.fill(new RoundRectangle2D.Double(0, 0, getWidth()-1, getHeight()-1, arc, arc));
+        
+        
+        
         super.paintComponent(g);
     }
 
@@ -66,6 +92,10 @@ public class RoundButton extends JButton {
             this.shape = new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), arc, arc);
         }
         return shape.contains(x, y);
+    }
+    
+    public void hierhastewas(PlayerColor color) {	
+    	this.color=color;
     }
 }
 

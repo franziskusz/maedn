@@ -69,7 +69,6 @@ public class GameGUI extends JFrame{
 	JPanel panel4 = new JPanel();
 	JPanel panelbox = new JPanel();
 	
-	
 	static final int FPS_MIN = 0;
 	static final int FPS_MAX = 30;
 	static final int FPS_INIT = 15;
@@ -219,6 +218,7 @@ public class GameGUI extends JFrame{
 		
 		
 		btnWuerfel.setText("Dice");
+		btnWuerfel.setBorder(new MyBorder());
 		btnWuerfel.setActionCommand(WUERFELN);
 		btnWuerfel.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnWuerfel.setBorder(new EmptyBorder(0,0,0,0)); //ganzer Button orange bei klick, nicht nur rahmen
@@ -232,16 +232,17 @@ public class GameGUI extends JFrame{
 		panel2.add(labelDiced);
 
 		btnOption0.setText("0");
+		btnOption0.setBorder(new MyBorder());
 		btnOption0.setActionCommand(OPTION_0);
 		btnOption0.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption0.setBorder(new EmptyBorder(0,0,0,0));
 		btnOption0.setBackground(new Color(255,255,255,255));
 		//btnOption0.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption0);
-		
-		
+
 
 		btnOption1.setText("1");
+		btnOption1.setBorder(new MyBorder());
 		btnOption1.setActionCommand(OPTION_1);
 		btnOption1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption1.setBorder(new EmptyBorder(0,0,0,0));
@@ -250,6 +251,7 @@ public class GameGUI extends JFrame{
 		//panel2.add( Box.createRigidArea( new Dimension( 1 , 0 ) )  ); für den Abstand zwischen den Buttons, hat nicht geklappt
 
 		btnOption2.setText("2");
+		btnOption2.setBorder(new MyBorder());
 		btnOption2.setActionCommand(OPTION_2);
 		btnOption2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption2.setBorder(new EmptyBorder(0,0,0,0));
@@ -260,6 +262,7 @@ public class GameGUI extends JFrame{
 	
 
 		btnOption3.setText("3");
+		btnOption3.setBorder(new MyBorder());
 		btnOption3.setActionCommand(OPTION_3);
 		btnOption3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption3.setBorder(new EmptyBorder(0,0,0,0));
@@ -291,31 +294,31 @@ public class GameGUI extends JFrame{
 			panel3.add(btnAdmin);
 		}
 		
-	
+	/*
 		if (btnOption0.isEnabled()==true) {
 			btnOption0.setBackground(new Color(136,136,136,200));
-		} if (btnOption0.isEnabled()==false) {
+		} else if (btnOption0.isEnabled()==false) {
 			btnOption0.setBackground(new Color(255,255,255,255));
 		}
 		
 		if (btnOption1.isEnabled()== true) {
 			btnOption1.setBackground(new Color(136,136,136,200));
-		} if (btnOption1.isEnabled()== false) {
+		} else if (btnOption1.isEnabled()== false) {
 			btnOption1.setBackground(new Color(255,255,255,255));
 		}
 		
 		if (btnOption2.isEnabled()==true) {
 			btnOption2.setBackground(new Color(136,136,136,200));
-		} if  (btnOption2.isEnabled()==false){
+		} else if  (btnOption2.isEnabled()==false){
 			btnOption2.setBackground(new Color(255,255,255,255));
 		}
 		
 		if (btnOption3.isEnabled()==true) {
 			btnOption3.setBackground(new Color(136,136,136,200));
-		} if (btnOption3.isEnabled()==false){
+		} else if (btnOption3.isEnabled()==false){
 			btnOption3.setBackground(new Color(255,255,255,255));
 		}
- 
+ */
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
