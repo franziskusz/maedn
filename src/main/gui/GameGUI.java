@@ -34,6 +34,8 @@ import javax.swing.event.ChangeListener;
 
 
 
+
+
 public class GameGUI extends JFrame{
 
 
@@ -48,6 +50,8 @@ public class GameGUI extends JFrame{
 	private JPanel rightPanel;
 	private Panel_with_background content;
 	private Circle circle;
+	
+
 
 	public static final String WUERFELN = "WUERFELN";
 	public static final String OPTION_0 = "OPTION_0";
@@ -94,8 +98,10 @@ public class GameGUI extends JFrame{
 	ImageIcon imageIcon4 = new ImageIcon ("./images/4.png");
 	ImageIcon imageIcon5 = new ImageIcon ("./images/5.png");
 	ImageIcon imageIcon6 = new ImageIcon ("./images/6.png");
+	ImageIcon imageIconWinner = new ImageIcon("./images/success.png");
+	
 
-	public GameGUI(ArrayList<Piece> pieces, boolean admin){
+	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allhuman){
 
 		this.setTitle("Mensch ärgere dich nicht!");
 
@@ -159,7 +165,7 @@ public class GameGUI extends JFrame{
 		
 		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
-		boardLayeredPane.add(s1);
+		
 		
 		
 	
@@ -217,7 +223,7 @@ button.setEffect(shadow);
 		*/
 		
 		panel4.setLayout(new GridLayout());
-		panel4.setBorder(new EmptyBorder(0,0,10,0));
+		//panel4.setBorder(new EmptyBorder(0,0,10,0));
 		left.setEditable(false);
 		left.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		left.setHorizontalAlignment(JTextField.RIGHT);
@@ -242,11 +248,15 @@ button.setEffect(shadow);
 
 		
 		int i=500;
-		SleepThread.setPace(i);	
+		SleepThread.setPace(i);
+		
+		
+		if (allhuman==false) {
+		panel4.setBorder(new EmptyBorder(0,0,10,0));
 		panel4.add(left);
 		panel4.add(slider);
 		panel4.add(right);
-
+		}
 		
 		
 
@@ -307,8 +317,7 @@ button.setEffect(shadow);
 		//btnOption3.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption3);
 		
-		
-      
+
 		
 		
 
@@ -355,7 +364,10 @@ button.setEffect(shadow);
 		}
  */
 		
+		
+		
 		done(null);
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.pack();
@@ -432,8 +444,8 @@ button.setEffect(shadow);
 
 	public void setBackgroundColor(PlayerColor playerColor) {
 		switch(playerColor) {
-			case RED:
-				
+		
+			case RED:			
 				panel1.setBackground(new Color (255,0,0,255));
 				//panel2.setBackground(new Color(255, 61, 61,255));
 				break;
@@ -453,8 +465,6 @@ button.setEffect(shadow);
 	}
 	
 	public void done(PlayerColor[] winner) {
-		
-		
 		
 		RoundButton first = new RoundButton ("",20, false);
 		first.setVisible(true);
@@ -481,6 +491,7 @@ button.setEffect(shadow);
 		second.setLayout(new GridLayout());
 		second.setLocation(190,181);
 		second.setEnabled(false);
+
 		boardLayeredPane.add(second);
 		
 		RoundButton third = new RoundButton ("",20, false);
@@ -496,8 +507,7 @@ button.setEffect(shadow);
 		third.setEnabled(false);
 		boardLayeredPane.add(third);
 		
-		
-		
+	
 		RoundButton fourth = new RoundButton ("",20, false);
 		fourth.setVisible(true);
 		fourth.setText("Fourth");
@@ -509,6 +519,7 @@ button.setEffect(shadow);
 		fourth.setLayout(new GridLayout());
 		fourth.setLocation(190,421);
 		fourth.setEnabled(false);
+
 		boardLayeredPane.add(fourth);
 		
 		RoundButton again = new RoundButton ("",20, false);
@@ -522,6 +533,8 @@ button.setEffect(shadow);
 		again.setLayout(new GridLayout());
 		again.setLocation(470,520);
 		again.setEnabled(true);
+		
+		
 		boardLayeredPane.add(again);
 		
 		
@@ -530,10 +543,23 @@ button.setEffect(shadow);
 		black.setPreferredSize(new Dimension(700,700));
 		black.setBounds(0,0,700,700);
 		black.setBorder(new EmptyBorder(0,0,0,0));
-		black.setBackground(new Color(0,0,0,180));
+		black.setBackground(new Color(0,0,0,200));
 		black.setVisible(true);
 		boardLayeredPane.add(black);
 		
+		
+		
+		
+		/*
+		 * Probleme zu beheben:
+		 * 
+		 * Bilder einbinden funktioniert nicht
+		 * Button erneut spielen ruft SetUpGUI nicht auf
+		 * Farbe Buttons Winner werden nicht eingebunden
+		 * done Funktion wird immer ausgeführt, soll aber nur wenn beendet
+		 * Botgeschwindigkeit nur steuerbar wenn Bot enthalten ist
+		 * 
+		 */
 		
 		for (int i=1;i<=4;i++) {
 			
@@ -549,6 +575,10 @@ button.setEffect(shadow);
 		
 	}
 	
+	
+	
+
+
 	
 }
 

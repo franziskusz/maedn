@@ -202,35 +202,50 @@ public class SetupGUI extends JFrame {
 
 	private void startGame() {
 		
+		boolean allhuman = true;
+		
 		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
 		if(comboBox1.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.RED));
+			allhuman=false;
 		}
 
 		if(comboBox2.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.BLUE));
+	
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.BLUE));
+			allhuman=false;
 		}
 
 		if(comboBox3.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.GREEN));
+		
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.GREEN));
+			allhuman=false;
 		}
 
 		if(comboBox4.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.YELLOW));
+		
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.YELLOW));
+			allhuman=false;
 		}
 
 		GameModel gameModel = new GameModel(INITIAL_PLAYERS);
-		GameGUI gameGui = new GameGUI(gameModel.getPieces(), cbAdmin.isSelected());
+		GameGUI gameGui = new GameGUI(gameModel.getPieces(), cbAdmin.isSelected(), allhuman);
 		GameController gameController = new GameController(gameModel, gameGui);
+		
+		
+		// if(comboBox1.getSelectedIndex().add(new Gamer(null)))
 
 		this.setVisible(false);
 	}
+	
+	
+	
 }

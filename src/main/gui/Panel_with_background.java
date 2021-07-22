@@ -26,8 +26,9 @@ public class Panel_with_background extends JLayeredPane {
 		setLayout(null);
 	}
 
-	
-	
+
+
+
 	public void paintComponent(Graphics g) {
 		Image img = new ImageIcon("./images/background.png").getImage();
 		g.drawImage(img, 0, 0, null);
@@ -220,4 +221,8 @@ public class Panel_with_background extends JLayeredPane {
 	public void setPieces(ArrayList<Piece> pieces) {
 		this.pieces = pieces;
 	}
+
+
+
+
 }
