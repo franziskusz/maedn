@@ -55,7 +55,7 @@ public class SetupGUI extends JFrame {
 
 	//ToggleSwitch ts = new ToggleSwitch();
 	
-	private JButton buttonContinue = new JButton("Los !");
+	private RoundButton buttonContinue = new RoundButton("Los !",20,false);
 	
 
 	public SetupGUI() {
