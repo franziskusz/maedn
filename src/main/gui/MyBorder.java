@@ -76,5 +76,4 @@ public class MyBorder implements Border {
     public Insets getBorderInsets(Component c) {
         return new Insets(thickness_, thickness_, thickness_, thickness_);
     }
-
 }
