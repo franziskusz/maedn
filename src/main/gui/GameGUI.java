@@ -12,10 +12,14 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.management.timer.Timer;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -31,6 +35,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
 
 
 
@@ -51,7 +65,7 @@ public class GameGUI extends JFrame{
 	private Panel_with_background content;
 	private Circle circle;
 	
-
+	private BufferedImage image;
 
 	public static final String WUERFELN = "WUERFELN";
 	public static final String OPTION_0 = "OPTION_0";
@@ -101,7 +115,7 @@ public class GameGUI extends JFrame{
 	ImageIcon imageIconWinner = new ImageIcon("./images/success.png");
 	
 
-	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allhuman){
+	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allhuman) throws IOException{
 
 		this.setTitle("Mensch ärgere dich nicht!");
 
@@ -263,7 +277,7 @@ button.setEffect(shadow);
 		
 		
 		btnWuerfel.setText("Dice");
-		btnWuerfel.setBorder(new MyBorder());
+		//btnWuerfel.setBorder(new MyBorder());
 		btnWuerfel.setActionCommand(WUERFELN);
 		btnWuerfel.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnWuerfel.setBorder(new EmptyBorder(0,0,0,0)); //ganzer Button orange bei klick, nicht nur rahmen
@@ -277,7 +291,7 @@ button.setEffect(shadow);
 		panel2.add(labelDiced);
 
 		btnOption0.setText("0");
-		btnOption0.setBorder(new MyBorder());
+		//btnOption0.setBorder(new MyBorder());
 		btnOption0.setActionCommand(OPTION_0);
 		btnOption0.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption0.setBorder(new EmptyBorder(0,0,0,0));
@@ -287,7 +301,7 @@ button.setEffect(shadow);
 
 
 		btnOption1.setText("1");
-		btnOption1.setBorder(new MyBorder());
+		//btnOption1.setBorder(new MyBorder());
 		btnOption1.setActionCommand(OPTION_1);
 		btnOption1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption1.setBorder(new EmptyBorder(0,0,0,0));
@@ -296,7 +310,7 @@ button.setEffect(shadow);
 		//panel2.add( Box.createRigidArea( new Dimension( 1 , 0 ) )  ); für den Abstand zwischen den Buttons, hat nicht geklappt
 
 		btnOption2.setText("2");
-		btnOption2.setBorder(new MyBorder());
+		//btnOption2.setBorder(new MyBorder());
 		btnOption2.setActionCommand(OPTION_2);
 		btnOption2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption2.setBorder(new EmptyBorder(0,0,0,0));
@@ -307,7 +321,7 @@ button.setEffect(shadow);
 	
 
 		btnOption3.setText("3");
-		btnOption3.setBorder(new MyBorder());
+		//btnOption3.setBorder(new MyBorder());
 		btnOption3.setActionCommand(OPTION_3);
 		btnOption3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption3.setBorder(new EmptyBorder(0,0,0,0));
@@ -464,12 +478,58 @@ button.setEffect(shadow);
 		}
 	}
 	
-	public void done(PlayerColor[] winner) {
+	public void done(PlayerColor[] winner) throws IOException {
+		
+		int x=205;
+		int y=88;
+		int z=115+5;
+		
+		BufferedImage myPicture = ImageIO.read(new File("./images/success_2.png"));
+		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+		picLabel.setBounds(265,7,50,50);
+		boardLayeredPane.add(picLabel);
+		
+
+		BufferedImage myPicture2 = ImageIO.read(new File("./images/first.png"));
+		JLabel picLabel2 = new JLabel(new ImageIcon(myPicture2));
+		picLabel2.setBounds(x,y,50,50);
+		boardLayeredPane.add(picLabel2);
+		
+		BufferedImage myPicture3 = ImageIO.read(new File("./images/second.png"));
+		JLabel picLabel3 = new JLabel(new ImageIcon(myPicture3));
+		picLabel3.setBounds(x,y+z,50,50);
+		boardLayeredPane.add(picLabel3);
+		
+		BufferedImage myPicture4 = ImageIO.read(new File("./images/third.png"));
+		JLabel picLabel4 = new JLabel(new ImageIcon(myPicture4));
+		picLabel4.setBounds(x,y+2*z,50,50);
+		boardLayeredPane.add(picLabel4);
+		
+		
+		//
+		
+		BufferedImage myPicture6 = ImageIO.read(new File("./images/first.png"));
+		JLabel picLabel6 = new JLabel(new ImageIcon(myPicture6));
+		picLabel6.setBounds(325,y,50,50);
+		boardLayeredPane.add(picLabel6);
+		
+		BufferedImage myPicture7 = ImageIO.read(new File("./images/second.png"));
+		JLabel picLabel7 = new JLabel(new ImageIcon(myPicture7));
+		picLabel7.setBounds(325,y+z,50,50);
+		boardLayeredPane.add(picLabel7);
+		
+		BufferedImage myPicture8 = ImageIO.read(new File("./images/third.png"));
+		JLabel picLabel8 = new JLabel(new ImageIcon(myPicture8));
+		picLabel8.setBounds(325,y+2*z,50,50);
+		boardLayeredPane.add(picLabel8);
+		//
+		
+		
 		
 		RoundButton first = new RoundButton ("",20, false);
 		first.setVisible(true);
 		first.setText("Winner");
-		first.setBorder(new MyBorder());
+		//first.setBorder(new MyBorder());
 		first.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		first.setBorder(new EmptyBorder(0,0,0,0));
 		first.setBackground(new Color(255,255,255,255));
@@ -483,7 +543,7 @@ button.setEffect(shadow);
 		RoundButton second = new RoundButton ("",20, false);
 		second.setVisible(true);
 		second.setText("Second");
-		second.setBorder(new MyBorder());
+		//second.setBorder(new MyBorder());
 		second.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		second.setBorder(new EmptyBorder(0,0,0,0));
 		second.setBackground(new Color(255,255,255,255));
@@ -497,7 +557,7 @@ button.setEffect(shadow);
 		RoundButton third = new RoundButton ("",20, false);
 		third.setVisible(true);
 		third.setText("Third");
-		third.setBorder(new MyBorder());
+		//third.setBorder(new MyBorder());
 		third.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		third.setBorder(new EmptyBorder(0,0,0,0));
 		third.setBackground(new Color(255,255,255,255));
@@ -511,7 +571,7 @@ button.setEffect(shadow);
 		RoundButton fourth = new RoundButton ("",20, false);
 		fourth.setVisible(true);
 		fourth.setText("Fourth");
-		fourth.setBorder(new MyBorder());
+		//fourth.setBorder(new MyBorder());
 		fourth.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		fourth.setBorder(new EmptyBorder(0,0,0,0));
 		fourth.setBackground(new Color(255,255,255,255));
@@ -525,7 +585,7 @@ button.setEffect(shadow);
 		RoundButton again = new RoundButton ("",20, false);
 		again.setVisible(true);
 		again.setText("Play again?");
-		again.setBorder(new MyBorder());
+		//again.setBorder(new MyBorder());
 		again.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		again.setBorder(new EmptyBorder(0,0,0,0));
 		again.setBackground(new Color(255,255,255,255));
@@ -547,6 +607,14 @@ button.setEffect(shadow);
 		black.setVisible(true);
 		boardLayeredPane.add(black);
 		
+		/*
+		try {
+	          image = ImageIO.read(new File("./images/success.png"));
+	       } catch (IOException ex) {
+	            // handle exception...
+	       }
+		boardLayeredPane.drawImage(image, 0, 0, this); 
+	*/
 		
 		
 		
@@ -557,7 +625,7 @@ button.setEffect(shadow);
 		 * Button erneut spielen ruft SetUpGUI nicht auf
 		 * Farbe Buttons Winner werden nicht eingebunden
 		 * done Funktion wird immer ausgeführt, soll aber nur wenn beendet
-		 * Botgeschwindigkeit nur steuerbar wenn Bot enthalten ist
+		 * 
 		 * 
 		 */
 		
@@ -577,7 +645,6 @@ button.setEffect(shadow);
 	
 	
 	
-
 
 	
 }

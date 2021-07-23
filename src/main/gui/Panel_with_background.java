@@ -6,6 +6,7 @@ import main.model.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
@@ -221,6 +222,10 @@ public class Panel_with_background extends JLayeredPane {
 	public void setPieces(ArrayList<Piece> pieces) {
 		this.pieces = pieces;
 	}
+
+
+
+
 
 
 

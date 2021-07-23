@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SetupGUI extends JFrame {
@@ -183,7 +184,14 @@ public class SetupGUI extends JFrame {
 		
 
 		panel5.setLayout(new GridLayout());
-		buttonContinue.addActionListener(e -> startGame());
+		buttonContinue.addActionListener(e -> {
+			try {
+				startGame();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		panel5.add(buttonContinue);
 		jtf5.setBackground(getForeground());
 		jtf5.setBorder(new EmptyBorder(5,5,5,5));
@@ -200,7 +208,7 @@ public class SetupGUI extends JFrame {
 		this.setVisible(true);
 	}
 
-	private void startGame() {
+	private void startGame() throws IOException {
 		
 		boolean allhuman = true;
 		
