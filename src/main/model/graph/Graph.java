@@ -77,66 +77,105 @@ public class Graph
 	 * @param players
 	 * @return
 	 */
-	public void adminMove(Player player, int pieceID, Vertex target, ArrayList<Player> players)
+	public boolean adminMove(Player player, int pieceID, Vertex target, ArrayList<Player> players)
 	{
 		int targetIndex=target.getIndex();
 		Piece movingPiece=player.getPieces()[pieceID];
 		Vertex option=player.getPieces()[pieceID].getPosition();
 		Piece targetPiece=target.getPiece();
+		boolean legalMove=false;
 		
-		if (target.getPiece()==null) // Laufen
+		//TODO Prüfen, dass der Zug nicht im gegnerischen Zielfeld landet, nicht in einem Heimatfeld landet und keine eigene Figur schlägt
+		if ((excludeOpponentsGoal(player, target, players))&&(checkAdminTarget(player, target)))
 		{
-			vertices.get(targetIndex).setPiece(movingPiece);
-			vertices.get(targetIndex).getPiece().setPosition(target);
-			option.setPiece(null);
-			
-			if (targetIndex>55)
+			legalMove=true;
+		}
+		
+		if (legalMove)
+		{
+			if (target.getPiece()==null) // Laufen
 			{
-				SuperSpecialCase=checkforSuperSpecialCase(player, players);
-				//debug
-				if(SuperSpecialCase==true)
+				vertices.get(targetIndex).setPiece(movingPiece);
+				vertices.get(targetIndex).getPiece().setPosition(target);
+				option.setPiece(null);
+				
+				if (targetIndex>55)
 				{
-					System.out.println("SuperSpecialCase!!!");
+					SuperSpecialCase=checkforSuperSpecialCase(player, players);
+					//debug
+					if(SuperSpecialCase==true)
+					{
+						System.out.println("SuperSpecialCase!!!");
+					}
+				}
+	
+				if(checkGoal(player, players))
+				{
+					player.setGoalAchieved();
+				}
+	//			goalAchieved=checkGoal(player, players);
+				
+				if (player.isGoalAchieved())
+				{
+					SuperSpecialCase=false;
+	//				place=place+1;
+	//				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz "+place+ ". SuperSpecialCase ist false"); //debug
 				}
 			}
-
-			if(checkGoal(player, players))
-			{
-				player.setGoalAchieved();
-			}
-//			goalAchieved=checkGoal(player, players);
 			
-			if (player.isGoalAchieved())
+			else //Schlagen
 			{
-				SuperSpecialCase=false;
-//				place=place+1;
-//				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz "+place+ ". SuperSpecialCase ist false"); //debug
+				int targetPieceID=targetPiece.getId();
+				Player targetPlayer = target.getPiece().getPlayer();
+				boolean newPositionfound = false;
+				boolean diceThreeTimes=false;
+				
+				//geschlagene Pieces gehen nach Hause
+				sendTargetHome(target, players, newPositionfound, targetPieceID);
+				
+				vertices.get(targetIndex).setPiece(movingPiece);
+				vertices.get(targetIndex).getPiece().setPosition(target);
+				option.setPiece(null);
+				
+				//SuperSpecialCase prüfen: Wenn true, wird die gleichnamige boolsche Variable auf true gesetzt
+				diceThreeTimes=checkforSuperSpecialCase(targetPlayer, players);
+				//debug
+				if(diceThreeTimes==true)
+				{
+					System.out.println("SuperSpecialCase!!!");
+					target.getPiece().getPlayer().setPlayerState(PlayerState.DICE_THREE_TIMES);
+				}
 			}
 		}
+		return legalMove;
+	}
+	
+	//Hilfsfunktion, welche zwei Bedingungen prüft
+	boolean checkAdminTarget(Player player, Vertex target)
+	{
+		boolean re=true;
 		
-		else //Schlagen
+		//Ausschließen, dass eigene Figuren geschlagen werden
+		if (target.getPiece()!=null)
 		{
-			int targetPieceID=targetPiece.getId();
-			Player targetPlayer = target.getPiece().getPlayer();
-			boolean newPositionfound = false;
-			
-			//geschlagene Pieces gehen nach Hause
-			sendTargetHome(target, players, newPositionfound, targetPieceID);
-			
-			vertices.get(targetIndex).setPiece(movingPiece);
-			vertices.get(targetIndex).getPiece().setPosition(target);
-			option.setPiece(null);
-			
-			//SuperSpecialCase prüfen: Wenn true, wird die gleichnamige boolsche Variable auf true gesetzt
-			SuperSpecialCase=checkforSuperSpecialCase(targetPlayer, players);
-			//debug
-			if(SuperSpecialCase==true)
+			if (target.getPiece().getPlayer()==player)
 			{
-				System.out.println("SuperSpecialCase!!!");
-				target.getPiece().getPlayer().setPlayerState(PlayerState.DICE_THREE_TIMES);
-				SuperSpecialCase=false;
+				re=false;
 			}
 		}
+		//Heimatfelder ausschließen
+		if (re==true)
+		{
+			for (int i=40; i<56; i++)
+			{
+				if (target.getIndex()==i)
+				{
+					re=false;
+					break;
+				}
+			}
+		}
+		return re;
 	}
 	
 	/**
@@ -198,6 +237,7 @@ public class Graph
 			int targetPieceID=targetPiece.getId();
 			Player targetPlayer = target.getPiece().getPlayer();
 			boolean newPositionfound = false;
+			boolean diceThreeTimes=false;
 			
 			//geschlagene Pieces gehen nach Hause
 			sendTargetHome(target, players, newPositionfound, targetPieceID);
@@ -207,30 +247,15 @@ public class Graph
 			option.setPiece(null);
 			
 			//SuperSpecialCase prüfen: Wenn true, wird die gleichnamige boolsche Variable auf true gesetzt
-			SuperSpecialCase=checkforSuperSpecialCase(targetPlayer, players);
+			diceThreeTimes=checkforSuperSpecialCase(targetPlayer, players);
 			//debug
 			
-			if(SuperSpecialCase==true)
+			if(diceThreeTimes==true)
 			{
 				System.out.println("SuperSpecialCase!!!");
 				target.getPiece().getPlayer().setPlayerState(PlayerState.DICE_THREE_TIMES);
-				SuperSpecialCase=false;
 			}
 		}
-		
-		
-		//TODO:   - Wurde Geschlagen?
-		/*
-        - Muss geschlagener Spieler THREE TIMES bekommen (gar keine Spielfiguren mehr
-                oder restlos aufgerückt)
-        - Ist der Spieler restlos aufgerückt und hast sonst keine Spielsteine auf dem Feld?
-            - Dann bekommt er THREE TIMES (evt noch nicht setzen, sondern nur als FLAG)
-            
-            
-           - in performOption() eine Methode im Graph aufrufen, die überprüft, ob der
-    	mitgegebene Spieler (playerTrun) gewonnen hat
-    	- Falls ja -> GameState END setzen
-        */	
 	}
 	
 	
