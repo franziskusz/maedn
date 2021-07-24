@@ -79,7 +79,11 @@ public class Vertex
 	{
 		return successors;
 	}
-	
+
+	public static void resetIndexCount() {
+		Vertex.indexCount = 0;
+	}
+
 	@Override
 	public String toString()
 	{

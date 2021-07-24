@@ -3,6 +3,8 @@ package main.model.player;
 import main.model.enums.PlayerColor;
 import main.model.enums.PlayerState;
 
+import java.util.Comparator;
+
 public class Player {
 
 	private int lastDiced;
@@ -21,6 +23,13 @@ public class Player {
 		goalAchieved = false;
 		place = null;
 	}
+
+	public static Comparator<Player> sortByPlace = new Comparator<Player>() {
+		@Override
+		public int compare(Player player1, Player player2) {
+			return player1.getPlace().compareTo(player2.getPlace());
+		}
+	};
 
 
 	public int getLastDiced() {
@@ -59,6 +68,10 @@ public class Player {
 		this.goalAchieved = true;
 		place = nextPlace;
 		nextPlace++;
+	}
+
+	public static void resetNextPlayer() {
+		nextPlace = 1;
 	}
 
 	public Integer getPlace() {
