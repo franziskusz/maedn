@@ -9,10 +9,8 @@ import main.model.player.Player;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class SetupGUI extends JFrame {
@@ -28,226 +26,147 @@ public class SetupGUI extends JFrame {
 	private JPanel panel3 = new JPanel();
 	private JPanel panel4 = new JPanel();
 	private JPanel panel5 = new JPanel();
-	
-	private JTextField jtf1 = new JTextField("Rot");
-	private JTextField jtf2 = new JTextField("Blau");
-	private JTextField jtf3 = new JTextField("Grün");
-	private JTextField jtf4 = new JTextField("Gelb");
-	private JTextField jtf5 = new JTextField("Admin");
 
-	private JComboBox comboBox1 = new JComboBox(playerOptions);
-	private JComboBox comboBox2 = new JComboBox(playerOptions);
-	private JComboBox comboBox3 = new JComboBox(playerOptions);
-	private JComboBox comboBox4 = new JComboBox(playerOptions);
+	private JComboBox comboBoxRed = new JComboBox(playerOptions);
+	private JComboBox comboBoxBlue = new JComboBox(playerOptions);
+	private JComboBox comboBoxGreen = new JComboBox(playerOptions);
+	private JComboBox comboBoxYellow = new JComboBox(playerOptions);
 
-	/*
-	private JLabel jLabel1 = new JLabel("Rot");
-	private JLabel jLabel2 = new JLabel("Blau");
-	private JLabel jLabel3 = new JLabel("Grün");
-	private JLabel jLabel4 = new JLabel("Gelb");
-	*/
-	
-	private RoundButton2 buttonContinue = new RoundButton2 ("Los !",20, false);;
-	
-	
+
+	private RoundButton2 buttonContinue = new RoundButton2("Los !", 20, false);
+	;
 
 	private JCheckBox cbAdmin = new JCheckBox("Admin", false);
 
-	//ToggleSwitch ts = new ToggleSwitch();
-	
-	
 
 	public SetupGUI() {
-		
-		
-		
-		
-		jtf1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		jtf2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		jtf3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		jtf4.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		comboBox1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		comboBox2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		comboBox3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		comboBox4.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		buttonContinue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		
 		this.setTitle("Mensch ärgere dich nicht!");
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		this.setLocation(300,300);
+		this.setLocation(300, 300);
 		this.setSize(500, 500);
 
-		//labelWhatToDo.setLayout(new GridLayout());
+		comboBoxRed.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		comboBoxBlue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		comboBoxGreen.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		comboBoxYellow.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+
+		buttonContinue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+
 		labelWhatToDo.setText(" Bitte wähle hier 'Mensch', wenn du selbst spielen möchtest und ");
 		labelWhatToDo2.setText(" wähle 'Bot' wenn du möchtest, dass der Computer spielen soll. ");
 		labelWhatToDo3.setText(" Auf 'Los!' startet das Spiel.");
+
 		labelWhatToDo.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		labelWhatToDo2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		labelWhatToDo3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+
 		labelWhatToDo.setEditable(false);
 		labelWhatToDo2.setEditable(false);
 		labelWhatToDo3.setEditable(false);
+
 		labelWhatToDo.setBorder(null);
 		labelWhatToDo2.setBorder(null);
 		labelWhatToDo3.setBorder(null);
+
 		labelWhatToDo.setBackground(getForeground());
 		labelWhatToDo2.setBackground(getForeground());
 		labelWhatToDo3.setBackground(getForeground());
+
 		this.add(labelWhatToDo, BorderLayout.CENTER);
 		this.add(labelWhatToDo2, BorderLayout.CENTER);
 		this.add(labelWhatToDo3, BorderLayout.CENTER);
-		
-/*
+
+
 		panel1.setLayout(new GridLayout());
-		panel1.add(jtf1);
-		jtf1.setHorizontalAlignment(JTextField.CENTER);
-		jtf1.setEditable(false);
-		jtf1.setBackground(new Color (255,0,0,155));
-		jtf1.setBorder(BorderFactory.createLoweredBevelBorder());
-		comboBox1.setBorder(BorderFactory.createLoweredBevelBorder());
-		panel1.add(comboBox1);
-		panel1.setBorder(new EmptyBorder(5,5,5,5));
+		panel1.setBackground(new Color(255, 0, 0, 155));
+		panel1.setBorder(new EmptyBorder(2, 5, 5, 5));
+
+		comboBoxRed.setBorder(BorderFactory.createTitledBorder("Rot"));
+		panel1.add(comboBoxRed);
 		this.add(panel1);
 
+
 		panel2.setLayout(new GridLayout());
-		panel2.add(jtf2);
-		jtf2.setHorizontalAlignment(JTextField.CENTER);
-		jtf2.setEditable(false);
-		jtf2.setBackground(new Color (30,144,255,155));
-		jtf2.setBorder(BorderFactory.createLoweredBevelBorder());
-		comboBox2.setBorder(BorderFactory.createLoweredBevelBorder());
-		panel2.add(comboBox2);
-		panel2.setBorder(new EmptyBorder(5,5,5,5));
+		panel2.setBackground(new Color(30, 144, 255, 155));
+		panel2.setBorder(new EmptyBorder(2, 5, 5, 5));
+
+		comboBoxBlue.setBorder(BorderFactory.createTitledBorder("Blau"));
+		panel2.add(comboBoxBlue);
 		this.add(panel2);
 
+
 		panel3.setLayout(new GridLayout());
-		panel3.add(jtf3);
-		jtf3.setHorizontalAlignment(JTextField.CENTER);
-		jtf3.setEditable(false);
-		jtf3.setBackground(new Color (0,255,0,225));
-		jtf3.setBorder(BorderFactory.createLoweredBevelBorder());
-		comboBox3.setBorder(BorderFactory.createLoweredBevelBorder());
-		panel3.add(comboBox3);
-		panel3.setBorder(new EmptyBorder(5,5,5,5));
+		panel3.setBackground(new Color(0, 225, 0, 225));
+		panel3.setBorder(new EmptyBorder(2, 5, 5, 5));
+
+		comboBoxGreen.setBorder(BorderFactory.createTitledBorder("Grün"));
+		panel3.add(comboBoxGreen);
 		this.add(panel3);
 
+
 		panel4.setLayout(new GridLayout());
-		panel4.add(jtf4);
-		jtf4.setHorizontalAlignment(JTextField.CENTER);
-		jtf4.setEditable(false);
-		jtf4.setBackground(new Color (255,255,0,225));
-		jtf4.setBorder(BorderFactory.createLoweredBevelBorder());
-		comboBox4.setBorder(BorderFactory.createLoweredBevelBorder());
-		panel4.add(comboBox4);
-		panel4.setBorder(new EmptyBorder(5,5,5,5));
+		panel4.setBackground(new Color(255, 225, 0, 225));
+		panel4.setBorder(new EmptyBorder(2, 5, 5, 5));
+
+		comboBoxYellow.setBorder(BorderFactory.createTitledBorder("Gelb"));
+		panel4.add(comboBoxYellow);
 		this.add(panel4);
-*/
-		
-	/*
-		ts.setPreferredSize(new Dimension(100,30));
-		ts.setLayout(new BorderLayout());
-		ts.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-	*/	
-		
-		
-		panel1.setLayout(new GridLayout());
-		panel1.setBackground(new Color(255,0,0,155));
-		panel1.add(comboBox1);
-		comboBox1.setBorder(BorderFactory.createTitledBorder("Rot"));
-		//comboBox1.setBackground(new Color(255,0,0,155));
-		panel1.setBorder(new EmptyBorder(2,5,5,5));
-		this.add(panel1);
-		
-		panel2.setLayout(new GridLayout());
-		panel2.setBackground(new Color (30,144,255,155));
-		panel2.add(comboBox2);
-		comboBox2.setBorder(BorderFactory.createTitledBorder("Blau"));
-		//comboBox2.setBackground(new Color(20,44,255,155));
-		panel2.setBorder(new EmptyBorder(2,5,5,5));
-		this.add(panel2);
-		
-		panel3.setLayout(new GridLayout());
-		panel3.setBackground(new Color (0,225,0,225));
-		panel3.add(comboBox3);
-		comboBox3.setBorder(BorderFactory.createTitledBorder("Grün"));
-		//comboBox3.setBackground(new Color(0,125,0,225));
-		panel3.setBorder(new EmptyBorder(2,5,5,5));
-		this.add(panel3);
-		
-		panel4.setLayout(new GridLayout());
-		panel4.setBackground(new Color (255,225,0,225));
-		panel4.add(comboBox4);
-		comboBox4.setBorder(BorderFactory.createTitledBorder("Gelb"));
-		//comboBox4.setBackground(new Color(125,125,0,225));
-		panel4.setBorder(new EmptyBorder(2,5,5,5));
-		this.add(panel4);
-		
+
 
 		panel5.setLayout(new GridLayout());
 		buttonContinue.addActionListener(e -> {
-			try {
-				
-				startGame();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			//buttonContinue.setBackground(new Color(255,0,0,255));
+			startGame();
 		});
-		
 		panel5.add(buttonContinue);
-		jtf5.setBackground(getForeground());
-		jtf5.setBorder(new EmptyBorder(5,5,5,5));
-		jtf5.setEditable(false);
+
 		panel5.add(cbAdmin);
-		//panel5.add(jtf5);
-		panel5.setBorder(new EmptyBorder(5,5,5,5));
+
+		panel5.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.add(panel5);
-		
-		
+
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     	this.setResizable(false);
+		this.setResizable(false);
 		this.pack();
 	}
 
-	private void startGame() throws IOException {
-		
-		boolean allhuman = true;
-		
+	private void startGame() {
+
+		boolean allHuman = true;
+
 		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
 
-		if(comboBox1.getSelectedIndex() == 0) {
+		if(comboBoxRed.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.RED));
-			allhuman=false;
+			allHuman = false;
 		}
 
-		if(comboBox2.getSelectedIndex() == 0) {
+		if(comboBoxBlue.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.BLUE));
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.BLUE));
-			allhuman=false;
+			allHuman = false;
 		}
 
-		if(comboBox3.getSelectedIndex() == 0) {
+		if(comboBoxGreen.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.GREEN));
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.GREEN));
-			allhuman=false;
+			allHuman = false;
 		}
 
-		if(comboBox4.getSelectedIndex() == 0) {
+		if(comboBoxYellow.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.YELLOW));
-		
+
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.YELLOW));
-			allhuman=false;
+			allHuman = false;
 		}
 
 		GameModel gameModel = new GameModel(INITIAL_PLAYERS);
-		GameGUI gameGui = new GameGUI(gameModel.getPieces(), cbAdmin.isSelected(), allhuman);
+		GameGUI gameGui = new GameGUI(gameModel.getPieces(), cbAdmin.isSelected(), allHuman);
 		GameController gameController = new GameController(gameModel, gameGui);
 
 		this.setVisible(false);
