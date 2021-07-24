@@ -1,29 +1,19 @@
 package main.gui;
 
-
 import main.Main;
 import main.SleepThread;
 import main.model.enums.PlayerColor;
 import main.model.player.Piece;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.management.timer.Timer;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,40 +23,8 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
-
-
-
-
 
 public class GameGUI extends JFrame {
-
-
-	private static final Graphics Graphics = null;
-	private JLabel myLabel;
-	private JButton option1;
-	private JButton option2;
-	private JButton option3;
-	private JButton option4;
-	private JButton würfeln;
-	private JPanel mainPanel;
-	private JPanel rightPanel;
-	private Panel_with_background content;
-	private Circle circle;
-
-	private BufferedImage image;
 
 	public static final String WUERFELN = "WUERFELN";
 	public static final String OPTION_0 = "OPTION_0";
@@ -76,265 +34,191 @@ public class GameGUI extends JFrame {
 	public static final String ADMIN = "ADMIN";
 	public static final String AGAIN = "AGAIN";
 
-	JPanel panel1 = new JPanel();
 
-	private RoundButton btnWuerfel = new RoundButton("", 20, false);
+	private RoundButton btnDice = new RoundButton("", 20, false);
 	private RoundButton btnOption0 = new RoundButton("", 20, false);
 	private RoundButton btnOption1 = new RoundButton("", 20, false);
 	private RoundButton btnOption2 = new RoundButton("", 20, false);
 	private RoundButton btnOption3 = new RoundButton("", 20, false);
 	private RoundButton2 btnAdmin = new RoundButton2("", 20, false);
-	private RoundButton2 btnAgain = new RoundButton2 ("",20, false);
+	private RoundButton2 btnPlayAgain = new RoundButton2("", 20, false);
 
 
+	private JPanel panelTop = new JPanel();
+	private JPanel panelBottomTop = new JPanel();
+	private JPanel panelBottomCenter = new JPanel();
+	private JPanel panelBottomBottom = new JPanel();
+	private JPanel panelBottom = new JPanel();
 
-	JPanel panel2 = new JPanel();
-	JPanel panel3 = new JPanel();
-	JPanel panel4 = new JPanel();
-	JPanel panelbox = new JPanel();
-
-	static final int FPS_MIN = 0;
-	static final int FPS_MAX = 30;
-	static final int FPS_INIT = 15;
-
-	private JSlider slider = new JSlider(10,1010,510);
+	private JSlider sliderBotSpeed = new JSlider(10, 1010, 510);
 
 
-	private JTextField text = new RoundJTextField(20);
-	private JLabel labelDiced;
+	private JTextField tfInstruction = new RoundJTextField(20);
+	private JLabel labelDicedImage;
 	private JTextField tfAdmin = new RoundJTextField(20);
-	private JTextField left = new JTextField("fast");
-	private JTextField right = new JTextField("slow");
+	private JTextField tfSliderLeft = new JTextField("fast");
+	private JTextField tfSliderRight = new JTextField("slow");
 
-	private Panel_with_background boardLayeredPane;
+	private PanelGameBoard boardLayeredPane;
 
-	ImageIcon imageIcon1 = new ImageIcon ("./images/1.png");
-	ImageIcon imageIcon2 = new ImageIcon ("./images/2.png");
-	ImageIcon imageIcon3 = new ImageIcon ("./images/3.png");
-	ImageIcon imageIcon4 = new ImageIcon ("./images/4.png");
-	ImageIcon imageIcon5 = new ImageIcon ("./images/5.png");
-	ImageIcon imageIcon6 = new ImageIcon ("./images/6.png");
-	ImageIcon imageIconWinner = new ImageIcon("./images/success.png");
+	private ImageIcon imageIconDiced1 = new ImageIcon("./images/1.png");
+	private ImageIcon imageIconDiced2 = new ImageIcon("./images/2.png");
+	private ImageIcon imageIconDiced3 = new ImageIcon("./images/3.png");
+	private ImageIcon imageIconDiced4 = new ImageIcon("./images/4.png");
+	private ImageIcon imageIconDiced5 = new ImageIcon("./images/5.png");
+	private ImageIcon imageIconDiced6 = new ImageIcon("./images/6.png");
+
+	private ImageIcon imageIconWreath = new ImageIcon("./images/wreath.png");
+	private ImageIcon imageIconFirstPlace = new ImageIcon("./images/first.png");
+	private ImageIcon imageIconSecondPlace = new ImageIcon("./images/second.png");
+	private ImageIcon imageIconThirdPlace = new ImageIcon("./images/third.png");
 
 
-	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allhuman) throws IOException{
+	private JLabel labelWreathImage = new JLabel(imageIconWreath);
+	private JLabel labelFirstPlaceImage = new JLabel(imageIconFirstPlace);
+	private JLabel labelSecondPlaceImage = new JLabel(imageIconSecondPlace);
+	private JLabel labelThirdPlaceImage = new JLabel(imageIconThirdPlace);
+	private JLabel labelFirstPlaceImage2 = new JLabel(imageIconFirstPlace);
+	private JLabel labelThirdPlaceImage2 = new JLabel(imageIconThirdPlace);
+	private JLabel labelSecondPlaceImage2 = new JLabel(imageIconSecondPlace);
+
+
+	private RoundButton2 rbtnFirstPlace = new RoundButton2("", 20, false);
+	private RoundButton2 rbtnSecondPlace = new RoundButton2("", 20, false);
+	private RoundButton2 rbtnThirdPlace = new RoundButton2("", 20, false);
+	private RoundButton2 rbtnFourthPlace = new RoundButton2("", 20, false);
+	private RoundButton rbtnBoardLayeredPaneShadow = new RoundButton("", 0, false);
+
+	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allHuman) {
 
 		this.setTitle("Mensch ärgere dich nicht!");
 
 
-/*
-		JPLayeredPane layeredpane = new JPanel();
-		panel.setBackground(Color.black);
-		panel.setPreferredSize(new Dimension(700, 700));
-		this.add(panel, BorderLayout.CENTER);
-*/
-
-		/*
-		setLayout(new FlowLayout());
-
-		text.setEditable(false);
-		text.setText("?");
-		text.setPreferredSize( new Dimension( 200, 24 ) );
-		wZahl.setSize(400, 10);
-		add(text);
-
-		wZahl.setEditable(false);
-		wZahl.setText("0");
-		wZahl.setSize(10, 10);
-		add(wZahl);
-
-		btnWuerfel.setText("Würfeln");
-		btnWuerfel.setActionCommand(WUERFELN);
-		add(btnWuerfel);
-
-		btnOption1.setText("Option 1");
-		btnOption1.setActionCommand(OPTION_1);
-		add(btnOption1);
-
-		btnOption2.setText("Option 2");
-		btnOption2.setActionCommand(OPTION_2);
-		add(btnOption2);
-
-		btnOption3.setText("Option 3");
-		btnOption3.setActionCommand(OPTION_3);
-		add(btnOption3);
-
-		btnOption4.setText("Option 3");
-		btnOption4.setActionCommand(OPTION_3);
-		add(btnOption4);
-
-
-		pack();
-
-		*/
-
-		/*
-		s1.setEnabled(false);
-		s1.setBackground(new Color (225,221,176,200));
-		s1.setBorder(BorderFactory.createLoweredBevelBorder());
-		s1.setBounds(270, 270, 40, 40);
-		 */
-
-
-
-		
-
-		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
+		boardLayeredPane = new PanelGameBoard(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
+		this.add(boardLayeredPane, BorderLayout.CENTER);
 
 
+		panelTop.setPreferredSize(new Dimension(580, 50));
+		panelTop.setLayout(new GridBagLayout());
+		this.add(panelTop, BorderLayout.NORTH);
 
+		panelBottomTop.setLayout(new GridLayout(1, 6, 10, 0));
+		panelBottomTop.setPreferredSize(new Dimension(580, 80));
+		panelBottomTop.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		this.add(boardLayeredPane,BorderLayout.CENTER);
+		panelBottomCenter.setLayout(new GridLayout(1, 6, 10, 0));
+		panelBottomCenter.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-
-
-		panel1.setPreferredSize(new Dimension(580, 50));
-		this.add(panel1, BorderLayout.NORTH);
-		panel1.setLayout(new GridBagLayout());
-		panel2.setLayout(new GridLayout(1,6,10,0));
-		panel2.setPreferredSize(new Dimension(580,80));
-		panel2.setBorder(new EmptyBorder(10, 10, 10, 10));
-		panel3.setLayout(new GridLayout(1,6,10,0));
-		panel3.setBorder(new EmptyBorder(10, 10, 10, 10));
-
-		panelbox.setLayout(new BorderLayout());
-		panelbox.add(panel2, BorderLayout.NORTH);
-		panelbox.add(panel3, BorderLayout.CENTER);
-		panelbox.add(panel4, BorderLayout.SOUTH);
+		panelBottom.setLayout(new BorderLayout());
+		panelBottom.add(panelBottomTop, BorderLayout.NORTH);
+		panelBottom.add(panelBottomCenter, BorderLayout.CENTER);
+		panelBottom.add(panelBottomBottom, BorderLayout.SOUTH);
 
 
 		if(admin) {
 			// Höhe des Panels anpassen, damit Buttons noch angezeigt werden
-			panel3.setPreferredSize(new Dimension(580, 50));
-
+			panelBottomCenter.setPreferredSize(new Dimension(580, 50));
 		} else {
-			panel3.setPreferredSize(new Dimension(580, 0));
+			panelBottomCenter.setPreferredSize(new Dimension(580, 0));
 		}
-		this.add(panelbox, BorderLayout.SOUTH);
+		this.add(panelBottom, BorderLayout.SOUTH);
 
 
-		text.setHorizontalAlignment(JTextField.CENTER);
-		text.setEditable(false);
-		text.setText("?");
-		text.setPreferredSize( new Dimension( 200, 24 ));
-		text.setBackground(new Color(255,255,255,255));
-		text.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		panel1.add(text);
+		tfInstruction.setHorizontalAlignment(JTextField.CENTER);
+		tfInstruction.setEditable(false);
+		tfInstruction.setText("?");
+		tfInstruction.setPreferredSize(new Dimension(200, 24));
+		tfInstruction.setBackground(new Color(255, 255, 255, 255));
+		tfInstruction.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		panelTop.add(tfInstruction);
 
 
-		/*
-		 *
-		 *
-
-DropShadow shadow = new DropShadow();
-Button button = new Button();
-button.setEffect(shadow);
-		slider.setMajorTickSpacing(10);
-		slider.setMinorTickSpacing(1);
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		slider.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		panel4.add(slider);
-		*/
-
-		panel4.setLayout(new GridLayout());
+		panelBottomBottom.setLayout(new GridLayout());
 		//panel4.setBorder(new EmptyBorder(0,0,10,0));
-		left.setEditable(false);
-		left.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		left.setHorizontalAlignment(JTextField.RIGHT);
-		left.setBackground(getForeground());
-		left.setBorder(new EmptyBorder(0,0,0,0));
+		tfSliderLeft.setEditable(false);
+		tfSliderLeft.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		tfSliderLeft.setHorizontalAlignment(JTextField.RIGHT);
+		tfSliderLeft.setBackground(getForeground());
+		tfSliderLeft.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 
+		tfSliderRight.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		tfSliderRight.setEditable(false);
+		tfSliderRight.setBackground(getForeground());
+		tfSliderRight.setBorder(new EmptyBorder(0, 0, 0, 0));
 
-		right.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		right.setEditable(false);
-		right.setBackground(getForeground());
-		right.setBorder(new EmptyBorder(0,0,0,0));
-
-		slider.setPaintTicks(true);
-		slider.setMinorTickSpacing(25);
-		slider.setPaintTrack(true);
-		slider.setMajorTickSpacing(100);
+		sliderBotSpeed.setPaintTicks(true);
+		sliderBotSpeed.setMinorTickSpacing(25);
+		sliderBotSpeed.setPaintTrack(true);
+		sliderBotSpeed.setMajorTickSpacing(100);
 		//slider.setPaintLabels(true);
-		slider.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		slider.setOrientation(SwingConstants.HORIZONTAL);
-		slider.addChangeListener(e -> setbotpace());
+		sliderBotSpeed.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		sliderBotSpeed.setOrientation(SwingConstants.HORIZONTAL);
+		sliderBotSpeed.addChangeListener(e -> SleepThread.setPace(sliderBotSpeed.getValue()));
 
 
-		int i=500;
-		SleepThread.setPace(i);
-
-
-		if (allhuman==false) {
-			panel4.setBorder(new EmptyBorder(0,0,10,0));
-			panel4.add(left);
-			panel4.add(slider);
-			panel4.add(right);
+		if(!allHuman) {
+			panelBottomBottom.setBorder(new EmptyBorder(0, 0, 10, 0));
+			panelBottomBottom.add(tfSliderLeft);
+			panelBottomBottom.add(sliderBotSpeed);
+			panelBottomBottom.add(tfSliderRight);
 		}
 
 
-
-
-
-		btnWuerfel.setText("Dice");
+		btnDice.setText("Dice");
 		//btnWuerfel.setBorder(new MyBorder());
-		btnWuerfel.setActionCommand(WUERFELN);
-		btnWuerfel.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		btnWuerfel.setBorder(new EmptyBorder(0,0,0,0)); //ganzer Button orange bei klick, nicht nur rahmen
-		btnWuerfel.setBackground(new Color(255,255,255,255));
+		btnDice.setActionCommand(WUERFELN);
+		btnDice.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		btnDice.setBorder(new EmptyBorder(0, 0, 0, 0)); //ganzer Button orange bei klick, nicht nur rahmen
+		btnDice.setBackground(new Color(255, 255, 255, 255));
 		//btnWuerfel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
-		panel2.add(btnWuerfel);
+		panelBottomTop.add(btnDice);
 
-		labelDiced = new JLabel("", imageIcon6,JLabel.CENTER);
+		labelDicedImage = new JLabel("", imageIconDiced6, JLabel.CENTER);
 		// @Toni Hier mit der Größe Rumspielen
-		labelDiced.setPreferredSize(new Dimension(40, 40));
-		panel2.add(labelDiced);
+		labelDicedImage.setPreferredSize(new Dimension(40, 40));
+		panelBottomTop.add(labelDicedImage);
 
 		btnOption0.setText("0");
 		//btnOption0.setBorder(new MyBorder());
 		btnOption0.setActionCommand(OPTION_0);
 		btnOption0.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		btnOption0.setBorder(new EmptyBorder(0,0,0,0));
-		btnOption0.setBackground(new Color(255,255,255,255));
+		btnOption0.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnOption0.setBackground(new Color(255, 255, 255, 255));
 		//btnOption0.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
-		panel2.add(btnOption0);
+		panelBottomTop.add(btnOption0);
 
 
 		btnOption1.setText("1");
 		//btnOption1.setBorder(new MyBorder());
 		btnOption1.setActionCommand(OPTION_1);
 		btnOption1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		btnOption1.setBorder(new EmptyBorder(0,0,0,0));
-		btnOption1.setBackground(new Color(255,255,255,255));
-		panel2.add(btnOption1);
+		btnOption1.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnOption1.setBackground(new Color(255, 255, 255, 255));
+		panelBottomTop.add(btnOption1);
 		//panel2.add( Box.createRigidArea( new Dimension( 1 , 0 ) )  ); für den Abstand zwischen den Buttons, hat nicht geklappt
+
 
 		btnOption2.setText("2");
 		//btnOption2.setBorder(new MyBorder());
 		btnOption2.setActionCommand(OPTION_2);
 		btnOption2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		btnOption2.setBorder(new EmptyBorder(0,0,0,0));
-		btnOption2.setBackground(new Color(255,255,255,255));
-
+		btnOption2.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnOption2.setBackground(new Color(255, 255, 255, 255));
 		//btnOption2.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
-		panel2.add(btnOption2);
+		panelBottomTop.add(btnOption2);
 
 
 		btnOption3.setText("3");
 		//btnOption3.setBorder(new MyBorder());
 		btnOption3.setActionCommand(OPTION_3);
 		btnOption3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		btnOption3.setBorder(new EmptyBorder(0,0,0,0));
-		btnOption3.setBackground(new Color(255,255,255,255));
-
+		btnOption3.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnOption3.setBackground(new Color(255, 255, 255, 255));
 		//btnOption3.setBorder(new EmptyBorder(0,10,0,0));
 		//btnOption3.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
-		panel2.add(btnOption3);
-
-
-
+		panelBottomTop.add(btnOption3);
 
 
 		if(admin) {
@@ -344,41 +228,15 @@ button.setEffect(shadow);
 			tfAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 			tfAdmin.setBorder(BorderFactory.createLineBorder(Color.black));
 			tfAdmin.setHorizontalAlignment(RoundJTextField.CENTER);
-			panel3.add(tfAdmin);
+			panelBottomCenter.add(tfAdmin);
 
 			btnAdmin.setText("Admin");
 			btnAdmin.setActionCommand(ADMIN);
 			btnAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-			btnAdmin.setBorder(new EmptyBorder(0,0,0,0));
-			btnAdmin.setBackground(new Color(255,255,255,255));
-			panel3.add(btnAdmin);
+			btnAdmin.setBorder(new EmptyBorder(0, 0, 0, 0));
+			btnAdmin.setBackground(new Color(255, 255, 255, 255));
+			panelBottomCenter.add(btnAdmin);
 		}
-
-	/*
-		if (btnOption0.isEnabled()==true) {
-			btnOption0.setBackground(new Color(136,136,136,200));
-		} else if (btnOption0.isEnabled()==false) {
-			btnOption0.setBackground(new Color(255,255,255,255));
-		}
-
-		if (btnOption1.isEnabled()== true) {
-			btnOption1.setBackground(new Color(136,136,136,200));
-		} else if (btnOption1.isEnabled()== false) {
-			btnOption1.setBackground(new Color(255,255,255,255));
-		}
-
-		if (btnOption2.isEnabled()==true) {
-			btnOption2.setBackground(new Color(136,136,136,200));
-		} else if  (btnOption2.isEnabled()==false){
-			btnOption2.setBackground(new Color(255,255,255,255));
-		}
-
-		if (btnOption3.isEnabled()==true) {
-			btnOption3.setBackground(new Color(136,136,136,200));
-		} else if (btnOption3.isEnabled()==false){
-			btnOption3.setBackground(new Color(255,255,255,255));
-		}
- */
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -387,50 +245,52 @@ button.setEffect(shadow);
 	}
 
 
-
-	private void setbotpace() {
-		SleepThread.setPace(slider.getValue());
+	public JButton getBtnDice() {
+		return btnDice;
 	}
 
-
-
-	public JButton getBtnWuerfel() {
-		return btnWuerfel;
-	}
 
 	public JButton getBtnOption0() {
 		return btnOption0;
 	}
 
+
 	public JButton getBtnOption1() {
 		return btnOption1;
 	}
+
 
 	public JButton getBtnOption2() {
 		return btnOption2;
 	}
 
+
 	public JButton getBtnOption3() {
 		return btnOption3;
 	}
+
 
 	public JButton getBtnAdmin() {
 		return btnAdmin;
 	}
 
-	public JButton getBtnAgain() {
-		return btnAgain;
+
+	public JButton getBtnPlayAgain() {
+		return btnPlayAgain;
 	}
 
-	public JTextField getText() {
-		return text;
+
+	public JTextField getTfInstruction() {
+		return tfInstruction;
 	}
+
 
 	public JTextField getTfAdmin() {
 		return tfAdmin;
 	}
 
-	public Panel_with_background getBoardLayeredPane() {
+
+	public PanelGameBoard getBoardLayeredPane() {
 		return boardLayeredPane;
 	}
 
@@ -438,274 +298,173 @@ button.setEffect(shadow);
 	public void setDicedImage(int diced) {
 		switch(diced) {
 			case 1:
-				labelDiced.setIcon(imageIcon1);
+				labelDicedImage.setIcon(imageIconDiced1);
 				break;
 			case 2:
-				labelDiced.setIcon(imageIcon2);
+				labelDicedImage.setIcon(imageIconDiced2);
 				break;
 			case 3:
-				labelDiced.setIcon(imageIcon3);
+				labelDicedImage.setIcon(imageIconDiced3);
 				break;
 			case 4:
-				labelDiced.setIcon(imageIcon4);
+				labelDicedImage.setIcon(imageIconDiced4);
 				break;
 			case 5:
-				labelDiced.setIcon(imageIcon5);
+				labelDicedImage.setIcon(imageIconDiced5);
 				break;
 			case 6:
-				labelDiced.setIcon(imageIcon6);
+				labelDicedImage.setIcon(imageIconDiced6);
 				break;
 		}
 	}
+
 
 	public void setBackgroundColor(PlayerColor playerColor) {
 		switch(playerColor) {
 
 			case RED:
-				panel1.setBackground(new Color (255,0,0,255));
-				//panel2.setBackground(new Color(255, 61, 61,255));
+				panelTop.setBackground(new Color(255, 0, 0, 255));
 				break;
 			case BLUE:
-				panel1.setBackground(new Color (30,144,255,255));
-				//panel2.setBackground(new Color(61, 139, 255,255));
+				panelTop.setBackground(new Color(30, 144, 255, 255));
 				break;
 			case GREEN:
-				panel1.setBackground(new Color (0,255,0,225));
-				//panel2.setBackground(new Color(138, 243, 67,255));
+				panelTop.setBackground(new Color(0, 255, 0, 225));
 				break;
 			case YELLOW:
-				panel1.setBackground(new Color (255,255,0,225));
-				//panel2.setBackground(new Color(222, 201, 21,255));
+				panelTop.setBackground(new Color(255, 255, 0, 225));
 				break;
 		}
 	}
+
 
 	public void stopGame() {
 		this.setVisible(false);
 		Main.startSetUp();
 	}
 
-	public void done(PlayerColor[] winner) {
 
-		int x=205;
-		int y=88;
-		int z=115+5;
+	public void showEndScreen(PlayerColor[] winner) {
 
-		BufferedImage myPicture = null;
-		try {
-			myPicture = ImageIO.read(new File("./images/success_2.png"));
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-		picLabel.setBounds(265,7,50,50);
-		boardLayeredPane.add(picLabel);
+		int x = 205;
+		int y = 88;
+		int z = 115 + 5;
 
+		labelWreathImage.setBounds(265, 7, 50, 50);
+		boardLayeredPane.add(labelWreathImage);
 
-		BufferedImage myPicture2 = null;
-		try {
-			myPicture2 = ImageIO.read(new File("./images/first.png"));
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		JLabel picLabel2 = new JLabel(new ImageIcon(myPicture2));
-		picLabel2.setBounds(x,y,50,50);
-		boardLayeredPane.add(picLabel2);
+		labelFirstPlaceImage.setBounds(x, y, 50, 50);
+		boardLayeredPane.add(labelFirstPlaceImage);
 
-		BufferedImage myPicture3 = null;
-		try {
-			myPicture3 = ImageIO.read(new File("./images/second.png"));
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		JLabel picLabel3 = new JLabel(new ImageIcon(myPicture3));
-		picLabel3.setBounds(x,y+z,50,50);
-		boardLayeredPane.add(picLabel3);
+		labelSecondPlaceImage.setBounds(x, y + z, 50, 50);
+		boardLayeredPane.add(labelSecondPlaceImage);
 
-		BufferedImage myPicture4 = null;
-		try {
-			myPicture4 = ImageIO.read(new File("./images/third.png"));
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		JLabel picLabel4 = new JLabel(new ImageIcon(myPicture4));
-		picLabel4.setBounds(x,y+2*z,50,50);
-		boardLayeredPane.add(picLabel4);
-
+		labelThirdPlaceImage.setBounds(x, y + 2 * z, 50, 50);
+		boardLayeredPane.add(labelThirdPlaceImage);
 
 		//
 
-		BufferedImage myPicture6 = null;
-		try {
-			myPicture6 = ImageIO.read(new File("./images/first.png"));
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		JLabel picLabel6 = new JLabel(new ImageIcon(myPicture6));
-		picLabel6.setBounds(325,y,50,50);
-		boardLayeredPane.add(picLabel6);
+		labelFirstPlaceImage2.setBounds(325, y, 50, 50);
+		boardLayeredPane.add(labelFirstPlaceImage2);
 
-		BufferedImage myPicture7 = null;
-		try {
-			myPicture7 = ImageIO.read(new File("./images/second.png"));
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		JLabel picLabel7 = new JLabel(new ImageIcon(myPicture7));
-		picLabel7.setBounds(325,y+z,50,50);
-		boardLayeredPane.add(picLabel7);
+		labelSecondPlaceImage2.setBounds(325, y + z, 50, 50);
+		boardLayeredPane.add(labelSecondPlaceImage2);
 
-		BufferedImage myPicture8 = null;
-		try {
-			myPicture8 = ImageIO.read(new File("./images/third.png"));
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		JLabel picLabel8 = new JLabel(new ImageIcon(myPicture8));
-		picLabel8.setBounds(325,y+2*z,50,50);
-		boardLayeredPane.add(picLabel8);
-		
+		labelThirdPlaceImage2.setBounds(325, y + 2 * z, 50, 50);
+		boardLayeredPane.add(labelThirdPlaceImage2);
+
 		//
 
+		rbtnFirstPlace.setVisible(true);
+		rbtnFirstPlace.setText("Winner");
+		//rbtnFirstPlace.setBorder(new MyBorder());
+		rbtnFirstPlace.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		rbtnFirstPlace.setBorder(new EmptyBorder(0, 0, 0, 0));
+		rbtnFirstPlace.setBounds(0, 0, 200, 100);
+		rbtnFirstPlace.setLayout(new GridLayout());
+		rbtnFirstPlace.setLocation(190, 61);
+		//rbtnFirstPlace.setEnabled(false);
+		boardLayeredPane.add(rbtnFirstPlace);
 
 
-		RoundButton2 first = new RoundButton2 ("",20, false);
-		first.setVisible(true);
-		first.setText("Winner");
-		//first.setBorder(new MyBorder());
-		first.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		first.setBorder(new EmptyBorder(0,0,0,0));
-		first.setBounds(0,0,200,100);
-		first.setLayout(new GridLayout());
-		first.setLocation(190,61);
-		//first.setEnabled(false);
-		boardLayeredPane.add(first);
+		rbtnSecondPlace.setVisible(true);
+		rbtnSecondPlace.setText("Second");
+		//rbtnSecondPlace.setBorder(new MyBorder());
+		rbtnSecondPlace.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		rbtnSecondPlace.setBorder(new EmptyBorder(0, 0, 0, 0));
+		rbtnSecondPlace.setBounds(0, 0, 200, 100);
+		rbtnSecondPlace.setLayout(new GridLayout());
+		rbtnSecondPlace.setLocation(190, 181);
+		//rbtnSecondPlace.setEnabled(false);
+		boardLayeredPane.add(rbtnSecondPlace);
 
 
-		RoundButton2 second = new RoundButton2 ("",20, false);
-		second.setVisible(true);
-		second.setText("Second");
-		//second.setBorder(new MyBorder());
-		second.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		second.setBorder(new EmptyBorder(0,0,0,0));
-		second.setBounds(0,0,200,100);
-		second.setLayout(new GridLayout());
-		second.setLocation(190,181);
-		//second.setEnabled(false);
-		boardLayeredPane.add(second);
-
-		RoundButton2 third = new RoundButton2 ("",20, false);
-		third.setVisible(true);
-		third.setText("Third");
-		//third.setBorder(new MyBorder());
-		third.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		third.setBorder(new EmptyBorder(0,0,0,0));
-		third.setBounds(0,0,200,100);
-		third.setLayout(new GridLayout());
-		third.setLocation(190,301);
-		//third.setEnabled(false);
-		boardLayeredPane.add(third);
+		rbtnThirdPlace.setVisible(true);
+		rbtnThirdPlace.setText("Third");
+		//rbtnThirdPlace.setBorder(new MyBorder());
+		rbtnThirdPlace.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		rbtnThirdPlace.setBorder(new EmptyBorder(0, 0, 0, 0));
+		rbtnThirdPlace.setBounds(0, 0, 200, 100);
+		rbtnThirdPlace.setLayout(new GridLayout());
+		rbtnThirdPlace.setLocation(190, 301);
+		//rbtnThirdPlace.setEnabled(false);
+		boardLayeredPane.add(rbtnThirdPlace);
 
 
-		RoundButton2 fourth = new RoundButton2 ("",20, false);
-		fourth.setVisible(true);
-		fourth.setText("Fourth");
-		
-		fourth.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		fourth.setBorder(new EmptyBorder(0,0,0,0));
-		fourth.setBounds(0,0,200,100);
-		fourth.setLayout(new GridLayout());
-		fourth.setLocation(190,421);
-		//fourth.setEnabled(false);
-		boardLayeredPane.add(fourth);
+		rbtnFourthPlace.setVisible(true);
+		rbtnFourthPlace.setText("Fourth");
+
+		rbtnFourthPlace.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		rbtnFourthPlace.setBorder(new EmptyBorder(0, 0, 0, 0));
+		rbtnFourthPlace.setBounds(0, 0, 200, 100);
+		rbtnFourthPlace.setLayout(new GridLayout());
+		rbtnFourthPlace.setLocation(190, 421);
+		//rbtnFourthPlace.setEnabled(false);
+		boardLayeredPane.add(rbtnFourthPlace);
 
 		// Variable again wird ganz oben deklariert und initialisiert, weil sonst kein getter möglich.
-		btnAgain.setVisible(true);
-		btnAgain.setText("Play again?");
-		btnAgain.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		btnAgain.setBorder(new EmptyBorder(0,0,0,0));
-		btnAgain.setBounds(0,0,100,50);
-		btnAgain.setLayout(new GridLayout());
-		btnAgain.setLocation(470,520);
-		btnAgain.setEnabled(true);
-		btnAgain.setActionCommand(AGAIN);
+		btnPlayAgain.setVisible(true);
+		btnPlayAgain.setText("Play again?");
+		btnPlayAgain.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		btnPlayAgain.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnPlayAgain.setBounds(0, 0, 100, 50);
+		btnPlayAgain.setLayout(new GridLayout());
+		btnPlayAgain.setLocation(470, 520);
+		btnPlayAgain.setEnabled(true);
+		btnPlayAgain.setActionCommand(AGAIN);
 
 
-		boardLayeredPane.add(btnAgain);
+		boardLayeredPane.add(btnPlayAgain);
+
+		rbtnBoardLayeredPaneShadow.setEnabled(false);
+		rbtnBoardLayeredPaneShadow.setPreferredSize(new Dimension(700, 700));
+		rbtnBoardLayeredPaneShadow.setBounds(0, 0, 700, 700);
+		rbtnBoardLayeredPaneShadow.setBorder(new EmptyBorder(0, 0, 0, 0));
+		rbtnBoardLayeredPaneShadow.setBackground(new Color(0, 0, 0, 200));
+		rbtnBoardLayeredPaneShadow.setVisible(true);
+		boardLayeredPane.add(rbtnBoardLayeredPaneShadow);
 
 
-		RoundButton black = new RoundButton("", 0, false);
-		black.setEnabled(false);
-		black.setPreferredSize(new Dimension(700,700));
-		black.setBounds(0,0,700,700);
-		black.setBorder(new EmptyBorder(0,0,0,0));
-		black.setBackground(new Color(0,0,0,200));
-		black.setVisible(true);
-		boardLayeredPane.add(black);
+		RoundButton2[] placement = {rbtnFirstPlace, rbtnSecondPlace, rbtnThirdPlace, rbtnFourthPlace};
 
+		for(int i = 0; i <= 3; ++i) {
+			switch(winner[i]) {
+				case RED:
+					placement[i].setBackground(new Color(255, 0, 0, 255));
+					break;
+				case BLUE:
+					placement[i].setBackground(new Color(30, 144, 255, 255));
+					break;
+				case GREEN:
+					placement[i].setBackground(new Color(0, 255, 0, 225));
+					break;
+				case YELLOW:
+					placement[i].setBackground(new Color(255, 255, 0, 225));
+					break;
 
-	    RoundButton2[] placement = {first,second,third, fourth}; 
-
-		for (int i=0; i<=3; ++i) {
-			switch (winner[i]) {
-			case RED:
-				placement[i].setBackground(new Color (255,0,0,255));
-				break;
-			case BLUE:
-				placement[i].setBackground(new Color (30,144,255,255));
-				break;
-			case GREEN:
-				placement[i].setBackground(new Color (0,255,0,225));
-				break;
-			case YELLOW:
-				placement[i].setBackground(new Color (255,255,0,225));
-				break;
-			
 			}
-					
-			
-			
-			
-			
 		}
-		
-		/*
-		try {
-	          image = ImageIO.read(new File("./images/success.png"));
-	       } catch (IOException ex) {
-	            // handle exception...
-	       }
-		boardLayeredPane.drawImage(image, 0, 0, this);
-	*/
-
-
-
-		/*
-		 * Probleme zu beheben:
-		 *
-		 * Bilder einbinden funktioniert nicht
-		 * Button erneut spielen ruft SetUpGUI nicht auf
-		 * Farbe Buttons Winner werden nicht eingebunden
-		 * done Funktion wird immer ausgeführt, soll aber nur wenn beendet
-		 *
-		 *
-		 */
-
-			/*	
-		int first= 1;
-		int second=2;
-		int third=3;
-		int fourth=4;
-		*/
-
-
-
 	}
-
-
-
-
-
 }
 
 

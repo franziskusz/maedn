@@ -40,13 +40,13 @@ public class GameController implements Observer, ActionListener {
 
 
 		// set Listener für Buttons
-		gameGUI.getBtnWuerfel().addActionListener(this);
+		gameGUI.getBtnDice().addActionListener(this);
 		gameGUI.getBtnOption0().addActionListener(this);
 		gameGUI.getBtnOption1().addActionListener(this);
 		gameGUI.getBtnOption2().addActionListener(this);
 		gameGUI.getBtnOption3().addActionListener(this);
 		gameGUI.getBtnAdmin().addActionListener(this);
-		gameGUI.getBtnAgain().addActionListener(this);
+		gameGUI.getBtnPlayAgain().addActionListener(this);
 
 		// Buttons disable
 		gameGUI.getBtnOption0().setEnabled(false);
@@ -68,13 +68,13 @@ public class GameController implements Observer, ActionListener {
 		gameGUI.setBackgroundColor(gameModel.getPlayerTurn().getPlayerColor());
 
 		if(gameModel.getPlayerTurn() instanceof Bot) {
-			gameGUI.getBtnWuerfel().setEnabled(false);
+			gameGUI.getBtnDice().setEnabled(false);
 			gameGUI.getBtnAdmin().setEnabled(false);
-			gameGUI.getText().setText("Bot ist dran");
+			gameGUI.getTfInstruction().setText("Bot ist dran");
 		} else {
-			gameGUI.getBtnWuerfel().setEnabled(true);
+			gameGUI.getBtnDice().setEnabled(true);
 			gameGUI.getBtnAdmin().setEnabled(true);
-			gameGUI.getText().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+			gameGUI.getTfInstruction().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
 		}
 
 		System.out.println("Init GUI");
@@ -92,29 +92,29 @@ public class GameController implements Observer, ActionListener {
 	public void update(Observable o, Object arg) {
 		if(o == gameModel) {
 			if(gameModel.getGameState() == GameState.END) {
-				gameGUI.getText().setText("Spiel Ende");
+				gameGUI.getTfInstruction().setText("Spiel Ende");
 
 				ArrayList<Player> winner = new ArrayList<>(gameModel.getINITIAL_PLAYERS());
 				winner.sort(Player.sortByPlace);
 
-				gameGUI.done(new PlayerColor[] {winner.get(0).getPlayerColor(), winner.get(1).getPlayerColor(),
+				gameGUI.showEndScreen(new PlayerColor[] {winner.get(0).getPlayerColor(), winner.get(1).getPlayerColor(),
 						winner.get(2).getPlayerColor(), winner.get(3).getPlayerColor()});
 
 			} else {
 				gameGUI.setBackgroundColor(gameModel.getPlayerTurn().getPlayerColor());
 				RoundButton.hierhastewas(gameModel.getPlayerTurn().getPlayerColor());
 				if(gameModel.getPlayerTurn() instanceof Bot) {
-					gameGUI.getBtnWuerfel().setEnabled(false);
+					gameGUI.getBtnDice().setEnabled(false);
 					gameGUI.getBtnOption0().setEnabled(false);
 					gameGUI.getBtnOption1().setEnabled(false);
 					gameGUI.getBtnOption2().setEnabled(false);
 					gameGUI.getBtnOption3().setEnabled(false);
 					gameGUI.getBtnAdmin().setEnabled(false);
 
-					gameGUI.getText().setText("Bot ist dran");
+					gameGUI.getTfInstruction().setText("Bot ist dran");
 				} else {
 					if(gameModel.hasOption()) {
-						gameGUI.getBtnWuerfel().setEnabled(false);
+						gameGUI.getBtnDice().setEnabled(false);
 						gameGUI.getBtnAdmin().setEnabled(false);
 						if(gameModel.getOptions().contains(0)) {
 							gameGUI.getBtnOption0().setEnabled(true);
@@ -129,9 +129,9 @@ public class GameController implements Observer, ActionListener {
 							gameGUI.getBtnOption3().setEnabled(true);
 						}
 
-						gameGUI.getText().setText("Wähle Option");
+						gameGUI.getTfInstruction().setText("Wähle Option");
 					} else {
-						gameGUI.getBtnWuerfel().setEnabled(true);
+						gameGUI.getBtnDice().setEnabled(true);
 						gameGUI.getBtnAdmin().setEnabled(true);
 						gameGUI.getBtnOption0().setEnabled(false);
 						gameGUI.getBtnOption1().setEnabled(false);
@@ -139,9 +139,9 @@ public class GameController implements Observer, ActionListener {
 						gameGUI.getBtnOption3().setEnabled(false);
 
 						if(gameModel.getPlayerTurnDicedCount() >= 1) {
-							gameGUI.getText().setText("Bitte nochmal Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+							gameGUI.getTfInstruction().setText("Bitte nochmal Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
 						} else {
-							gameGUI.getText().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+							gameGUI.getTfInstruction().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
 						}
 					}
 				}
