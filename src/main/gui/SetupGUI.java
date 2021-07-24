@@ -47,7 +47,7 @@ public class SetupGUI extends JFrame {
 	private JLabel jLabel4 = new JLabel("Gelb");
 	*/
 	
-	
+	private RoundButton2 buttonContinue = new RoundButton2 ("Los !",20, false);;
 	
 	
 
@@ -55,22 +55,22 @@ public class SetupGUI extends JFrame {
 
 	//ToggleSwitch ts = new ToggleSwitch();
 	
-	private RoundButton buttonContinue = new RoundButton("Los !",20,false);
 	
 
 	public SetupGUI() {
-	
-		buttonContinue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		
+		
+		
 		
 		jtf1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		jtf2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		jtf3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		jtf4.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		
 		comboBox1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		comboBox2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		comboBox3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		comboBox4.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		buttonContinue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		
 		this.setTitle("Mensch ärgere dich nicht!");
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
@@ -186,12 +186,16 @@ public class SetupGUI extends JFrame {
 		panel5.setLayout(new GridLayout());
 		buttonContinue.addActionListener(e -> {
 			try {
+				
 				startGame();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
+			//buttonContinue.setBackground(new Color(255,0,0,255));
 		});
+		
 		panel5.add(buttonContinue);
 		jtf5.setBackground(getForeground());
 		jtf5.setBorder(new EmptyBorder(5,5,5,5));

@@ -78,14 +78,13 @@ public class GameGUI extends JFrame {
 
 	JPanel panel1 = new JPanel();
 
-	private JButton btnWuerfel = new RoundButton("", 20, false);
-	private JButton btnOption0 = new RoundButton("", 20, false);
-	private JButton btnOption1 = new RoundButton("", 20, false);
-	private JButton btnOption2 = new RoundButton("", 20, false);
-	private JButton btnOption3 = new RoundButton("", 20, false);
-	private JButton btnAdmin = new RoundButton("", 20, false);
-	private RoundButton s1 = new RoundButton("",40,false);
-	private RoundButton btnAgain = new RoundButton ("",20, false);;
+	private RoundButton btnWuerfel = new RoundButton("", 20, false);
+	private RoundButton btnOption0 = new RoundButton("", 20, false);
+	private RoundButton btnOption1 = new RoundButton("", 20, false);
+	private RoundButton btnOption2 = new RoundButton("", 20, false);
+	private RoundButton btnOption3 = new RoundButton("", 20, false);
+	private RoundButton2 btnAdmin = new RoundButton2("", 20, false);
+	private RoundButton2 btnAgain = new RoundButton2 ("",20, false);
 
 
 
@@ -178,7 +177,7 @@ public class GameGUI extends JFrame {
 
 
 
-
+		
 
 		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
@@ -565,73 +564,66 @@ button.setEffect(shadow);
 		JLabel picLabel8 = new JLabel(new ImageIcon(myPicture8));
 		picLabel8.setBounds(325,y+2*z,50,50);
 		boardLayeredPane.add(picLabel8);
+		
 		//
 
 
 
-		RoundButton first = new RoundButton ("",20, false);
+		RoundButton2 first = new RoundButton2 ("",20, false);
 		first.setVisible(true);
 		first.setText("Winner");
 		//first.setBorder(new MyBorder());
 		first.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		first.setBorder(new EmptyBorder(0,0,0,0));
-		first.setBackground(new Color(255,255,255,255));
 		first.setBounds(0,0,200,100);
 		first.setLayout(new GridLayout());
 		first.setLocation(190,61);
-		first.setEnabled(false);
+		//first.setEnabled(false);
 		boardLayeredPane.add(first);
 
 
-		RoundButton second = new RoundButton ("",20, false);
+		RoundButton2 second = new RoundButton2 ("",20, false);
 		second.setVisible(true);
 		second.setText("Second");
 		//second.setBorder(new MyBorder());
 		second.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		second.setBorder(new EmptyBorder(0,0,0,0));
-		second.setBackground(new Color(255,255,255,255));
 		second.setBounds(0,0,200,100);
 		second.setLayout(new GridLayout());
 		second.setLocation(190,181);
-		second.setEnabled(false);
-
+		//second.setEnabled(false);
 		boardLayeredPane.add(second);
 
-		RoundButton third = new RoundButton ("",20, false);
+		RoundButton2 third = new RoundButton2 ("",20, false);
 		third.setVisible(true);
 		third.setText("Third");
 		//third.setBorder(new MyBorder());
 		third.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		third.setBorder(new EmptyBorder(0,0,0,0));
-		third.setBackground(new Color(255,255,255,255));
 		third.setBounds(0,0,200,100);
 		third.setLayout(new GridLayout());
 		third.setLocation(190,301);
-		third.setEnabled(false);
+		//third.setEnabled(false);
 		boardLayeredPane.add(third);
 
 
-		RoundButton fourth = new RoundButton ("",20, false);
+		RoundButton2 fourth = new RoundButton2 ("",20, false);
 		fourth.setVisible(true);
 		fourth.setText("Fourth");
-		//fourth.setBorder(new MyBorder());
+		
 		fourth.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		fourth.setBorder(new EmptyBorder(0,0,0,0));
-		fourth.setBackground(new Color(255,255,255,255));
 		fourth.setBounds(0,0,200,100);
 		fourth.setLayout(new GridLayout());
 		fourth.setLocation(190,421);
-		fourth.setEnabled(false);
-
+		//fourth.setEnabled(false);
 		boardLayeredPane.add(fourth);
 
 		// Variable again wird ganz oben deklariert und initialisiert, weil sonst kein getter möglich.
 		btnAgain.setVisible(true);
 		btnAgain.setText("Play again?");
-		//again.setBorder(new MyBorder());
 		btnAgain.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnAgain.setBorder(new EmptyBorder(0,0,0,0));
-		btnAgain.setBackground(new Color(255,255,255,255));
 		btnAgain.setBounds(0,0,100,50);
 		btnAgain.setLayout(new GridLayout());
 		btnAgain.setLocation(470,520);
@@ -651,6 +643,32 @@ button.setEffect(shadow);
 		black.setVisible(true);
 		boardLayeredPane.add(black);
 
+
+	    RoundButton2[] placement = {first,second,third, fourth}; 
+
+		for (int i=0; i<=3; ++i) {
+			switch (winner[i]) {
+			case RED:
+				placement[i].setBackground(new Color (255,0,0,255));
+				break;
+			case BLUE:
+				placement[i].setBackground(new Color (30,144,255,255));
+				break;
+			case GREEN:
+				placement[i].setBackground(new Color (0,255,0,225));
+				break;
+			case YELLOW:
+				placement[i].setBackground(new Color (255,255,0,225));
+				break;
+			
+			}
+					
+			
+			
+			
+			
+		}
+		
 		/*
 		try {
 	          image = ImageIO.read(new File("./images/success.png"));
@@ -673,9 +691,6 @@ button.setEffect(shadow);
 		 *
 		 */
 
-		for (int i=1;i<=4;i++) {
-
-		}
 			/*	
 		int first= 1;
 		int second=2;
