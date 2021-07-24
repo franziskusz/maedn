@@ -380,7 +380,7 @@ button.setEffect(shadow);
 		
 		
 		
-		//done(null);
+		done(null);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
