@@ -205,7 +205,6 @@ public class SetupGUI extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      	this.setResizable(false);
 		this.pack();
-		this.setVisible(true);
 	}
 
 	private void startGame() throws IOException {
@@ -213,6 +212,7 @@ public class SetupGUI extends JFrame {
 		boolean allhuman = true;
 		
 		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
+
 		if(comboBox1.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
 		} else {
@@ -222,7 +222,6 @@ public class SetupGUI extends JFrame {
 
 		if(comboBox2.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.BLUE));
-	
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.BLUE));
 			allhuman=false;
@@ -230,7 +229,6 @@ public class SetupGUI extends JFrame {
 
 		if(comboBox3.getSelectedIndex() == 0) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.GREEN));
-		
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.GREEN));
 			allhuman=false;
@@ -247,13 +245,12 @@ public class SetupGUI extends JFrame {
 		GameModel gameModel = new GameModel(INITIAL_PLAYERS);
 		GameGUI gameGui = new GameGUI(gameModel.getPieces(), cbAdmin.isSelected(), allhuman);
 		GameController gameController = new GameController(gameModel, gameGui);
-		
-		
-		// if(comboBox1.getSelectedIndex().add(new Gamer(null)))
 
 		this.setVisible(false);
 	}
-	
-	
-	
+
+	public void showGUI() {
+		this.setVisible(true);
+	}
+
 }

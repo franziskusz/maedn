@@ -1,6 +1,7 @@
 package main.gui;
 
 
+import main.Main;
 import main.SleepThread;
 import main.model.enums.PlayerColor;
 import main.model.player.Piece;
@@ -50,7 +51,7 @@ import javax.swing.JPanel;
 
 
 
-public class GameGUI extends JFrame{
+public class GameGUI extends JFrame {
 
 
 	private static final Graphics Graphics = null;
@@ -64,7 +65,7 @@ public class GameGUI extends JFrame{
 	private JPanel rightPanel;
 	private Panel_with_background content;
 	private Circle circle;
-	
+
 	private BufferedImage image;
 
 	public static final String WUERFELN = "WUERFELN";
@@ -73,37 +74,39 @@ public class GameGUI extends JFrame{
 	public static final String OPTION_2 = "OPTION_2";
 	public static final String OPTION_3 = "OPTION_3";
 	public static final String ADMIN = "ADMIN";
+	public static final String AGAIN = "AGAIN";
 
 	JPanel panel1 = new JPanel();
-	
-	private JButton btnWuerfel = new RoundButton("", 20, false); 
+
+	private JButton btnWuerfel = new RoundButton("", 20, false);
 	private JButton btnOption0 = new RoundButton("", 20, false);
 	private JButton btnOption1 = new RoundButton("", 20, false);
 	private JButton btnOption2 = new RoundButton("", 20, false);
 	private JButton btnOption3 = new RoundButton("", 20, false);
 	private JButton btnAdmin = new RoundButton("", 20, false);
 	private RoundButton s1 = new RoundButton("",40,false);
-	
-	
-	
+	private RoundButton btnAgain = new RoundButton ("",20, false);;
+
+
+
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
 	JPanel panel4 = new JPanel();
 	JPanel panelbox = new JPanel();
-	
+
 	static final int FPS_MIN = 0;
 	static final int FPS_MAX = 30;
 	static final int FPS_INIT = 15;
-	
+
 	private JSlider slider = new JSlider(10,1010,510);
-	
+
 
 	private JTextField text = new RoundJTextField(20);
 	private JLabel labelDiced;
 	private JTextField tfAdmin = new RoundJTextField(20);
 	private JTextField left = new JTextField("fast");
 	private JTextField right = new JTextField("slow");
-	
+
 	private Panel_with_background boardLayeredPane;
 
 	ImageIcon imageIcon1 = new ImageIcon ("./images/1.png");
@@ -113,7 +116,7 @@ public class GameGUI extends JFrame{
 	ImageIcon imageIcon5 = new ImageIcon ("./images/5.png");
 	ImageIcon imageIcon6 = new ImageIcon ("./images/6.png");
 	ImageIcon imageIconWinner = new ImageIcon("./images/success.png");
-	
+
 
 	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allhuman) throws IOException{
 
@@ -126,7 +129,7 @@ public class GameGUI extends JFrame{
 		panel.setPreferredSize(new Dimension(700, 700));
 		this.add(panel, BorderLayout.CENTER);
 */
-		
+
 		/*
 		setLayout(new FlowLayout());
 
@@ -163,7 +166,7 @@ public class GameGUI extends JFrame{
 
 
 		pack();
-		
+
 		*/
 
 		/*
@@ -172,21 +175,21 @@ public class GameGUI extends JFrame{
 		s1.setBorder(BorderFactory.createLoweredBevelBorder());
 		s1.setBounds(270, 270, 40, 40);
 		 */
-		
-		
-		
-		
-		
+
+
+
+
+
 		boardLayeredPane = new Panel_with_background(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
-		
-		
-		
-	
+
+
+
+
 		this.add(boardLayeredPane,BorderLayout.CENTER);
 
-		
-		
+
+
 		panel1.setPreferredSize(new Dimension(580, 50));
 		this.add(panel1, BorderLayout.NORTH);
 		panel1.setLayout(new GridBagLayout());
@@ -195,23 +198,23 @@ public class GameGUI extends JFrame{
 		panel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		panel3.setLayout(new GridLayout(1,6,10,0));
 		panel3.setBorder(new EmptyBorder(10, 10, 10, 10));
-		
+
 		panelbox.setLayout(new BorderLayout());
 		panelbox.add(panel2, BorderLayout.NORTH);
 		panelbox.add(panel3, BorderLayout.CENTER);
 		panelbox.add(panel4, BorderLayout.SOUTH);
-		
-		
+
+
 		if(admin) {
 			// Höhe des Panels anpassen, damit Buttons noch angezeigt werden
 			panel3.setPreferredSize(new Dimension(580, 50));
-			
+
 		} else {
 			panel3.setPreferredSize(new Dimension(580, 0));
 		}
 		this.add(panelbox, BorderLayout.SOUTH);
 
-		
+
 		text.setHorizontalAlignment(JTextField.CENTER);
 		text.setEditable(false);
 		text.setText("?");
@@ -219,11 +222,11 @@ public class GameGUI extends JFrame{
 		text.setBackground(new Color(255,255,255,255));
 		text.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel1.add(text);
-		
-		
+
+
 		/*
-		 * 
-		 * 
+		 *
+		 *
 
 DropShadow shadow = new DropShadow();
 Button button = new Button();
@@ -235,7 +238,7 @@ button.setEffect(shadow);
 		slider.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panel4.add(slider);
 		*/
-		
+
 		panel4.setLayout(new GridLayout());
 		//panel4.setBorder(new EmptyBorder(0,0,10,0));
 		left.setEditable(false);
@@ -243,14 +246,14 @@ button.setEffect(shadow);
 		left.setHorizontalAlignment(JTextField.RIGHT);
 		left.setBackground(getForeground());
 		left.setBorder(new EmptyBorder(0,0,0,0));
-		
-		
-		
+
+
+
 		right.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		right.setEditable(false);
 		right.setBackground(getForeground());
 		right.setBorder(new EmptyBorder(0,0,0,0));
-		
+
 		slider.setPaintTicks(true);
 		slider.setMinorTickSpacing(25);
 		slider.setPaintTrack(true);
@@ -260,22 +263,22 @@ button.setEffect(shadow);
 		slider.setOrientation(SwingConstants.HORIZONTAL);
 		slider.addChangeListener(e -> setbotpace());
 
-		
+
 		int i=500;
 		SleepThread.setPace(i);
-		
-		
-		if (allhuman==false) {
-		panel4.setBorder(new EmptyBorder(0,0,10,0));
-		panel4.add(left);
-		panel4.add(slider);
-		panel4.add(right);
-		}
-		
-		
 
-		
-		
+
+		if (allhuman==false) {
+			panel4.setBorder(new EmptyBorder(0,0,10,0));
+			panel4.add(left);
+			panel4.add(slider);
+			panel4.add(right);
+		}
+
+
+
+
+
 		btnWuerfel.setText("Dice");
 		//btnWuerfel.setBorder(new MyBorder());
 		btnWuerfel.setActionCommand(WUERFELN);
@@ -284,7 +287,7 @@ button.setEffect(shadow);
 		btnWuerfel.setBackground(new Color(255,255,255,255));
 		//btnWuerfel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnWuerfel);
-		
+
 		labelDiced = new JLabel("", imageIcon6,JLabel.CENTER);
 		// @Toni Hier mit der Größe Rumspielen
 		labelDiced.setPreferredSize(new Dimension(40, 40));
@@ -318,7 +321,7 @@ button.setEffect(shadow);
 
 		//btnOption2.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption2);
-	
+
 
 		btnOption3.setText("3");
 		//btnOption3.setBorder(new MyBorder());
@@ -330,10 +333,10 @@ button.setEffect(shadow);
 		//btnOption3.setBorder(new EmptyBorder(0,10,0,0));
 		//btnOption3.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panel2.add(btnOption3);
-		
 
-		
-		
+
+
+
 
 		if(admin) {
 			// Admin Elemente anzeigen
@@ -351,45 +354,41 @@ button.setEffect(shadow);
 			btnAdmin.setBackground(new Color(255,255,255,255));
 			panel3.add(btnAdmin);
 		}
-		
+
 	/*
 		if (btnOption0.isEnabled()==true) {
 			btnOption0.setBackground(new Color(136,136,136,200));
 		} else if (btnOption0.isEnabled()==false) {
 			btnOption0.setBackground(new Color(255,255,255,255));
 		}
-		
+
 		if (btnOption1.isEnabled()== true) {
 			btnOption1.setBackground(new Color(136,136,136,200));
 		} else if (btnOption1.isEnabled()== false) {
 			btnOption1.setBackground(new Color(255,255,255,255));
 		}
-		
+
 		if (btnOption2.isEnabled()==true) {
 			btnOption2.setBackground(new Color(136,136,136,200));
 		} else if  (btnOption2.isEnabled()==false){
 			btnOption2.setBackground(new Color(255,255,255,255));
 		}
-		
+
 		if (btnOption3.isEnabled()==true) {
 			btnOption3.setBackground(new Color(136,136,136,200));
 		} else if (btnOption3.isEnabled()==false){
 			btnOption3.setBackground(new Color(255,255,255,255));
 		}
  */
-		
-		
-		
-		done(null);
-		
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.pack();
 		this.setVisible(true);
 	}
 
-		
-	
+
+
 	private void setbotpace() {
 		SleepThread.setPace(slider.getValue());
 	}
@@ -420,6 +419,10 @@ button.setEffect(shadow);
 		return btnAdmin;
 	}
 
+	public JButton getBtnAgain() {
+		return btnAgain;
+	}
+
 	public JTextField getText() {
 		return text;
 	}
@@ -435,31 +438,31 @@ button.setEffect(shadow);
 
 	public void setDicedImage(int diced) {
 		switch(diced) {
-		case 1:
-			labelDiced.setIcon(imageIcon1);
-			break;
-		case 2:
-			labelDiced.setIcon(imageIcon2);
-			break;
-		case 3:
-			labelDiced.setIcon(imageIcon3);
-			break;
-		case 4:
-			labelDiced.setIcon(imageIcon4);
-			break;
-		case 5:
-			labelDiced.setIcon(imageIcon5);
-			break;
-		case 6:
-			labelDiced.setIcon(imageIcon6);
-			break;
+			case 1:
+				labelDiced.setIcon(imageIcon1);
+				break;
+			case 2:
+				labelDiced.setIcon(imageIcon2);
+				break;
+			case 3:
+				labelDiced.setIcon(imageIcon3);
+				break;
+			case 4:
+				labelDiced.setIcon(imageIcon4);
+				break;
+			case 5:
+				labelDiced.setIcon(imageIcon5);
+				break;
+			case 6:
+				labelDiced.setIcon(imageIcon6);
+				break;
 		}
 	}
 
 	public void setBackgroundColor(PlayerColor playerColor) {
 		switch(playerColor) {
-		
-			case RED:			
+
+			case RED:
 				panel1.setBackground(new Color (255,0,0,255));
 				//panel2.setBackground(new Color(255, 61, 61,255));
 				break;
@@ -477,55 +480,95 @@ button.setEffect(shadow);
 				break;
 		}
 	}
-	
-	public void done(PlayerColor[] winner) throws IOException {
-		
+
+	public void stopGame() {
+		this.setVisible(false);
+		Main.startSetUp();
+	}
+
+	public void done(PlayerColor[] winner) {
+
 		int x=205;
 		int y=88;
 		int z=115+5;
-		
-		BufferedImage myPicture = ImageIO.read(new File("./images/success_2.png"));
+
+		BufferedImage myPicture = null;
+		try {
+			myPicture = ImageIO.read(new File("./images/success_2.png"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 		picLabel.setBounds(265,7,50,50);
 		boardLayeredPane.add(picLabel);
-		
 
-		BufferedImage myPicture2 = ImageIO.read(new File("./images/first.png"));
+
+		BufferedImage myPicture2 = null;
+		try {
+			myPicture2 = ImageIO.read(new File("./images/first.png"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		JLabel picLabel2 = new JLabel(new ImageIcon(myPicture2));
 		picLabel2.setBounds(x,y,50,50);
 		boardLayeredPane.add(picLabel2);
-		
-		BufferedImage myPicture3 = ImageIO.read(new File("./images/second.png"));
+
+		BufferedImage myPicture3 = null;
+		try {
+			myPicture3 = ImageIO.read(new File("./images/second.png"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		JLabel picLabel3 = new JLabel(new ImageIcon(myPicture3));
 		picLabel3.setBounds(x,y+z,50,50);
 		boardLayeredPane.add(picLabel3);
-		
-		BufferedImage myPicture4 = ImageIO.read(new File("./images/third.png"));
+
+		BufferedImage myPicture4 = null;
+		try {
+			myPicture4 = ImageIO.read(new File("./images/third.png"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		JLabel picLabel4 = new JLabel(new ImageIcon(myPicture4));
 		picLabel4.setBounds(x,y+2*z,50,50);
 		boardLayeredPane.add(picLabel4);
-		
-		
+
+
 		//
-		
-		BufferedImage myPicture6 = ImageIO.read(new File("./images/first.png"));
+
+		BufferedImage myPicture6 = null;
+		try {
+			myPicture6 = ImageIO.read(new File("./images/first.png"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		JLabel picLabel6 = new JLabel(new ImageIcon(myPicture6));
 		picLabel6.setBounds(325,y,50,50);
 		boardLayeredPane.add(picLabel6);
-		
-		BufferedImage myPicture7 = ImageIO.read(new File("./images/second.png"));
+
+		BufferedImage myPicture7 = null;
+		try {
+			myPicture7 = ImageIO.read(new File("./images/second.png"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		JLabel picLabel7 = new JLabel(new ImageIcon(myPicture7));
 		picLabel7.setBounds(325,y+z,50,50);
 		boardLayeredPane.add(picLabel7);
-		
-		BufferedImage myPicture8 = ImageIO.read(new File("./images/third.png"));
+
+		BufferedImage myPicture8 = null;
+		try {
+			myPicture8 = ImageIO.read(new File("./images/third.png"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		JLabel picLabel8 = new JLabel(new ImageIcon(myPicture8));
 		picLabel8.setBounds(325,y+2*z,50,50);
 		boardLayeredPane.add(picLabel8);
 		//
-		
-		
-		
+
+
+
 		RoundButton first = new RoundButton ("",20, false);
 		first.setVisible(true);
 		first.setText("Winner");
@@ -538,7 +581,7 @@ button.setEffect(shadow);
 		first.setLocation(190,61);
 		first.setEnabled(false);
 		boardLayeredPane.add(first);
-		
+
 
 		RoundButton second = new RoundButton ("",20, false);
 		second.setVisible(true);
@@ -553,7 +596,7 @@ button.setEffect(shadow);
 		second.setEnabled(false);
 
 		boardLayeredPane.add(second);
-		
+
 		RoundButton third = new RoundButton ("",20, false);
 		third.setVisible(true);
 		third.setText("Third");
@@ -566,8 +609,8 @@ button.setEffect(shadow);
 		third.setLocation(190,301);
 		third.setEnabled(false);
 		boardLayeredPane.add(third);
-		
-	
+
+
 		RoundButton fourth = new RoundButton ("",20, false);
 		fourth.setVisible(true);
 		fourth.setText("Fourth");
@@ -581,23 +624,24 @@ button.setEffect(shadow);
 		fourth.setEnabled(false);
 
 		boardLayeredPane.add(fourth);
-		
-		RoundButton again = new RoundButton ("",20, false);
-		again.setVisible(true);
-		again.setText("Play again?");
+
+		// Variable again wird ganz oben deklariert und initialisiert, weil sonst kein getter möglich.
+		btnAgain.setVisible(true);
+		btnAgain.setText("Play again?");
 		//again.setBorder(new MyBorder());
-		again.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		again.setBorder(new EmptyBorder(0,0,0,0));
-		again.setBackground(new Color(255,255,255,255));
-		again.setBounds(0,0,100,50);
-		again.setLayout(new GridLayout());
-		again.setLocation(470,520);
-		again.setEnabled(true);
-		
-		
-		boardLayeredPane.add(again);
-		
-		
+		btnAgain.setFont(new Font("Lexend Deca", Font.BOLD, 15));
+		btnAgain.setBorder(new EmptyBorder(0,0,0,0));
+		btnAgain.setBackground(new Color(255,255,255,255));
+		btnAgain.setBounds(0,0,100,50);
+		btnAgain.setLayout(new GridLayout());
+		btnAgain.setLocation(470,520);
+		btnAgain.setEnabled(true);
+		btnAgain.setActionCommand(AGAIN);
+
+
+		boardLayeredPane.add(btnAgain);
+
+
 		RoundButton black = new RoundButton("", 0, false);
 		black.setEnabled(false);
 		black.setPreferredSize(new Dimension(700,700));
@@ -606,45 +650,47 @@ button.setEffect(shadow);
 		black.setBackground(new Color(0,0,0,200));
 		black.setVisible(true);
 		boardLayeredPane.add(black);
-		
+
 		/*
 		try {
 	          image = ImageIO.read(new File("./images/success.png"));
 	       } catch (IOException ex) {
 	            // handle exception...
 	       }
-		boardLayeredPane.drawImage(image, 0, 0, this); 
+		boardLayeredPane.drawImage(image, 0, 0, this);
 	*/
-		
-		
-		
+
+
+
 		/*
 		 * Probleme zu beheben:
-		 * 
+		 *
 		 * Bilder einbinden funktioniert nicht
 		 * Button erneut spielen ruft SetUpGUI nicht auf
 		 * Farbe Buttons Winner werden nicht eingebunden
 		 * done Funktion wird immer ausgeführt, soll aber nur wenn beendet
-		 * 
-		 * 
+		 *
+		 *
 		 */
-		
-		
+
+		for (int i=1;i<=4;i++) {
+
+		}
 			/*	
 		int first= 1;
 		int second=2;
 		int third=3;
 		int fourth=4;
 		*/
-		
-		
-		
-	}
-	
-	
-	
 
-	
+
+
+	}
+
+
+
+
+
 }
 
 

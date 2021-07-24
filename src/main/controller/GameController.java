@@ -4,11 +4,13 @@ import main.gui.GameGUI;
 import main.gui.RoundButton;
 import main.model.enums.GameState;
 import main.model.GameModel;
+import main.model.enums.PlayerColor;
 import main.model.player.Bot;
 import main.model.player.Player;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -44,6 +46,7 @@ public class GameController implements Observer, ActionListener {
 		gameGUI.getBtnOption2().addActionListener(this);
 		gameGUI.getBtnOption3().addActionListener(this);
 		gameGUI.getBtnAdmin().addActionListener(this);
+		gameGUI.getBtnAgain().addActionListener(this);
 
 		// Buttons disable
 		gameGUI.getBtnOption0().setEnabled(false);
@@ -89,14 +92,13 @@ public class GameController implements Observer, ActionListener {
 	public void update(Observable o, Object arg) {
 		if(o == gameModel) {
 			if(gameModel.getGameState() == GameState.END) {
-				StringBuilder stringBuilder = new StringBuilder();
-				for(Player player : gameModel.getINITIAL_PLAYERS()) {
-					stringBuilder.append(player.getPlayerColor().toString() + " " + player.getPlace() + ". ");
-				}
-				// TODO evt anders azeigen (Im Moment "BLAU 1. ROT 3. GREEN 4. YELLOW 2.")
-				gameGUI.getText().setText(stringBuilder.toString());
+				gameGUI.getText().setText("Spiel Ende");
 
-				//TODO evt Button sichtbar machen, der Wieder das Initiale JFrame aufruft für neue Runde
+				ArrayList<Player> winner = new ArrayList<>(gameModel.getINITIAL_PLAYERS());
+				winner.sort(Player.sortByPlace);
+
+				gameGUI.done(new PlayerColor[] {winner.get(0).getPlayerColor(), winner.get(1).getPlayerColor(),
+						winner.get(2).getPlayerColor(), winner.get(3).getPlayerColor()});
 
 			} else {
 				gameGUI.setBackgroundColor(gameModel.getPlayerTurn().getPlayerColor());
@@ -183,6 +185,9 @@ public class GameController implements Observer, ActionListener {
 			case GameGUI.ADMIN:
 				gameModel.perfromAdminCommand(gameGUI, gameGUI.getTfAdmin().getText());
 				gameGUI.getTfAdmin().setText("");
+				break;
+			case GameGUI.AGAIN:
+				gameGUI.stopGame();
 				break;
 
 			default:
