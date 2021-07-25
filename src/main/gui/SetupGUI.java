@@ -62,7 +62,12 @@ public class SetupGUI extends JFrame {
 	boolean GreenHuman = false;
 	boolean YellowHuman = false;
 	
+	boolean RedBot = false;
+	boolean BlueBot = false;
+	boolean GreenBot = false;
+	boolean YellowBot = false;
 	
+
 
 	private JCheckBox cbAdmin = new JCheckBox("Admin", false);
 
@@ -152,10 +157,13 @@ public class SetupGUI extends JFrame {
 			btnRedHuman.setBackground(new Color(255,0,0,255));
 			RedHuman=true;
 			btnRedBot.setEnabled(false);
+		
 		});
 		btnRedBot.addActionListener(e -> {
 			btnRedBot.setBackground(new Color(255,0,0,255));
+			RedBot= true;
 			btnRedHuman.setEnabled(false);
+
 		});
 		
 		/*
@@ -219,10 +227,13 @@ public class SetupGUI extends JFrame {
 			btnBlueHuman.setBackground(new Color(0,0,255,200));
 			BlueHuman = true;
 			btnBlueBot.setEnabled(false);
+
 		});
 		btnBlueBot.addActionListener(e -> {
 			btnBlueBot.setBackground(new Color(0,0,255,200));
+			BlueBot= true;
 			btnBlueHuman.setEnabled(false);
+
 		});
 		btnBlueHuman.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnBlueBot.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -260,10 +271,13 @@ public class SetupGUI extends JFrame {
 			btnGreenHuman.setBackground(new Color(0,255,0,200));
 			GreenHuman = true;
 			btnGreenBot.setEnabled(false);
+		
 		});
 		btnGreenBot.addActionListener(e -> {
 			btnGreenBot.setBackground(new Color(0,255,0,200));
+			GreenBot= true;
 			btnGreenHuman.setEnabled(false);
+			
 		});
 		btnGreenHuman.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnGreenBot.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -303,8 +317,9 @@ public class SetupGUI extends JFrame {
 			btnYellowBot.setEnabled(false);
 		});
 		btnYellowBot.addActionListener(e -> {
-				btnYellowBot.setBackground(new Color(255,255,0,200));
-				btnYellowHuman.setEnabled(false);
+			btnYellowBot.setBackground(new Color(255,255,0,200));
+			YellowBot= true;
+			btnYellowHuman.setEnabled(false);
 		});
 		btnYellowHuman.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnYellowBot.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -327,10 +342,27 @@ public class SetupGUI extends JFrame {
 		buttonContinue.setText("Los!");
 		buttonContinue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		buttonContinue.setBorder(new EmptyBorder(0,0,0,0));
+		
+		
+		
 		buttonContinue.addActionListener(e -> {
 			startGame();
 		});
 		buttonContinue.setPreferredSize(new Dimension(100,50));
+		
+		
+		/*
+		if (RedHuman || RedBot &&
+			BlueHuman || BlueBot && 
+			GreenHuman || GreenBot && 
+			YellowHuman || YellowBot) {
+			
+			buttonContinue.setEnabled(true);
+		} else {
+			buttonContinue.setEnabled(false);
+		}
+		*/
+		
 		
 		panelFooter.add(buttonContinue);
 
