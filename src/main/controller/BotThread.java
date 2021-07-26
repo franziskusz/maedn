@@ -1,15 +1,15 @@
-package main;
+package main.controller;
 
 import main.model.GameModel;
 import main.model.enums.BotAction;
 
-public class SleepThread implements Runnable {
+public class BotThread implements Runnable {
 
 	private GameModel gameModel;
 	private BotAction botAction;
 	private static int pace=500;
 
-	public SleepThread(GameModel gameModel, BotAction botAction) {
+	public BotThread(GameModel gameModel, BotAction botAction) {
 		this.gameModel = gameModel;
 		this.botAction = botAction;
 	}

@@ -1,6 +1,6 @@
 package main.model;
 
-import main.SleepThread;
+import main.controller.BotThread;
 import main.controller.AdminCommand;
 import main.model.enums.BotAction;
 import main.model.enums.GameState;
@@ -504,7 +504,7 @@ public class GameModel extends Observable {
 	 */
 	private void isBot_DoAction(BotAction botAction) {
 		if(playerTurn instanceof Bot) {
-			Thread thread = new Thread(new SleepThread(this, botAction));
+			Thread thread = new Thread(new BotThread(this, botAction));
 			thread.start();
 		}
 	}

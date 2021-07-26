@@ -1,7 +1,7 @@
 package main.gui;
 
 import main.Main;
-import main.SleepThread;
+import main.controller.BotThread;
 import main.model.enums.PlayerColor;
 import main.model.player.Piece;
 
@@ -143,7 +143,7 @@ public class GameGUI extends GUI {
 		//slider.setPaintLabels(true);
 		sliderBotSpeed.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		sliderBotSpeed.setOrientation(SwingConstants.HORIZONTAL);
-		sliderBotSpeed.addChangeListener(e -> SleepThread.setPace(sliderBotSpeed.getValue()));
+		sliderBotSpeed.addChangeListener(e -> BotThread.setPace(sliderBotSpeed.getValue()));
 
 
 		if(!allHuman) {
