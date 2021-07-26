@@ -11,9 +11,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-public class SetupGUI extends JFrame {
+public class SetupGUI extends GUI {
 
 	private final String[] playerOptions = {"Mensch", "Bot"};
 
@@ -370,10 +372,14 @@ public class SetupGUI extends JFrame {
 
 		panelFooter.setBorder(new EmptyBorder(5, 5, -30, 245));
 		this.add(panelFooter);
-		
-		
-		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				closeGUI();
+			}
+		});
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
 		
 		/*
@@ -508,5 +514,4 @@ public class SetupGUI extends JFrame {
 	public void showGUI() {
 		this.setVisible(true);
 	}
-
 }
