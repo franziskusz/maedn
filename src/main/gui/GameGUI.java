@@ -34,16 +34,19 @@ public class GameGUI extends JFrame {
 	public static final String ADMIN = "ADMIN";
 	public static final String AGAIN = "AGAIN";
 
-
 	private RoundButton btnDice = new RoundButton("", 20, false);
 	private RoundButton btnOption0 = new RoundButton("", 20, false);
 	private RoundButton btnOption1 = new RoundButton("", 20, false);
 	private RoundButton btnOption2 = new RoundButton("", 20, false);
 	private RoundButton btnOption3 = new RoundButton("", 20, false);
+	private RoundButton rbtnBoardLayeredPaneShadow = new RoundButton("", 0, false);
 	private RoundButton2 btnAdmin = new RoundButton2("", 20, false);
 	private RoundButton2 btnPlayAgain = new RoundButton2("", 20, false);
-
-
+	private RoundButton2 rbtnFirstPlace = new RoundButton2("", 20, false);
+	private RoundButton2 rbtnSecondPlace = new RoundButton2("", 20, false);
+	private RoundButton2 rbtnThirdPlace = new RoundButton2("", 20, false);
+	private RoundButton2 rbtnFourthPlace = new RoundButton2("", 20, false);
+	
 	private JPanel panelTop = new JPanel();
 	private JPanel panelBottomTop = new JPanel();
 	private JPanel panelBottomCenter = new JPanel();
@@ -52,9 +55,7 @@ public class GameGUI extends JFrame {
 
 	private JSlider sliderBotSpeed = new JSlider(10, 1010, 510);
 
-
 	private JTextField tfInstruction = new RoundJTextField(20);
-	private JLabel labelDicedImage;
 	private JTextField tfAdmin = new RoundJTextField(20);
 	private JTextField tfSliderLeft = new JTextField("fast");
 	private JTextField tfSliderRight = new JTextField("slow");
@@ -67,13 +68,13 @@ public class GameGUI extends JFrame {
 	private ImageIcon imageIconDiced4 = new ImageIcon("./images/4.png");
 	private ImageIcon imageIconDiced5 = new ImageIcon("./images/5.png");
 	private ImageIcon imageIconDiced6 = new ImageIcon("./images/6.png");
-
 	private ImageIcon imageIconWreath = new ImageIcon("./images/wreath.png");
 	private ImageIcon imageIconFirstPlace = new ImageIcon("./images/first.png");
 	private ImageIcon imageIconSecondPlace = new ImageIcon("./images/second.png");
 	private ImageIcon imageIconThirdPlace = new ImageIcon("./images/third.png");
+	private ImageIcon imageIconKonfetti = new ImageIcon("./images/konfetti.gif");
 
-
+	private JLabel labelDicedImage;
 	private JLabel labelWreathImage = new JLabel(imageIconWreath);
 	private JLabel labelFirstPlaceImage = new JLabel(imageIconFirstPlace);
 	private JLabel labelSecondPlaceImage = new JLabel(imageIconSecondPlace);
@@ -81,23 +82,16 @@ public class GameGUI extends JFrame {
 	private JLabel labelFirstPlaceImage2 = new JLabel(imageIconFirstPlace);
 	private JLabel labelThirdPlaceImage2 = new JLabel(imageIconThirdPlace);
 	private JLabel labelSecondPlaceImage2 = new JLabel(imageIconSecondPlace);
+	private JLabel labelKonfettiImage = new JLabel(imageIconKonfetti);
 
-
-	private RoundButton2 rbtnFirstPlace = new RoundButton2("", 20, false);
-	private RoundButton2 rbtnSecondPlace = new RoundButton2("", 20, false);
-	private RoundButton2 rbtnThirdPlace = new RoundButton2("", 20, false);
-	private RoundButton2 rbtnFourthPlace = new RoundButton2("", 20, false);
-	private RoundButton rbtnBoardLayeredPaneShadow = new RoundButton("", 0, false);
 
 	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allHuman) {
 
 		this.setTitle("Mensch ärgere dich nicht!");
-
-
+		
 		boardLayeredPane = new PanelGameBoard(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
 		this.add(boardLayeredPane, BorderLayout.CENTER);
-
 
 		panelTop.setPreferredSize(new Dimension(580, 50));
 		panelTop.setLayout(new GridBagLayout());
@@ -177,7 +171,7 @@ public class GameGUI extends JFrame {
 
 		labelDicedImage = new JLabel("", imageIconDiced6, JLabel.CENTER);
 		// @Toni Hier mit der Größe Rumspielen
-		labelDicedImage.setPreferredSize(new Dimension(40, 40));
+		labelDicedImage.setPreferredSize(new Dimension(50, 50));
 		panelBottomTop.add(labelDicedImage);
 
 		btnOption0.setText("0");
@@ -375,6 +369,12 @@ public class GameGUI extends JFrame {
 
 		//
 
+
+		labelKonfettiImage.setBounds(0,0, 700, 700);
+		boardLayeredPane.add(labelKonfettiImage);
+		
+		
+		
 		rbtnFirstPlace.setVisible(true);
 		rbtnFirstPlace.setText("Winner");
 		//rbtnFirstPlace.setBorder(new MyBorder());
@@ -444,6 +444,7 @@ public class GameGUI extends JFrame {
 		rbtnBoardLayeredPaneShadow.setVisible(true);
 		boardLayeredPane.add(rbtnBoardLayeredPaneShadow);
 
+		
 
 		RoundButton2[] placement = {rbtnFirstPlace, rbtnSecondPlace, rbtnThirdPlace, rbtnFourthPlace};
 
