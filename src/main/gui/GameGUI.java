@@ -370,7 +370,7 @@ public class GameGUI extends JFrame {
 		//
 
 
-		labelKonfettiImage.setBounds(0,0, 700, 700);
+		labelKonfettiImage.setBounds(0,0, 600, 600);
 		boardLayeredPane.add(labelKonfettiImage);
 		
 		
