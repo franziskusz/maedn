@@ -11,20 +11,14 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class GameGUI extends JFrame {
+public class GameGUI extends GUI {
 
 	public static final String WUERFELN = "WUERFELN";
 	public static final String OPTION_0 = "OPTION_0";
@@ -46,7 +40,7 @@ public class GameGUI extends JFrame {
 	private RoundButton2 rbtnSecondPlace = new RoundButton2("", 20, false);
 	private RoundButton2 rbtnThirdPlace = new RoundButton2("", 20, false);
 	private RoundButton2 rbtnFourthPlace = new RoundButton2("", 20, false);
-	
+
 	private JPanel panelTop = new JPanel();
 	private JPanel panelBottomTop = new JPanel();
 	private JPanel panelBottomCenter = new JPanel();
@@ -88,7 +82,7 @@ public class GameGUI extends JFrame {
 	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allHuman) {
 
 		this.setTitle("Mensch ärgere dich nicht!");
-		
+
 		boardLayeredPane = new PanelGameBoard(new ImageIcon("./images/background.png").getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
 		this.add(boardLayeredPane, BorderLayout.CENTER);
@@ -232,7 +226,12 @@ public class GameGUI extends JFrame {
 			panelBottomCenter.add(btnAdmin);
 		}
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				closeGUI();
+			}
+		});
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
 		this.pack();
 		this.setVisible(true);
@@ -337,7 +336,6 @@ public class GameGUI extends JFrame {
 		Main.startSetUp();
 	}
 
-
 	public void showEndScreen(PlayerColor[] winner) {
 
 		int x = 205;
@@ -370,11 +368,10 @@ public class GameGUI extends JFrame {
 		//
 
 
-		labelKonfettiImage.setBounds(0,0, 600, 600);
+		labelKonfettiImage.setBounds(0, 0, 600, 600);
 		boardLayeredPane.add(labelKonfettiImage);
-		
-		
-		
+
+
 		rbtnFirstPlace.setVisible(true);
 		rbtnFirstPlace.setText("Winner");
 		//rbtnFirstPlace.setBorder(new MyBorder());
@@ -444,7 +441,6 @@ public class GameGUI extends JFrame {
 		rbtnBoardLayeredPaneShadow.setVisible(true);
 		boardLayeredPane.add(rbtnBoardLayeredPaneShadow);
 
-		
 
 		RoundButton2[] placement = {rbtnFirstPlace, rbtnSecondPlace, rbtnThirdPlace, rbtnFourthPlace};
 
