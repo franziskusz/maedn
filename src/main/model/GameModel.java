@@ -280,16 +280,9 @@ public class GameModel extends Observable {
 				case "MOVE":
 					if(gameState != GameState.DETERMINE_ORDER) {
 						if(AdminCommand.checkPieceID(args[1]) && AdminCommand.checkVertex(args[2])) {
-							// TODO in  Graph Methode einbauen, die spielstein verschiebt und gleiche Abfragen macht wie beim
-							//   normalen ziehen (Schlagen, Three-Times, Gewonnen) und auch SuperSpecialCase Abfrage theoretisch
-							//   außerdem muss geguckt werden, dass man nicht auf ein Feld moved, wo man eig. gar nicht hindarf (fremdes Haus z.B.)
-
-							// TODO ob das so passt und an besten von Franziskus noch nen Booleans anfordern, damit Fehlermeldung, falls nicht möglich.
-							board.adminMove(playerTurn, Integer.parseInt(args[1]), board.getVertices().get(Integer.parseInt(args[2])), INITIAL_PLAYERS);
-
-//							if(){
-//								JOptionPane.showMessageDialog(view, "Diesen Spielstein kannst du nicht dort hinbewegen!");
-//							}
+							if(!board.adminMove(playerTurn, Integer.parseInt(args[1]), board.getVertices().get(Integer.parseInt(args[2])), INITIAL_PLAYERS)){
+								JOptionPane.showMessageDialog(view, "Diesen Spielstein kannst du nicht dort hinbewegen!");
+							}
 							updateGUI();
 						} else {
 							JOptionPane.showMessageDialog(view, "Diesen Spielstein oder dieses Feld gibts nicht.");
