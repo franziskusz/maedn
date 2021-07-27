@@ -337,10 +337,15 @@ public class GameGUI extends GUI {
 	}
 
 	public void showEndScreen(PlayerColor[] winner) {
-
+		
+		
+		
 		int x = 205;
 		int y = 88;
 		int z = 115 + 5;
+		
+		labelKonfettiImage.setBounds(0, 0, 600, 600);
+		boardLayeredPane.add(labelKonfettiImage);
 
 		labelWreathImage.setBounds(265, 7, 50, 50);
 		boardLayeredPane.add(labelWreathImage);
@@ -368,8 +373,7 @@ public class GameGUI extends GUI {
 		//
 
 
-		labelKonfettiImage.setBounds(0, 0, 600, 600);
-		boardLayeredPane.add(labelKonfettiImage);
+		
 
 
 		rbtnFirstPlace.setVisible(true);
@@ -443,7 +447,9 @@ public class GameGUI extends GUI {
 
 
 		RoundButton2[] placement = {rbtnFirstPlace, rbtnSecondPlace, rbtnThirdPlace, rbtnFourthPlace};
-
+		
+		boolean colorPanelTopSet= false;
+		
 		for(int i = 0; i <= 3; ++i) {
 			switch(winner[i]) {
 				case RED:
@@ -458,9 +464,28 @@ public class GameGUI extends GUI {
 				case YELLOW:
 					placement[i].setBackground(new Color(255, 255, 0, 225));
 					break;
+			
+					
+					
 
 			}
 		}
+		
+		switch(winner[0]) {
+		
+			case RED:
+			panelTop.setBackground(new Color(255, 0, 0, 255));
+			
+			case BLUE:
+			panelTop.setBackground(new Color(30, 144, 255, 255));
+			
+			case GREEN:
+			panelTop.setBackground(new Color(0, 255, 0, 225));
+			
+			case YELLOW:
+			panelTop.setBackground(new Color(255, 255, 0, 225));
+		}
+	
 	}
 }
 
