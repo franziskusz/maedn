@@ -59,16 +59,24 @@ public class SetupGUI extends GUI {
 	private RoundButton2 btnYellowHuman = new RoundButton2("", 20, false);
 	private RoundButton2 btnYellowBot = new RoundButton2("", 20, false);
 	
-	boolean RedHuman = false;
-	boolean BlueHuman = false;
-	boolean GreenHuman = false;
-	boolean YellowHuman = false;
+	boolean clickedRedHuman = false;
+	boolean clickedBlueHuman = false;
+	boolean clickedGreenHuman = false;
+	boolean clickedYellowHuman = false;
 	
-	boolean RedBot = false;
-	boolean BlueBot = false;
-	boolean GreenBot = false;
-	boolean YellowBot = false;
+	boolean clickedRedBot = false;
+	boolean clickedBlueBot = false;
+	boolean clickedGreenBot = false;
+	boolean clickedYellowBot = false;
 	
+	private int counterRedHuman=0;
+	private int counterRedBot=0;
+	private int counterBlueHuman=0;
+	private int counterBlueBot=0;
+	private int counterGreenHuman=0;
+	private int counterGreenBot=0;
+	private int counterYellowHuman=0;
+	private int counterYellowBot=0;
 
 
 	private JCheckBox cbAdmin = new JCheckBox("Admin", false);
@@ -157,14 +165,35 @@ public class SetupGUI extends GUI {
 		
 		btnRedHuman.addActionListener(e -> {
 			btnRedHuman.setBackground(new Color(255,0,0,255));
-			RedHuman=true;
+			clickedRedHuman=true;
 			btnRedBot.setEnabled(false);
-		
+			counterRedHuman +=1;
+			
+			if (counterRedHuman%2==0) {
+				btnRedHuman.setBackground(new Color(255,255,255,255));
+				btnRedHuman.setEnabled(true);
+				btnRedBot.setEnabled(true);
+				clickedRedHuman=false;
+			}
+			
+			checkStartGame();
+			
+			
 		});
+		
 		btnRedBot.addActionListener(e -> {
 			btnRedBot.setBackground(new Color(255,0,0,255));
-			RedBot= true;
+			clickedRedBot= true;
 			btnRedHuman.setEnabled(false);
+			counterRedBot +=1;
+			
+			if (counterRedBot%2==0) {
+				btnRedBot.setBackground(new Color(255,255,255,255));
+				btnRedHuman.setEnabled(true);
+				btnRedBot.setEnabled(true);	
+				clickedRedBot= false;
+			}
+			checkStartGame();
 
 		});
 		
@@ -227,14 +256,32 @@ public class SetupGUI extends GUI {
 		
 		btnBlueHuman.addActionListener(e -> {
 			btnBlueHuman.setBackground(new Color(0,0,255,200));
-			BlueHuman = true;
+			clickedBlueHuman = true;
 			btnBlueBot.setEnabled(false);
+			counterBlueHuman +=1;
+			
+			if (counterBlueHuman%2==0) {
+				btnBlueHuman.setBackground(new Color(255,255,255,255));
+				btnBlueHuman.setEnabled(true);
+				btnBlueBot.setEnabled(true);
+				clickedBlueHuman=false;
+			}
+			checkStartGame();
 
 		});
 		btnBlueBot.addActionListener(e -> {
 			btnBlueBot.setBackground(new Color(0,0,255,200));
-			BlueBot= true;
+			clickedBlueBot= true;
 			btnBlueHuman.setEnabled(false);
+			counterBlueBot +=1;
+			
+			if (counterBlueBot%2==0) {
+				btnBlueBot.setBackground(new Color(255,255,255,255));
+				btnBlueHuman.setEnabled(true);
+				btnBlueBot.setEnabled(true);	
+				clickedBlueBot= false;
+			}
+			checkStartGame();
 
 		});
 		btnBlueHuman.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -271,14 +318,32 @@ public class SetupGUI extends GUI {
 		*/
 		btnGreenHuman.addActionListener(e -> {
 			btnGreenHuman.setBackground(new Color(0,255,0,200));
-			GreenHuman = true;
+			clickedGreenHuman = true;
 			btnGreenBot.setEnabled(false);
+			counterGreenHuman +=1;
+			
+			if (counterGreenHuman%2==0) {
+				btnGreenHuman.setBackground(new Color(255,255,255,255));
+				btnGreenHuman.setEnabled(true);
+				btnGreenBot.setEnabled(true);
+				clickedGreenHuman=false;
+			}
+			checkStartGame();
 		
 		});
 		btnGreenBot.addActionListener(e -> {
 			btnGreenBot.setBackground(new Color(0,255,0,200));
-			GreenBot= true;
+			clickedGreenBot= true;
 			btnGreenHuman.setEnabled(false);
+			counterGreenBot +=1;
+			
+			if (counterGreenBot%2==0) {
+				btnGreenBot.setBackground(new Color(255,255,255,255));
+				btnGreenHuman.setEnabled(true);
+				btnGreenBot.setEnabled(true);	
+				clickedGreenBot= false;
+			}
+			checkStartGame();
 			
 		});
 		btnGreenHuman.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -315,13 +380,31 @@ public class SetupGUI extends GUI {
 		*/	
 		btnYellowHuman.addActionListener(e -> {
 			btnYellowHuman.setBackground(new Color(255,255,0,200));
-			YellowHuman = true;
+			clickedYellowHuman = true;
 			btnYellowBot.setEnabled(false);
+			counterYellowHuman +=1;
+			
+			if (counterYellowHuman%2==0) {
+				btnYellowHuman.setBackground(new Color(255,255,255,255));
+				btnYellowHuman.setEnabled(true);
+				btnYellowBot.setEnabled(true);
+				clickedYellowHuman=false;
+			}
+			checkStartGame();
 		});
 		btnYellowBot.addActionListener(e -> {
 			btnYellowBot.setBackground(new Color(255,255,0,200));
-			YellowBot= true;
+			clickedYellowBot= true;
 			btnYellowHuman.setEnabled(false);
+			counterYellowBot +=1;
+			
+			if (counterYellowBot%2==0) {
+				btnYellowBot.setBackground(new Color(255,255,255,255));
+				btnYellowHuman.setEnabled(true);
+				btnYellowBot.setEnabled(true);	
+				clickedYellowBot= false;
+			}
+			checkStartGame();
 		});
 		btnYellowHuman.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnYellowBot.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -344,6 +427,8 @@ public class SetupGUI extends GUI {
 		buttonContinue.setText("Los!");
 		buttonContinue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		buttonContinue.setBorder(new EmptyBorder(0,0,0,0));
+		buttonContinue.setEnabled(false);
+		
 		
 		
 		
@@ -353,17 +438,9 @@ public class SetupGUI extends GUI {
 		buttonContinue.setPreferredSize(new Dimension(100,50));
 		
 		
-		/*
-		if (RedHuman || RedBot &&
-			BlueHuman || BlueBot && 
-			GreenHuman || GreenBot && 
-			YellowHuman || YellowBot) {
-			
-			buttonContinue.setEnabled(true);
-		} else {
-			buttonContinue.setEnabled(false);
-		}
-		*/
+		
+		
+		
 		
 		
 		panelFooter.add(buttonContinue);
@@ -475,28 +552,28 @@ public class SetupGUI extends GUI {
 
 		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
 
-		if(RedHuman) {
+		if(clickedRedHuman) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.RED));
 			allHuman = false;
 		}
 
-		if(BlueHuman) {
+		if(clickedBlueHuman) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.BLUE));
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.BLUE));
 			allHuman = false;
 		}
 
-		if(GreenHuman) {
+		if(clickedGreenHuman) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.GREEN));
 		} else {
 			INITIAL_PLAYERS.add(new Bot(PlayerColor.GREEN));
 			allHuman = false;
 		}
 
-		if(YellowHuman) {
+		if(clickedYellowHuman) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.YELLOW));
 
 		} else {
@@ -513,5 +590,22 @@ public class SetupGUI extends GUI {
 
 	public void showGUI() {
 		this.setVisible(true);
+	}
+	
+	private void checkStartGame() {
+		
+		if ((clickedRedHuman || clickedRedBot) &&
+				(clickedBlueHuman || clickedBlueBot) && 
+				(clickedGreenHuman || clickedGreenBot) && 
+				(clickedYellowHuman || clickedYellowBot)
+				) {
+				buttonContinue.setEnabled(true);
+			} 
+		else {
+			buttonContinue.setEnabled(false);
+		}
+		
+		
+		
 	}
 }
