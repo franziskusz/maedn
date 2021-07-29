@@ -147,6 +147,7 @@ public class Graph
 					System.out.println("Player State NORMAL "+targetPlayer.getPlayerColor());
 					targetPlayer.setPlayerState(PlayerState.NORMAL);
 				}
+				player.setPlayerState(PlayerState.NORMAL);
 				
 			}
 		}
@@ -178,21 +179,22 @@ public class Graph
 		if (re==true)
 		{
 			if ((target.getIndex()>40)&&(target.getIndex()<56))
-				
-			for(int i=0; i<4; i++)
-			{
-				int add=(1+i)*4;
-				if (player==players.get(i))
+			{	
+				for(int i=0; i<4; i++)
 				{
-					for (int j=36+add; j<40+add; j++)
+					int add=(1+i)*4;
+					if (player==players.get(i))
 					{
-						if (target.getIndex()==j)
+						for (int j=36+add; j<40+add; j++)
 						{
-							break;
-						}
-						else 
-						{
-							re = false;
+							if (target.getIndex()==j)
+							{
+								break;
+							}
+							else 
+							{
+								re = false;
+							}
 						}
 					}
 				}
