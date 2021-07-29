@@ -86,7 +86,7 @@ public class Graph
 		boolean legalMove=false;
 		
 		//TODO Prüfen, dass der Zug nicht im gegnerischen Zielfeld landet, nicht in einem Heimatfeld landet und keine eigene Figur schlägt
-		if ((excludeOpponentsGoal(player, target, players))&&(checkAdminTarget(player, target)))
+		if ((excludeOpponentsGoal(player, target, players))&&(checkAdminTarget(player, target, players)))
 		{
 			legalMove=true;
 		}
@@ -99,17 +99,18 @@ public class Graph
 				vertices.get(targetIndex).getPiece().setPosition(target);
 				option.setPiece(null);
 				
-				if (targetIndex>55)
+				if (targetIndex>39)
 				{
 					SuperSpecialCase=checkforSuperSpecialCase(player, players);
 					if(SuperSpecialCase==true)
 					{
-						System.out.println("SuperSpecialCase!!!");
+						System.out.println("DICE_THREE_TIMES"+player.getPlayerColor());
 						player.setPlayerState(PlayerState.DICE_THREE_TIMES);
 					}
 				}
 				else 
 				{
+					System.out.println("Player State NORMAL "+player.getPlayerColor());
 					player.setPlayerState(PlayerState.NORMAL);
 				}
 	
@@ -138,12 +139,13 @@ public class Graph
 				diceThreeTimes=checkforSuperSpecialCase(targetPlayer, players);
 				if(diceThreeTimes==true)
 				{
-					System.out.println("DICE_THREE_TIMES");
-					target.getPiece().getPlayer().setPlayerState(PlayerState.DICE_THREE_TIMES);
+					System.out.println("DICE_THREE_TIMES "+targetPlayer.getPlayerColor());
+					targetPlayer.setPlayerState(PlayerState.DICE_THREE_TIMES);
 				}
 				else
 				{
-					target.getPiece().getPlayer().setPlayerState(PlayerState.NORMAL);
+					System.out.println("Player State NORMAL "+targetPlayer.getPlayerColor());
+					targetPlayer.setPlayerState(PlayerState.NORMAL);
 				}
 				
 			}
@@ -160,7 +162,7 @@ public class Graph
 	}
 	
 	//Hilfsfunktion, welche zwei Bedingungen prüft
-	boolean checkAdminTarget(Player player, Vertex target)
+	boolean checkAdminTarget(Player player, Vertex target, ArrayList<Player> players)
 	{
 		boolean re=true;
 		
@@ -175,12 +177,24 @@ public class Graph
 		//Heimatfelder ausschließen
 		if (re==true)
 		{
-			for (int i=40; i<56; i++)
+			if ((target.getIndex()>40)&&(target.getIndex()<56))
+				
+			for(int i=0; i<4; i++)
 			{
-				if (target.getIndex()==i)
+				int add=(1+i)*4;
+				if (player==players.get(i))
 				{
-					re=false;
-					break;
+					for (int j=36+add; j<40+add; j++)
+					{
+						if (target.getIndex()==j)
+						{
+							break;
+						}
+						else 
+						{
+							re = false;
+						}
+					}
 				}
 			}
 		}
