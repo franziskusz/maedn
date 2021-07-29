@@ -79,7 +79,7 @@ public class GameController implements Observer, ActionListener {
 			gameGUI.getBtnDice().setEnabled(true);
 			gameGUI.getBtnAdmin().setEnabled(true);
 			gameGUI.getTfAdmin().setEnabled(true);
-			gameGUI.getTfInstruction().setText("Please dice: " + gameModel.getPlayerTurn().getPlayerColor().toString());
+			gameGUI.getTfInstruction().setText("Please roll the dice: " + gameModel.getPlayerTurn().getPlayerColor().toString());
 		}
 
 		// TODO entfernen
@@ -137,7 +137,7 @@ public class GameController implements Observer, ActionListener {
 							gameGUI.getBtnOption3().setEnabled(true);
 						}
 
-						gameGUI.getTfInstruction().setText("Choose option: " + gameModel.getPlayerTurn().getPlayerColor().toString());
+						gameGUI.getTfInstruction().setText("Please choose an option: " + gameModel.getPlayerTurn().getPlayerColor().toString());
 					} else {
 						gameGUI.getBtnDice().setEnabled(true);
 						gameGUI.getBtnAdmin().setEnabled(true);
