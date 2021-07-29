@@ -189,6 +189,7 @@ public class Graph
 						{
 							if (target.getIndex()==j)
 							{
+								re=true;
 								break;
 							}
 							else 
