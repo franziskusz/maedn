@@ -181,21 +181,27 @@ public class GameModel extends Observable {
 			//  darf er direkt weiter 3x würfeln!
 			//  !!!!Wird durch folgendes gelöst (wahrscheinlich)!!!
 
-			if(board.isSuperSpecialCase()) {
-				if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
-					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
-					isBot_DoAction(BotAction.DICE);
-				} else {
-					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
-					nextPlayer();
-				}
+			if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
+				isBot_DoAction(BotAction.DICE);
 			} else {
-				if(playerTurn.getPlayerState() == PlayerState.NORMAL) {
-					nextPlayer();
-				} else {
-					isBot_DoAction(BotAction.DICE);
-				}
+				nextPlayer();
 			}
+
+//			if(board.isSuperSpecialCase()) {
+//				if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
+//					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
+//					isBot_DoAction(BotAction.DICE);
+//				} else {
+//					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
+//					nextPlayer();
+//				}
+//			} else {
+//				if(playerTurn.getPlayerState() == PlayerState.NORMAL) {
+//					nextPlayer();
+//				} else {
+//					isBot_DoAction(BotAction.DICE);
+//				}
+//			}
 
 		}
 
