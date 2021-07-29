@@ -155,7 +155,14 @@ public class GameController implements Observer, ActionListener {
 					}
 				}
 			}
+
+			// TODO image und sound nur bei wirklich gewürfelt, nicht bei Option click
 			gameGUI.setDicedImage(gameModel.getDiced());
+			if(!(gameModel.getPlayerTurn() instanceof Bot)) {
+//				gameGUI.playDiceSound();
+				// TODO entfernen
+				System.out.println("playsound");
+			}
 
 			gameGUI.getBoardLayeredPane().setPieces(gameModel.getPieces());
 			gameGUI.getBoardLayeredPane().repaint();
