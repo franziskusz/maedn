@@ -240,7 +240,8 @@ public class Graph
 				//debug
 				if(SuperSpecialCase==true)
 				{
-					System.out.println("SuperSpecialCase!!!");
+					System.out.println("DICE_THREE_TIMES "+player.getPlayerColor());
+					player.setPlayerState(PlayerState.DICE_THREE_TIMES);
 				}
 			}
 
@@ -278,8 +279,8 @@ public class Graph
 			
 			if(diceThreeTimes==true)
 			{
-				System.out.println("DICE_THREE_TIMES");
-				target.getPiece().getPlayer().setPlayerState(PlayerState.DICE_THREE_TIMES);
+				System.out.println("DICE_THREE_TIMES "+targetPlayer.getPlayerColor());
+				targetPlayer.setPlayerState(PlayerState.DICE_THREE_TIMES);
 			}
 		}
 	}
