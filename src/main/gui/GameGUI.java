@@ -15,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+import javax.print.attribute.standard.Media;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -216,6 +217,7 @@ public class GameGUI extends GUI {
 			tfAdmin.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 			tfAdmin.setBorder(BorderFactory.createLineBorder(Color.black));
 			tfAdmin.setHorizontalAlignment(RoundJTextField.CENTER);
+			tfAdmin.setActionCommand(ADMIN);
 			panelBottomCenter.add(tfAdmin);
 
 			btnAdmin.setText("Admin");
@@ -313,8 +315,9 @@ public class GameGUI extends GUI {
 
 
 	public void setBackgroundColor(PlayerColor playerColor) {
+		
+		
 		switch(playerColor) {
-
 			case RED:
 				panelTop.setBackground(new Color(255, 0, 0, 255));
 				break;
@@ -337,6 +340,25 @@ public class GameGUI extends GUI {
 	}
 
 	public void showEndScreen(PlayerColor[] winner) {
+
+		switch(winner[0]) {
+		
+			case RED:
+				panelTop.setBackground(new Color(255, 0, 0, 255));
+				break;
+		
+			case BLUE:
+				panelTop.setBackground(new Color(30, 144, 255, 255));
+				break;
+		
+			case GREEN:
+				panelTop.setBackground(new Color(0, 255, 0, 225));
+				break;
+		
+			case YELLOW:
+				panelTop.setBackground(new Color(255, 255, 0, 225));
+				break;
+		}
 		
 		
 		
@@ -445,10 +467,33 @@ public class GameGUI extends GUI {
 		rbtnBoardLayeredPaneShadow.setVisible(true);
 		boardLayeredPane.add(rbtnBoardLayeredPaneShadow);
 
+			/*
+			 -------------------------------
+			|								|
+			|								|
+			 ------------       ------------
+			 	-----	 |     | 	-----
+			   |	 | 	 |     |   |     |
+			   |  	 |	 |     |   |     |
+	           |	 |	 |     |   |     |
+			   | 	 |	 |     |   |     |
+			   |	 |	 |     |   |     |
+			   |	 |	 |     |   |     |
+			   |	 |	 |     |   |     |
+			   |	 |	 |     |   |     |
+			   |	 |	 |     |   |     |
+			   |	 |	 |     |   |     |
+			   |	 |	 |     |   |     |
+			   |	 |	  -----    |     |          ___
+			   |	 |	  		   |     |      ___|  |
+   	   -------- 	  -------------       ------      |
+      |			 		                            __|  
+  	  | 		  	  							___|    
+       ----------------------------------------- 
+			*/
 
 		RoundButton2[] placement = {rbtnFirstPlace, rbtnSecondPlace, rbtnThirdPlace, rbtnFourthPlace};
 		
-		boolean colorPanelTopSet= false;
 		
 		for(int i = 0; i <= 3; ++i) {
 			switch(winner[i]) {
@@ -464,28 +509,8 @@ public class GameGUI extends GUI {
 				case YELLOW:
 					placement[i].setBackground(new Color(255, 255, 0, 225));
 					break;
-			
-					
-					
-
 			}
 		}
-		
-		switch(winner[0]) {
-		
-			case RED:
-			panelTop.setBackground(new Color(255, 0, 0, 255));
-			
-			case BLUE:
-			panelTop.setBackground(new Color(30, 144, 255, 255));
-			
-			case GREEN:
-			panelTop.setBackground(new Color(0, 255, 0, 225));
-			
-			case YELLOW:
-			panelTop.setBackground(new Color(255, 255, 0, 225));
-		}
-	
 	}
 }
 
