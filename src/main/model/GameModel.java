@@ -23,6 +23,7 @@ public class GameModel extends Observable {
 	private Graph board;
 	private GameState gameState = GameState.NOT;
 	private Player playerTurn;
+	private Integer indexOfRemovedPlayer = null;
 	private int playerTurnDicedCount = 0;
 	private int diced = 6;
 
@@ -168,9 +169,11 @@ public class GameModel extends Observable {
 
 		// TODO entfernen
 		System.out.println(playerTurn.getPlayerColor().toString() + " will Option " + option);
+
 		board.performOption(playerTurn, playerTurn.getPieces()[option].getPosition(), diced, INITIAL_PLAYERS);
 
 		if(playerTurn.isGoalAchieved()) {
+			indexOfRemovedPlayer = players.indexOf(playerTurn);
 			players.remove(playerTurn);
 			if(players.size() <= 1) {
 				players.get(0).setGoalAchieved();
@@ -280,7 +283,19 @@ public class GameModel extends Observable {
 				case "MOVE":
 					if(gameState != GameState.DETERMINE_ORDER) {
 						if(AdminCommand.checkPieceID(args[1]) && AdminCommand.checkVertex(args[2])) {
-							if(!board.adminMove(playerTurn, Integer.parseInt(args[1]), board.getVertices().get(Integer.parseInt(args[2])), INITIAL_PLAYERS)){
+							if(board.adminMove(playerTurn, Integer.parseInt(args[1]), board.getVertices()
+									.get(Integer.parseInt(args[2])), INITIAL_PLAYERS)) {
+								if(playerTurn.isGoalAchieved()) {
+									indexOfRemovedPlayer = players.indexOf(playerTurn);
+									players.remove(playerTurn);
+									if(players.size() <= 1) {
+										players.get(0).setGoalAchieved();
+										changeGameState(GameState.END);
+									}  else {
+										nextPlayer();
+									}
+								}
+							} else {
 								JOptionPane.showMessageDialog(view, "Diesen Spielstein kannst du nicht dort hinbewegen!");
 							}
 							updateGUI();
@@ -441,7 +456,12 @@ public class GameModel extends Observable {
 				playerTurn = players.get(0);
 			}
 		} else {
-			playerTurn = players.get(0);
+			if((indexOfRemovedPlayer != null) && (indexOfRemovedPlayer < players.size())) {
+				playerTurn = players.get(indexOfRemovedPlayer);
+				indexOfRemovedPlayer = null;
+			} else {
+				playerTurn = players.get(0);
+			}
 		}
 
 		playerTurnDicedCount = 0;
