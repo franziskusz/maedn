@@ -102,24 +102,21 @@ public class Graph
 				if (targetIndex>55)
 				{
 					SuperSpecialCase=checkforSuperSpecialCase(player, players);
-					//debug
 					if(SuperSpecialCase==true)
 					{
 						System.out.println("SuperSpecialCase!!!");
+						player.setPlayerState(PlayerState.DICE_THREE_TIMES);
 					}
+				}
+				else 
+				{
+					player.setPlayerState(PlayerState.NORMAL);
 				}
 	
 				if(checkGoal(player, players))
 				{
 					player.setGoalAchieved();
-				}
-	//			goalAchieved=checkGoal(player, players);
-				
-				if (player.isGoalAchieved())
-				{
 					SuperSpecialCase=false;
-	//				place=place+1;
-	//				System.out.println("Spieler " +player.getPlayerColor()+ " ist im Ziel und belegt Platz "+place+ ". SuperSpecialCase ist false"); //debug
 				}
 			}
 			
@@ -139,13 +136,25 @@ public class Graph
 				
 				//SuperSpecialCase prüfen: Wenn true, wird die gleichnamige boolsche Variable auf true gesetzt
 				diceThreeTimes=checkforSuperSpecialCase(targetPlayer, players);
-				//debug
 				if(diceThreeTimes==true)
 				{
-					System.out.println("SuperSpecialCase!!!");
+					System.out.println("DICE_THREE_TIMES");
 					target.getPiece().getPlayer().setPlayerState(PlayerState.DICE_THREE_TIMES);
 				}
+				else
+				{
+					target.getPiece().getPlayer().setPlayerState(PlayerState.NORMAL);
+				}
+				
 			}
+		}
+		if (legalMove)
+		{
+			System.out.println("Zug war ok");
+		}
+		if (!legalMove)
+		{
+			System.out.println("Zug war nicht ok");
 		}
 		return legalMove;
 	}
@@ -252,7 +261,7 @@ public class Graph
 			
 			if(diceThreeTimes==true)
 			{
-				System.out.println("SuperSpecialCase!!!");
+				System.out.println("DICE_THREE_TIMES");
 				target.getPiece().getPlayer().setPlayerState(PlayerState.DICE_THREE_TIMES);
 			}
 		}
