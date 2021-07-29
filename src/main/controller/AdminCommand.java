@@ -2,12 +2,22 @@ package main.controller;
 
 public class AdminCommand {
 	public static boolean checkDice(String arg) {
-		int num = Integer.parseInt(arg);
+		int num;
+		try {
+			num = Integer.parseInt(arg);
+		} catch(Exception exception) {
+			return false;
+		}
 		return checkNum(1, 6, num);
 	}
 
 	public static boolean checkPieceID(String arg) {
-		int num = Integer.parseInt(arg);
+		int num;
+		try {
+			num = Integer.parseInt(arg);
+		} catch(Exception exception) {
+			return false;
+		}
 		return checkNum(0, 3, num);
 	}
 

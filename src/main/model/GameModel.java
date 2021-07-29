@@ -264,36 +264,44 @@ public class GameModel extends Observable {
 			String[] args = command.trim().split(" ");
 			switch(args[0]) {
 				case "DICE":
-					if(AdminCommand.checkDice(args[1])) {
-						diceRoll(Integer.parseInt(args[1]));
+					if(args.length == 2) {
+						if(AdminCommand.checkDice(args[1])) {
+							diceRoll(Integer.parseInt(args[1]));
+						} else {
+							JOptionPane.showMessageDialog(view, "You can't dice this number!");
+						}
 					} else {
-						JOptionPane.showMessageDialog(view, "You can't dice this number.");
+						JOptionPane.showMessageDialog(view, "Too many or too less arguments!");
 					}
 					return;
 				case "MOVE":
-					if(gameState != GameState.DETERMINE_ORDER) {
-						if(AdminCommand.checkPieceID(args[1]) && AdminCommand.checkVertex(args[2])) {
-							if(board.adminMove(playerTurn, Integer.parseInt(args[1]), board.getVertices()
-									.get(Integer.parseInt(args[2])), INITIAL_PLAYERS)) {
-								if(playerTurn.isGoalAchieved()) {
-									indexOfRemovedPlayer = players.indexOf(playerTurn);
-									players.remove(playerTurn);
-									if(players.size() <= 1) {
-										players.get(0).setGoalAchieved();
-										changeGameState(GameState.END);
-									}  else {
-										nextPlayer();
+					if(args.length == 3) {
+						if(gameState != GameState.DETERMINE_ORDER) {
+							if(AdminCommand.checkPieceID(args[1]) && AdminCommand.checkVertex(args[2])) {
+								if(board.adminMove(playerTurn, Integer.parseInt(args[1]), board.getVertices()
+										.get(Integer.parseInt(args[2])), INITIAL_PLAYERS)) {
+									if(playerTurn.isGoalAchieved()) {
+										indexOfRemovedPlayer = players.indexOf(playerTurn);
+										players.remove(playerTurn);
+										if(players.size() <= 1) {
+											players.get(0).setGoalAchieved();
+											changeGameState(GameState.END);
+										}  else {
+											nextPlayer();
+										}
 									}
+								} else {
+									JOptionPane.showMessageDialog(view, "You can't move this piece there!");
 								}
+								updateGUI();
 							} else {
-								JOptionPane.showMessageDialog(view, "You can't move this piece there!");
+								JOptionPane.showMessageDialog(view, "There is no piece or part of the board like this!");
 							}
-							updateGUI();
 						} else {
-							JOptionPane.showMessageDialog(view, "There is no piece or part of the board like this!");
+							JOptionPane.showMessageDialog(view, "This command does not work yet!");
 						}
 					} else {
-						JOptionPane.showMessageDialog(view, "This command does not work yet!");
+						JOptionPane.showMessageDialog(view, "Too many or too less arguments!");
 					}
 					return;
 				case "SKIP_DETERMINE_BEGINNER":
