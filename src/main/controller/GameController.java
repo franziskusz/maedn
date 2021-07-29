@@ -148,9 +148,9 @@ public class GameController implements Observer, ActionListener {
 						gameGUI.getBtnOption3().setEnabled(false);
 
 						if(gameModel.getPlayerTurnDicedCount() >= 1) {
-							gameGUI.getTfInstruction().setText("Dice again: " + gameModel.getPlayerTurn().getPlayerColor().toString());
+							gameGUI.getTfInstruction().setText("Please roll the dice again: " + gameModel.getPlayerTurn().getPlayerColor().toString());
 						} else {
-							gameGUI.getTfInstruction().setText("Please dice: " + gameModel.getPlayerTurn().getPlayerColor().toString());
+							gameGUI.getTfInstruction().setText("Please roll the dice: " + gameModel.getPlayerTurn().getPlayerColor().toString());
 						}
 					}
 				}
