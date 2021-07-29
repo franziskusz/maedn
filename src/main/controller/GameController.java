@@ -48,6 +48,9 @@ public class GameController implements Observer, ActionListener {
 		gameGUI.getBtnAdmin().addActionListener(this);
 		gameGUI.getBtnPlayAgain().addActionListener(this);
 
+		// set Listender für TfAdmin (Enter druecken)
+		gameGUI.getTfAdmin().addActionListener(this);
+
 		// Buttons disable
 		gameGUI.getBtnOption0().setEnabled(false);
 		gameGUI.getBtnOption1().setEnabled(false);
@@ -70,13 +73,16 @@ public class GameController implements Observer, ActionListener {
 		if(gameModel.getPlayerTurn() instanceof Bot) {
 			gameGUI.getBtnDice().setEnabled(false);
 			gameGUI.getBtnAdmin().setEnabled(false);
-			gameGUI.getTfInstruction().setText("Bot ist dran");
+			gameGUI.getTfAdmin().setEnabled(false);
+			gameGUI.getTfInstruction().setText("Bot's turn");
 		} else {
 			gameGUI.getBtnDice().setEnabled(true);
 			gameGUI.getBtnAdmin().setEnabled(true);
-			gameGUI.getTfInstruction().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+			gameGUI.getTfAdmin().setEnabled(true);
+			gameGUI.getTfInstruction().setText("Please dice: " + gameModel.getPlayerTurn().getPlayerColor().toString());
 		}
 
+		// TODO entfernen
 		System.out.println("Init GUI");
 	}
 
@@ -92,7 +98,7 @@ public class GameController implements Observer, ActionListener {
 	public void update(Observable o, Object arg) {
 		if(o == gameModel) {
 			if(gameModel.getGameState() == GameState.END) {
-				gameGUI.getTfInstruction().setText("Spiel Ende");
+				gameGUI.getTfInstruction().setText("Game end");
 
 				ArrayList<Player> winner = new ArrayList<>(gameModel.getINITIAL_PLAYERS());
 				winner.sort(Player.sortByPlace);
@@ -110,12 +116,14 @@ public class GameController implements Observer, ActionListener {
 					gameGUI.getBtnOption2().setEnabled(false);
 					gameGUI.getBtnOption3().setEnabled(false);
 					gameGUI.getBtnAdmin().setEnabled(false);
+					gameGUI.getTfAdmin().setEnabled(false);
 
-					gameGUI.getTfInstruction().setText("Bot ist dran");
+					gameGUI.getTfInstruction().setText("Bot's turn");
 				} else {
 					if(gameModel.hasOption()) {
 						gameGUI.getBtnDice().setEnabled(false);
 						gameGUI.getBtnAdmin().setEnabled(false);
+						gameGUI.getTfAdmin().setEnabled(false);
 						if(gameModel.getOptions().contains(0)) {
 							gameGUI.getBtnOption0().setEnabled(true);
 						}
@@ -129,19 +137,20 @@ public class GameController implements Observer, ActionListener {
 							gameGUI.getBtnOption3().setEnabled(true);
 						}
 
-						gameGUI.getTfInstruction().setText("Wähle Option");
+						gameGUI.getTfInstruction().setText("Choose option: " + gameModel.getPlayerTurn().getPlayerColor().toString());
 					} else {
 						gameGUI.getBtnDice().setEnabled(true);
 						gameGUI.getBtnAdmin().setEnabled(true);
+						gameGUI.getTfAdmin().setEnabled(true);
 						gameGUI.getBtnOption0().setEnabled(false);
 						gameGUI.getBtnOption1().setEnabled(false);
 						gameGUI.getBtnOption2().setEnabled(false);
 						gameGUI.getBtnOption3().setEnabled(false);
 
 						if(gameModel.getPlayerTurnDicedCount() >= 1) {
-							gameGUI.getTfInstruction().setText("Bitte nochmal Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+							gameGUI.getTfInstruction().setText("Dice again: " + gameModel.getPlayerTurn().getPlayerColor().toString());
 						} else {
-							gameGUI.getTfInstruction().setText("Bitte Würfeln " + gameModel.getPlayerTurn().getPlayerColor().toString());
+							gameGUI.getTfInstruction().setText("Please dice: " + gameModel.getPlayerTurn().getPlayerColor().toString());
 						}
 					}
 				}

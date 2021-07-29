@@ -156,17 +156,6 @@ public class GameModel extends Observable {
 	 */
 	public void performOption(int option) {
 
-		// @Franziskus
-		// TODO isSuperSpecialCase = board.perfromODERSO(int option);
-		// - hier eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
-		//    und daraufhin bestimmte Sachen überprüft
-		//    - Wurde Geschlagen?
-		//        - Muss geschlagener Spieler THREE TIMES bekommen (gar keine Spielfiguren mehr
-		//            aufm Spielfeld oder restlos aufgerückt)
-		//    - Ist der Spieler restlos aufgerückt und hast sonst keine Spielsteine auf dem Feld?
-		//        - Dann bekommt er THREE TIMES (return true; (THREE TIMES nicht setzen!) sonst immer return false;)
-		//    - Ob eigene Spielfigur übersprungen wurde muss NICHT überprüft werden, da es durch "keine Möglichkeit" auisgeschlossen
-
 		// TODO entfernen
 		System.out.println(playerTurn.getPlayerColor().toString() + " will Option " + option);
 
@@ -271,13 +260,14 @@ public class GameModel extends Observable {
 	 */
 	public void perfromAdminCommand(JFrame view, String command) {
 		if(!command.trim().equals("")) {
+			command = command.toUpperCase().replaceAll("\\s+", " ");
 			String[] args = command.trim().split(" ");
 			switch(args[0]) {
 				case "DICE":
 					if(AdminCommand.checkDice(args[1])) {
 						diceRoll(Integer.parseInt(args[1]));
 					} else {
-						JOptionPane.showMessageDialog(view, "Diese Zahl gibts aufm Würfel nicht");
+						JOptionPane.showMessageDialog(view, "You can't dice this number.");
 					}
 					return;
 				case "MOVE":
@@ -296,14 +286,14 @@ public class GameModel extends Observable {
 									}
 								}
 							} else {
-								JOptionPane.showMessageDialog(view, "Diesen Spielstein kannst du nicht dort hinbewegen!");
+								JOptionPane.showMessageDialog(view, "You can't move this piece there!");
 							}
 							updateGUI();
 						} else {
-							JOptionPane.showMessageDialog(view, "Diesen Spielstein oder dieses Feld gibts nicht.");
+							JOptionPane.showMessageDialog(view, "There is no piece or part of the board like this!");
 						}
 					} else {
-						JOptionPane.showMessageDialog(view, "Dieser Befehl Funktioniert zu diesem Zeitpunkt nicht");
+						JOptionPane.showMessageDialog(view, "This command does not work yet!");
 					}
 					return;
 				case "SKIP_DETERMINE_BEGINNER":
@@ -314,7 +304,7 @@ public class GameModel extends Observable {
 						firstPlayer();
 						updateGUI();
 					} else {
-						JOptionPane.showMessageDialog(view, "Dieser Befehl Funktioniert zu diesem Zeitpunkt nicht");
+						JOptionPane.showMessageDialog(view, "This command is not possible now!");
 					}
 					return;
 				case "SHOW_ID":
@@ -326,13 +316,13 @@ public class GameModel extends Observable {
 						nextPlayer();
 						updateGUI();
 					} else {
-						JOptionPane.showMessageDialog(view, "Dieser Befehl Funktioniert zu diesem Zeitpunkt nicht");
+						JOptionPane.showMessageDialog(view, "This command does not work yet!");
 					}
 					return;
 			}
 		}
 
-		JOptionPane.showMessageDialog(view, "Diesen Admin-Befehl gibts nicht.");
+		JOptionPane.showMessageDialog(view, "This command does not exist!");
 	}
 
 
@@ -452,6 +442,7 @@ public class GameModel extends Observable {
 			try {
 				playerTurn = players.get(indexOfPlayerTurn + 1);
 			} catch(Exception ex) {
+				//  TODO entfernen
 				System.out.println("Gewollter Fehler, der abgefangen wird.");
 				playerTurn = players.get(0);
 			}
