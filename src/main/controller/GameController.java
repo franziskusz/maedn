@@ -98,10 +98,10 @@ public class GameController implements Observer, ActionListener {
 	public void update(Observable o, Object arg) {
 		if(o == gameModel) {
 			if(gameModel.getGameState() == GameState.END) {
-				gameGUI.getTfInstruction().setText("Game end");
-
 				ArrayList<Player> winner = new ArrayList<>(gameModel.getINITIAL_PLAYERS());
 				winner.sort(Player.sortByPlace);
+
+				gameGUI.getTfInstruction().setText(winner.get(0).getPlayerColor().toString() + " wins");
 
 				gameGUI.showEndScreen(new PlayerColor[] {winner.get(0).getPlayerColor(), winner.get(1).getPlayerColor(),
 						winner.get(2).getPlayerColor(), winner.get(3).getPlayerColor()});
