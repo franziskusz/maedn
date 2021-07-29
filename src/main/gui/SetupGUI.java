@@ -90,9 +90,9 @@ public class SetupGUI extends GUI {
 		this.setSize(520, 520);
 
 		
-		labelWhatToDo.setText(" Bitte wähle hier 'Mensch', wenn du selbst spielen möchtest und ");
-		labelWhatToDo2.setText(" wähle 'Bot' wenn du möchtest, dass der Computer spielen soll. ");
-		labelWhatToDo3.setText(" Auf 'Los!' startet das Spiel.");
+		labelWhatToDo.setText(" Please select 'Person' if you want to play by yourself or ");
+		labelWhatToDo2.setText(" select 'Bot' if you want the computer to play. ");
+		labelWhatToDo3.setText(" 'Go!' will start the game! ");
 
 		labelWhatToDo.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		labelWhatToDo2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
@@ -120,10 +120,10 @@ public class SetupGUI extends GUI {
 		this.add(panelText, BorderLayout.NORTH);
 		
 		
-		tfRed.setText("Rot");
-		tfBlue.setText("Blau");
-		tfGreen.setText("Grün");
-		tfYellow.setText("Gelb");
+		tfRed.setText("Red");
+		tfBlue.setText("Blue");
+		tfGreen.setText("Green");
+		tfYellow.setText("Yellow");
 		
 		tfRed.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		tfBlue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
@@ -149,7 +149,7 @@ public class SetupGUI extends GUI {
 		
 		
 		//<Red>
-		btnRedHuman.setText("Mensch");
+		btnRedHuman.setText("Person");
 		btnRedBot.setText("Bot");
 		
 		btnRedHuman.setFont(new Font("Lexend Deca", Font.BOLD, 15));
@@ -241,7 +241,7 @@ public class SetupGUI extends GUI {
 		
 		
 		//<Blue>
-		btnBlueHuman.setText("Mensch");
+		btnBlueHuman.setText("Person");
 		btnBlueBot.setText("Bot");
 		
 		btnBlueHuman.setFont(new Font("Lexend Deca", Font.BOLD, 15));
@@ -304,7 +304,7 @@ public class SetupGUI extends GUI {
 		
 
 		//<Green>
-		btnGreenHuman.setText("Mensch");
+		btnGreenHuman.setText("Person");
 		btnGreenBot.setText("Bot");
 		
 		btnGreenHuman.setFont(new Font("Lexend Deca", Font.BOLD, 15));
@@ -366,7 +366,7 @@ public class SetupGUI extends GUI {
 		
 		
 		//<Yellow>				
-		btnYellowHuman.setText("Mensch");
+		btnYellowHuman.setText("Person");
 		btnYellowBot.setText("Bot");
 				
 		btnYellowHuman.setFont(new Font("Lexend Deca", Font.BOLD, 15));
@@ -424,7 +424,7 @@ public class SetupGUI extends GUI {
 		
 		
 		buttonContinue.setBackground(new Color(255,255,255,255));
-		buttonContinue.setText("Los!");
+		buttonContinue.setText("Go!");
 		buttonContinue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		buttonContinue.setBorder(new EmptyBorder(0,0,0,0));
 		buttonContinue.setEnabled(false);
