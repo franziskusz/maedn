@@ -29,17 +29,6 @@ Der Würfel gibt vor wie viele Felder in Rundreise-Richtung die Spielfigur beweg
 
 
 
-
-Testen:
-- alle im gleichen Abstand vor dem ziel, keiner mehr im Haus
-    ->Bei 6 nochmal Wüerfeln ohne Option, bei anderen Zahlen nächster Spieler ohne Optionen
-
-- Spieler hat schon Spielfigur im Ziel, aber noch nicht aufgerückt und
-    hat die Möglichkeit mit Überspingen seiner Spielfigur weiter aufzurücken.
-    -> Unterbinden, keine Möglichkeit!!
-
-
-
 FUNKTIONSWEISE ADMIN:
 - Befehle durch Eingabe in das vorgesehne Feld mit Button ausführen
 - Befehlausführung nur möglich, wenn Button aktiviert
@@ -73,8 +62,6 @@ BEFEHLE:
 
 
 Fragen die sich noch Stellen:
-- Wie wird das Ergebnis angezeigt? Im Moment steht einfach nur da "RED 3. BLUE 2. GREEN 1. YELLOW 4."
-- Was machen wir, wenn das Spiel vorbei ist? Beenden oder Neustartmöglichkeit? JA - NEUSTART
 - Wer schreibt Kurzanleitung, wer Testfall Dokumentation (Testbeispiele), wer Entwurfskizze?
 
 
@@ -90,8 +77,9 @@ Noch zu tun was Franziskus betrifft:
 -DONE- in Gamemodel.performOption() eine Methode im Graph aufrufen, die überprüft, ob der
     mitgegebene Spieler (playerTrun) gewonnen hat
     - Falls ja -> GameState END setzen
+-DONE- bei adminMove() einen Boolean zurückgeben, dass Fehlermeldung angezeigt werden kann, wenn z.B. ein MOVE auf ein gegnerisches Haus gemacht wird
 
-- in Gamemodel.performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
+-DONE- in Gamemodel.performOption() eine Methode im Graph aufrufen, die den gewünschten Spielstein bewegt
     und daraufhin bestimmte Sachen überprüft
     - Wurde Geschlagen?
         - Muss geschlagener Spieler THREE TIMES bekommen (gar keine Spielfiguren mehr
@@ -100,14 +88,11 @@ Noch zu tun was Franziskus betrifft:
         - Dann bekommt er THREE TIMES (evt noch nicht setzen, sondern nur als FLAG)
     - Ob eigene Spielfigur übersprungen wurde muss NICHT überprüft werden, da es durch "keine Möglichkeit" auisgeschlossen
 
-- in  Graph Methode einbauen (movePieceODERSO(Piece piece, int VertexID)), die spielstein verschiebt und gleiche Abfragen macht wie beim
+-DONE-(außerdem quatsch) in  Graph Methode einbauen (movePieceODERSO(Piece piece, int VertexID)), die spielstein verschiebt und gleiche Abfragen macht wie beim
   normalen ziehen (Schlagen, Three-Times, Gewonnen) und auch SuperSpecialCase Methode aufrufem dass Model gucken,
   ob dieser Fall auftritt Abfrage theoretisch außerdem muss geguckt werden, dass man nicht auf ein Feld moved,
   wo man eig. gar nicht hindarf (fremdes Haus z.B.)
   -> Für Admin, dass er "MOVE [pieceID] [VertexID]" eingeben kann.
-- bei adminMove() einen Boolean zurückgeben, dass Fehlermeldung angezeigt werden kann, wenn z.B. ein MOVE auf ein gegnerisches Haus gemacht wird
-
-SuperSpecialCase = Wenn der Spieler, der dran ist mit der performAction() mit allen Pieces im Haus aufrückt und sonst keine Pieces auf dem Spielfeld hat
 
 
 
@@ -151,4 +136,3 @@ Noch zu tun was Johanes betrifft:
 - DONE- Überprüfen wegen Neustart
 - DONE- Beim Schließen des Fensters nochmal nachfragen
 - (Intelligente Bots)
-- (Die Graph Klasse mal angucken, ob was einfacher geht)
