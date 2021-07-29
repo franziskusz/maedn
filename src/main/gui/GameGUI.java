@@ -19,6 +19,18 @@ import javax.print.attribute.standard.Media;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 public class GameGUI extends GUI {
 
 	public static final String WUERFELN = "WUERFELN";
@@ -78,9 +90,20 @@ public class GameGUI extends GUI {
 	private JLabel labelThirdPlaceImage2 = new JLabel(imageIconThirdPlace);
 	private JLabel labelSecondPlaceImage2 = new JLabel(imageIconSecondPlace);
 	private JLabel labelKonfettiImage = new JLabel(imageIconKonfetti);
+	
+	
+	private String DIR_SEPERATOR = java.io.File.separator;
+	private String soundUrl = "---";
+	private int volumeSounds = 60;
+	private static float MINIMAL_GAIN = -30f;
+	
+	//ImageIcon logo = new ImageIcon("./images/logo.png");
+	//ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("logo.png"));
 
 
 	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allHuman) {
+		
+		//this.setIconImage(logo.getImage());
 
 		this.setTitle("Mensch ärgere dich nicht!");
 
@@ -291,6 +314,9 @@ public class GameGUI extends GUI {
 
 
 	public void setDicedImage(int diced) {
+		
+		
+		
 		switch(diced) {
 			case 1:
 				labelDicedImage.setIcon(imageIconDiced1);
@@ -340,6 +366,8 @@ public class GameGUI extends GUI {
 	}
 
 	public void showEndScreen(PlayerColor[] winner) {
+		playEndScreenCelebration();
+		
 
 		switch(winner[0]) {
 		
@@ -512,6 +540,117 @@ public class GameGUI extends GUI {
 			}
 		}
 	}
+	
+	
+	public class SoundRunnable implements Runnable {
+		@Override
+		public void run() {
+			Clip clip;
+			File file = new File("./images" + DIR_SEPERATOR + soundUrl);
+			
+			try {
+				clip = AudioSystem.getClip();
+				clip.open(AudioSystem.getAudioInputStream(file));
+				FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				float effectsGain = (100f - (float)volumeSounds) / 100f * MINIMAL_GAIN;
+				gainControl.setValue(effectsGain);
+				clip.start();
+				Thread.sleep(clip.getMicrosecondLength()/1000);
+				clip.stop();
+				
+				
+			} catch (LineUnavailableException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (UnsupportedAudioFileException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void playSound() {
+			Thread soundThread = new Thread(new SoundRunnable());
+			soundThread.start();
+		}
+	
+	
+	private void playDiceSound1() {
+		soundUrl = "DiceSound1.wav";
+		playSound();
+	}
+	private void playDiceSound2() {
+		soundUrl = "DiceSound2.wav";
+		playSound();
+	}
+	private void playDiceSound3() {
+		soundUrl = "DiceSound3.wav";
+		playSound();
+	}
+	private void playDiceSound4() {
+		soundUrl = "DiceSound4.wav";
+		playSound();
+	}
+	private void playDiceSound5() {
+		soundUrl = "DiceSound5.wav";
+		playSound();
+	}
+	private void playDiceSound6() {
+		soundUrl = "DiceSound6.wav";
+		playSound();
+	}
+	private void playDiceSound7() {
+		soundUrl = "DiceSound7.wav";
+		playSound();
+	}
+	private void playDiceSound8() {
+		soundUrl = "DiceSound8.wav";
+		playSound();
+	}
+	
+	private void playEndScreenCelebration() {
+		soundUrl = "Celebration.wav";
+		playSound();
+	}
+	
+	
+	
+	public void playDiceSound() {
+		
+		Random randomSound = new Random();
+		int n = randomSound.nextInt(8)+1;
+		
+		switch(n) {
+		case 1:
+			playDiceSound1();
+			break;
+		case 2:
+			playDiceSound2();
+			break;
+		case 3:
+			playDiceSound3();
+			break;
+		case 4:
+			playDiceSound4();
+			break;
+		case 5:
+			playDiceSound5();
+			break;
+		case 6:
+			playDiceSound6();
+			break;
+		case 7:
+			playDiceSound7();
+			break;
+		case 8:
+			playDiceSound8();
+			break;
+		}
+		
+	}
+	
 }
 
 

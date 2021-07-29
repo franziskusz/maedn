@@ -124,17 +124,13 @@ Noch zu tun was Toni betrifft:
 
 -DONE- Siegesfanfare (eventuell neues Fenster nachdem Spiel beendet ist mit den Platzerungen und Pokalsymbol etc.)
 
-- Würfelsound einbinden
+-DONE- Würfelsound einbinden
+- Siegessound aufhören bei Klick auf Button Play again
+- Vielleicht anderer Siegessound
+- Java Icon ändern
+
 
 - eventuell Spielhintergundmusik
-    - erweiterte Einstellungen für das Spiel vielleicht
-
-    * Helligkeit
-    * Spielsteinfarben individuell auswählen (aus Optionen)
-    * Spielbrettfarben individuell auswählen (aus Optionen)
-    * Hintergrundbild  aus verschiedenen Vorschlägen
-    * Musik an/aus Checkbox oder An Aus Schalter
-    * Würfelsound an/aus
 
 - Dateizugriff auf für nicht UNIX Systeme möglich machen bzw. probieren obs auch so geht
 

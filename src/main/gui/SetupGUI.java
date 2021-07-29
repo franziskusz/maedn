@@ -181,6 +181,7 @@ public class SetupGUI extends GUI {
 			
 		});
 		
+		
 		btnRedBot.addActionListener(e -> {
 			btnRedBot.setBackground(new Color(255,0,0,255));
 			clickedRedBot= true;
