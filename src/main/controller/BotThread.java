@@ -36,4 +36,8 @@ public class BotThread implements Runnable {
 	public static void setPace(int speed) {
 		pace = speed;
 	}
+
+	public static int getPace() {
+		return pace;
+	}
 }

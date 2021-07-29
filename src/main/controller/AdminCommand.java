@@ -23,7 +23,12 @@ public class AdminCommand {
 
 
 	public static boolean checkVertex(String arg) {
-		int num = Integer.parseInt(arg);
+		int num;
+		try {
+			num = Integer.parseInt(arg);
+		} catch(Exception exception) {
+			return false;
+		}
 		return checkNum(0, 71, num);
 	}
 

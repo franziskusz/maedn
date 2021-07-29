@@ -168,6 +168,7 @@ public class GameGUI extends GUI {
 		sliderBotSpeed.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		sliderBotSpeed.setOrientation(SwingConstants.HORIZONTAL);
 		sliderBotSpeed.addChangeListener(e -> BotThread.setPace(sliderBotSpeed.getValue()));
+		sliderBotSpeed.setValue(BotThread.getPace());
 
 
 		if(!allHuman) {
