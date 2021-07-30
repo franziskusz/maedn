@@ -24,24 +24,18 @@ public class PanelGameBoard extends JLayeredPane {
 	public void paintComponent(Graphics g) {
 		Image img = new ImageIcon("./images/background.png").getImage();
 		g.drawImage(img, 0, 0, null);
-		// 					(Zeile,Spalte)
+		// 			(Zeile,Spalte)
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-		/* Meine TO-DO's
-		 *
-		 * Gimmicideen
-		 * 		Spielsteine wenn aufgerückt thumbs up oder smileyface
-		 * 		Würfelgeräusche
-		 * 		Bowling Animation beim Schlagen
-		 */
+		
 
 
 		//Spielfeld
 		g.setColor(new Color(225, 221, 176, 200));
-		//g.setColor(Color.black);
+		
 		g.fillOval(220, 20, 40, 40);//0,4
 		g.fillOval(270, 20, 40, 40);//0,5
 		g.fillOval(20, 270, 40, 40);//5,0
@@ -80,7 +74,6 @@ public class PanelGameBoard extends JLayeredPane {
 		g.fillOval(320, 370, 40, 40); //7,6
 
 		g.setColor(new Color(0, 0, 255, 150));
-		//g.setColor(Color.blue);
 		//Haus
 		g.fillOval(20, 20, 40, 40); //0,0
 		g.fillOval(70, 20, 40, 40); //0,1
@@ -95,7 +88,6 @@ public class PanelGameBoard extends JLayeredPane {
 		g.fillOval(220, 270, 40, 40); //5,4
 
 		g.setColor(new Color(35, 149, 0, 170));
-		//g.setColor(Color.green);
 		//Haus
 		g.fillOval(470, 20, 40, 40);//0,9
 		g.fillOval(470, 70, 40, 40);//1,9
@@ -111,7 +103,6 @@ public class PanelGameBoard extends JLayeredPane {
 
 
 		g.setColor(new Color(118, 0, 0, 150));
-		//g.setColor(Color.red);
 		//Haus
 		g.fillOval(20, 470, 40, 40);//9,0
 		g.fillOval(20, 520, 40, 40);//10,0
@@ -126,7 +117,6 @@ public class PanelGameBoard extends JLayeredPane {
 		g.fillOval(270, 320, 40, 40);    //6,5
 
 		g.setColor(new Color(255, 215, 0, 150));
-		//g.setColor(Color.yellow);
 		//Haus
 		g.fillOval(470, 470, 40, 40); //9,9
 		g.fillOval(470, 520, 40, 40); //10,9
