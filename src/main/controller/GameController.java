@@ -103,7 +103,7 @@ public class GameController implements Observer, ActionListener {
 
 				gameGUI.getTfInstruction().setText(winner.get(0).getPlayerColor().toString() + " wins");
 
-				gameGUI.showEndScreen(new PlayerColor[] {winner.get(0).getPlayerColor(), winner.get(1).getPlayerColor(),
+				gameGUI.showEndScreen(new PlayerColor[]{winner.get(0).getPlayerColor(), winner.get(1).getPlayerColor(),
 						winner.get(2).getPlayerColor(), winner.get(3).getPlayerColor()});
 
 			} else {
@@ -156,14 +156,7 @@ public class GameController implements Observer, ActionListener {
 				}
 			}
 
-			// TODO image und sound nur bei wirklich gewürfelt, nicht bei Option click
 			gameGUI.setDicedImage(gameModel.getDiced());
-			if(!(gameModel.getPlayerTurn() instanceof Bot)) {
-//				gameGUI.playDiceSound();
-				// TODO entfernen
-				System.out.println("playsound");
-			}
-
 			gameGUI.getBoardLayeredPane().setPieces(gameModel.getPieces());
 			gameGUI.getBoardLayeredPane().repaint();
 
@@ -185,6 +178,9 @@ public class GameController implements Observer, ActionListener {
 		switch(e.getActionCommand()) {
 			case GameGUI.WUERFELN:
 				gameModel.diceRoll();
+				if(!(gameModel.getPlayerTurn() instanceof Bot)) {
+					gameGUI.playDiceSound();
+				}
 				break;
 			case GameGUI.OPTION_0:
 				gameModel.performOption(0);
