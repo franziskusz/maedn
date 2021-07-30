@@ -95,7 +95,7 @@ public class GameGUI extends GUI {
 	//Sound Einstellungen
 	private String DIR_SEPERATOR = java.io.File.separator;
 	private String soundUrl = "---";
-	private int volumeSounds = 100;
+	private int volumeSounds = 80;
 	private static float MINIMAL_GAIN = -30f;
 	
 	//Spielfeld
