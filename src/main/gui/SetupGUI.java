@@ -37,16 +37,8 @@ public class SetupGUI extends GUI {
 	private JPanel panelButtonsGreen = new JPanel();
 	private JPanel panelButtonsYellow = new JPanel();
 	private JPanel panelFooter = new JPanel();
-	
-	
-	
 
-	private JComboBox comboBoxRed = new JComboBox(playerOptions);
-	private JComboBox comboBoxBlue = new JComboBox(playerOptions);
-	private JComboBox comboBoxGreen = new JComboBox(playerOptions);
-	private JComboBox comboBoxYellow = new JComboBox(playerOptions);
-
-
+	
 	private RoundButton2 buttonContinue = new RoundButton2("", 20, false);
 	
 	private RoundButton2 btnRedHuman = new RoundButton2("", 20, false);
@@ -162,11 +154,6 @@ public class SetupGUI extends GUI {
 		btnRedHuman.setBackground(new Color(255,255,255,255));
 		btnRedBot.setBackground(new Color(255,255,255,255));
 		
-		/*
-		btnRedHuman.setBackground(new Color(255,0,0,50));
-		btnRedBot.setBackground(new Color(255,0,0,50));
-		*/
-		
 		btnRedHuman.addActionListener(e -> {
 			btnRedHuman.setBackground(new Color(255,0,0,255));
 			clickedRedHuman=true;
@@ -179,10 +166,7 @@ public class SetupGUI extends GUI {
 				btnRedBot.setEnabled(true);
 				clickedRedHuman=false;
 			}
-			
 			checkStartGame();
-			
-			
 		});
 		
 		
@@ -199,44 +183,19 @@ public class SetupGUI extends GUI {
 				clickedRedBot= false;
 			}
 			checkStartGame();
-
 		});
 		
-		/*
-		btnRedHuman.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		        btnRedHuman.setBackground(new Color(255,0,0,255));
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		        btnRedHuman.setBackground(UIManager.getColor("control"));
-		    }
-		});
-		
-		btnRedBot.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		        btnRedBot.setBackground(new Color(255,0,0,255));
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		        btnRedBot.setBackground(UIManager.getColor("control"));
-		    }
-		});
-		
-		*/
 		
 		btnRedHuman.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnRedBot.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		panelButtonsRed.setLayout(new GridLayout());
-		//panel3.setPreferredSize(new Dimension(200,50));
 		panelButtonsRed.setBorder(new EmptyBorder(20,50,0,50));
 		panelButtonsRed.add(btnRedHuman);
 		
 		tfRed.setHorizontalAlignment(JTextField.CENTER);
 		panelButtonsRed.add(tfRed);
 		
-		//panelButtonsRed.add( Box.createRigidArea( new Dimension( 10 , 0 ) )  );
 		panelButtonsRed.add(btnRedBot);
 		this.add(panelButtonsRed);
 		//</Red>
@@ -254,10 +213,6 @@ public class SetupGUI extends GUI {
 		
 		btnBlueHuman.setBackground(new Color(255,255,255,255));
 		btnBlueBot.setBackground(new Color(255,255,255,255));
-		/*
-		btnBlueHuman.setBackground(new Color(0,0,255,50));
-		btnBlueBot.setBackground(new Color(0,0,255,50));
-		*/
 		
 		btnBlueHuman.addActionListener(e -> {
 			btnBlueHuman.setBackground(new Color(0,0,255,200));
@@ -298,8 +253,7 @@ public class SetupGUI extends GUI {
 		
 		tfBlue.setHorizontalAlignment(JTextField.CENTER);
 		panelButtonsBlue.add(tfBlue);
-		
-		//panelButtonsBlue.add( Box.createRigidArea( new Dimension( 10 , 0 ) )  );
+	
 		panelButtonsBlue.add(btnBlueBot);
 		this.add(panelButtonsBlue);
 		//</Blue>
@@ -317,10 +271,7 @@ public class SetupGUI extends GUI {
 		
 		btnGreenHuman.setBackground(new Color(255,255,255,255));
 		btnGreenBot.setBackground(new Color(255,255,255,255));
-		/*
-		btnGreenHuman.setBackground(new Color(0,255,0,50));
-		btnGreenBot.setBackground(new Color(0,255,0,50));
-		*/
+		
 		btnGreenHuman.addActionListener(e -> {
 			btnGreenHuman.setBackground(new Color(0,255,0,200));
 			clickedGreenHuman = true;
@@ -360,8 +311,7 @@ public class SetupGUI extends GUI {
 		
 		tfGreen.setHorizontalAlignment(JTextField.CENTER);
 		panelButtonsGreen.add(tfGreen);
-		
-		//panelButtonsGreen.add( Box.createRigidArea( new Dimension( 10 , 0 ) )  );
+
 		panelButtonsGreen.add(btnGreenBot);
 		this.add(panelButtonsGreen);
 		//</Green>
@@ -379,10 +329,7 @@ public class SetupGUI extends GUI {
 		
 		btnYellowHuman.setBackground(new Color(255,255,255,255));
 		btnYellowBot.setBackground(new Color(255,255,255,255));
-		/*
-		btnYellowHuman.setBackground(new Color(255,255,0,50));
-		btnYellowBot.setBackground(new Color(255,255,0,50));
-		*/	
+		
 		btnYellowHuman.addActionListener(e -> {
 			btnYellowHuman.setBackground(new Color(255,255,0,200));
 			clickedYellowHuman = true;
@@ -421,7 +368,7 @@ public class SetupGUI extends GUI {
 		tfYellow.setHorizontalAlignment(JTextField.CENTER);
 		panelButtonsYellow.add(tfYellow);
 		
-		//panelButtonsYellow.add( Box.createRigidArea( new Dimension( 10 , 0 ) )  );
+	
 		panelButtonsYellow.add(btnYellowBot);
 		this.add(panelButtonsYellow);
 		//</Yellow>
@@ -463,92 +410,6 @@ public class SetupGUI extends GUI {
 		});
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
-		
-		/*
-		comboBoxRed.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		comboBoxBlue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		comboBoxGreen.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		comboBoxYellow.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-
-		buttonContinue.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-
-		labelWhatToDo.setText(" Bitte wähle hier 'Mensch', wenn du selbst spielen möchtest und ");
-		labelWhatToDo2.setText(" wähle 'Bot' wenn du möchtest, dass der Computer spielen soll. ");
-		labelWhatToDo3.setText(" Auf 'Los!' startet das Spiel.");
-
-		labelWhatToDo.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		labelWhatToDo2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-		labelWhatToDo3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
-
-		labelWhatToDo.setEditable(false);
-		labelWhatToDo2.setEditable(false);
-		labelWhatToDo3.setEditable(false);
-
-		labelWhatToDo.setBorder(null);
-		labelWhatToDo2.setBorder(null);
-		labelWhatToDo3.setBorder(null);
-
-		labelWhatToDo.setBackground(getForeground());
-		labelWhatToDo2.setBackground(getForeground());
-		labelWhatToDo3.setBackground(getForeground());
-
-		this.add(labelWhatToDo, BorderLayout.CENTER);
-		this.add(labelWhatToDo2, BorderLayout.CENTER);
-		this.add(labelWhatToDo3, BorderLayout.CENTER);
-
-
-		panel1.setLayout(new GridLayout());
-		panel1.setBackground(new Color(255, 0, 0, 155));
-		panel1.setBorder(new EmptyBorder(2, 5, 5, 5));
-
-		comboBoxRed.setBorder(BorderFactory.createTitledBorder("Rot"));
-		panel1.add(comboBoxRed);
-		this.add(panel1);
-
-
-		panel2.setLayout(new GridLayout());
-		panel2.setBackground(new Color(30, 144, 255, 155));
-		panel2.setBorder(new EmptyBorder(2, 5, 5, 5));
-
-		comboBoxBlue.setBorder(BorderFactory.createTitledBorder("Blau"));
-		panel2.add(comboBoxBlue);
-		this.add(panel2);
-
-
-		panel3.setLayout(new GridLayout());
-		panel3.setBackground(new Color(0, 225, 0, 225));
-		panel3.setBorder(new EmptyBorder(2, 5, 5, 5));
-
-		comboBoxGreen.setBorder(BorderFactory.createTitledBorder("Grün"));
-		panel3.add(comboBoxGreen);
-		this.add(panel3);
-
-
-		panel4.setLayout(new GridLayout());
-		panel4.setBackground(new Color(255, 225, 0, 225));
-		panel4.setBorder(new EmptyBorder(2, 5, 5, 5));
-
-		comboBoxYellow.setBorder(BorderFactory.createTitledBorder("Gelb"));
-		panel4.add(comboBoxYellow);
-		this.add(panel4);
-
-
-		panel5.setLayout(new GridLayout());
-		buttonContinue.addActionListener(e -> {
-			startGame();
-		});
-		panel5.add(buttonContinue);
-
-		panel5.add(cbAdmin);
-
-		panel5.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.add(panel5);
-
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		this.pack();
-		*/
 	}
 
 	private void startGame() {
@@ -600,17 +461,13 @@ public class SetupGUI extends GUI {
 	private void checkStartGame() {
 		
 		if ((clickedRedHuman || clickedRedBot) &&
-				(clickedBlueHuman || clickedBlueBot) && 
-				(clickedGreenHuman || clickedGreenBot) && 
-				(clickedYellowHuman || clickedYellowBot)
-				) {
+			(clickedBlueHuman || clickedBlueBot) && 
+			(clickedGreenHuman || clickedGreenBot) && 
+			(clickedYellowHuman || clickedYellowBot)) {
 				buttonContinue.setEnabled(true);
 			} 
 		else {
 			buttonContinue.setEnabled(false);
-		}
-		
-		
-		
+		}	
 	}
 }

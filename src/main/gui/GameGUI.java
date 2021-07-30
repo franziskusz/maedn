@@ -1,5 +1,6 @@
 package main.gui;
 
+//Imports
 import main.Main;
 import main.controller.BotThread;
 import main.model.enums.PlayerColor;
@@ -14,15 +15,11 @@ import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-
-import javax.print.attribute.standard.Media;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import javax.sound.sampled.AudioSystem;
@@ -41,6 +38,7 @@ public class GameGUI extends GUI {
 	public static final String ADMIN = "ADMIN";
 	public static final String AGAIN = "AGAIN";
 
+	//Button's
 	private RoundButton btnDice = new RoundButton("", 20, false);
 	private RoundButton btnOption0 = new RoundButton("", 20, false);
 	private RoundButton btnOption1 = new RoundButton("", 20, false);
@@ -54,21 +52,23 @@ public class GameGUI extends GUI {
 	private RoundButton2 rbtnThirdPlace = new RoundButton2("", 20, false);
 	private RoundButton2 rbtnFourthPlace = new RoundButton2("", 20, false);
 
+	//Panel's
 	private JPanel panelTop = new JPanel();
 	private JPanel panelBottomTop = new JPanel();
 	private JPanel panelBottomCenter = new JPanel();
 	private JPanel panelBottomBottom = new JPanel();
 	private JPanel panelBottom = new JPanel();
 
+	//Slider
 	private JSlider sliderBotSpeed = new JSlider(10, 1010, 510);
 
+	//Textfield's
 	private JTextField tfInstruction = new RoundJTextField(20);
 	private JTextField tfAdmin = new RoundJTextField(20);
 	private JTextField tfSliderLeft = new JTextField("fast");
 	private JTextField tfSliderRight = new JTextField("slow");
 
-	private PanelGameBoard boardLayeredPane;
-
+	//ImageIcon's
 	private ImageIcon imageIconDiced1 = new ImageIcon("./images/1.png");
 	private ImageIcon imageIconDiced2 = new ImageIcon("./images/2.png");
 	private ImageIcon imageIconDiced3 = new ImageIcon("./images/3.png");
@@ -81,6 +81,7 @@ public class GameGUI extends GUI {
 	private ImageIcon imageIconThirdPlace = new ImageIcon("./images/third.png");
 	private ImageIcon imageIconKonfetti = new ImageIcon("./images/konfetti.gif");
 
+	//Label's
 	private JLabel labelDicedImage;
 	private JLabel labelWreathImage = new JLabel(imageIconWreath);
 	private JLabel labelFirstPlaceImage = new JLabel(imageIconFirstPlace);
@@ -91,14 +92,15 @@ public class GameGUI extends GUI {
 	private JLabel labelSecondPlaceImage2 = new JLabel(imageIconSecondPlace);
 	private JLabel labelKonfettiImage = new JLabel(imageIconKonfetti);
 	
-	
+	//Sound Einstellungen
 	private String DIR_SEPERATOR = java.io.File.separator;
 	private String soundUrl = "---";
 	private int volumeSounds = 100;
 	private static float MINIMAL_GAIN = -30f;
 	
-	//ImageIcon logo = new ImageIcon("./images/logo.png");
-	//ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("logo.png"));
+	//Spielfeld
+	private PanelGameBoard boardLayeredPane;
+	
 
 
 	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allHuman) {
@@ -144,9 +146,8 @@ public class GameGUI extends GUI {
 		tfInstruction.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		panelTop.add(tfInstruction);
 
-
 		panelBottomBottom.setLayout(new GridLayout());
-		//panel4.setBorder(new EmptyBorder(0,0,10,0));
+		
 		tfSliderLeft.setEditable(false);
 		tfSliderLeft.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		tfSliderLeft.setHorizontalAlignment(JTextField.RIGHT);
@@ -163,7 +164,6 @@ public class GameGUI extends GUI {
 		sliderBotSpeed.setMinorTickSpacing(25);
 		sliderBotSpeed.setPaintTrack(true);
 		sliderBotSpeed.setMajorTickSpacing(100);
-		//slider.setPaintLabels(true);
 		sliderBotSpeed.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		sliderBotSpeed.setOrientation(SwingConstants.HORIZONTAL);
 		sliderBotSpeed.addChangeListener(e -> BotThread.setPace(sliderBotSpeed.getValue()));
@@ -179,57 +179,45 @@ public class GameGUI extends GUI {
 
 
 		btnDice.setText("Dice");
-		//btnWuerfel.setBorder(new MyBorder());
 		btnDice.setActionCommand(WUERFELN);
 		btnDice.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnDice.setBorder(new EmptyBorder(0, 0, 0, 0)); //ganzer Button orange bei klick, nicht nur rahmen
 		btnDice.setBackground(new Color(255, 255, 255, 255));
-		//btnWuerfel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panelBottomTop.add(btnDice);
 
 		labelDicedImage = new JLabel("", imageIconDiced6, JLabel.CENTER);
-		// @Toni Hier mit der Größe Rumspielen
 		labelDicedImage.setPreferredSize(new Dimension(50, 50));
 		panelBottomTop.add(labelDicedImage);
 
 		btnOption0.setText("0");
-		//btnOption0.setBorder(new MyBorder());
 		btnOption0.setActionCommand(OPTION_0);
 		btnOption0.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption0.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnOption0.setBackground(new Color(255, 255, 255, 255));
-		//btnOption0.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panelBottomTop.add(btnOption0);
 
 
 		btnOption1.setText("1");
-		//btnOption1.setBorder(new MyBorder());
 		btnOption1.setActionCommand(OPTION_1);
 		btnOption1.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption1.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnOption1.setBackground(new Color(255, 255, 255, 255));
 		panelBottomTop.add(btnOption1);
-		//panel2.add( Box.createRigidArea( new Dimension( 1 , 0 ) )  ); für den Abstand zwischen den Buttons, hat nicht geklappt
 
 
 		btnOption2.setText("2");
-		//btnOption2.setBorder(new MyBorder());
 		btnOption2.setActionCommand(OPTION_2);
 		btnOption2.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption2.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnOption2.setBackground(new Color(255, 255, 255, 255));
-		//btnOption2.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panelBottomTop.add(btnOption2);
 
 
 		btnOption3.setText("3");
-		//btnOption3.setBorder(new MyBorder());
 		btnOption3.setActionCommand(OPTION_3);
 		btnOption3.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		btnOption3.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnOption3.setBackground(new Color(255, 255, 255, 255));
-		//btnOption3.setBorder(new EmptyBorder(0,10,0,0));
-		//btnOption3.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
 		panelBottomTop.add(btnOption3);
 
 
@@ -312,7 +300,12 @@ public class GameGUI extends GUI {
 		return boardLayeredPane;
 	}
 
-
+	/*
+	 * Stellt Bild der gewürfelten Zahl zur Verfügung
+	 *
+	 * @param diced 
+	 * übergibt die gewürfelte Zahl
+	 */
 	public void setDicedImage(int diced) {
 		
 		
@@ -339,7 +332,13 @@ public class GameGUI extends GUI {
 		}
 	}
 
-
+	/*
+	 * Färbt den oberen Teil des Fensters genau in der Farbe des Spielers, 
+	 * der an der Reihe ist
+	 *
+	 * @param playercolor
+	 * übergibt die Farbe des Spielers, der gerade dran ist
+	 */
 	public void setBackgroundColor(PlayerColor playerColor) {
 		
 		
@@ -359,12 +358,32 @@ public class GameGUI extends GUI {
 		}
 	}
 
-
+	
+	/*
+	 *?
+	 */
 	public void stopGame() {
 		this.setVisible(false);
 		Main.startSetUp();
 	}
 
+	
+	/*
+	 * Endbildschirm/Sigeranzeige
+	 * 
+	 * Holt sich das erste Element im Array - den Sieger- 
+	 * und färbt den oberen Bereich des Fensters in der entsprechenden Farbe
+	 * 
+	 * platziert Bilder wie Pokal, Siegeskranz, Medaillien für Platz 2 und 3
+	 *
+	 * erstellt einen runden Button der zentral platziert wird für alle 4 Spieler
+	 * erstellt eine Option um nochmal zu spielen
+	 * 
+	 * färbt die Buttons entsprechend der Reihenfolge des winner-Arrays ein
+	 *
+	 * @param winner
+	 * übergibt einen Array an Farben, der nach Platzierung sortiert ist
+	 */
 	public void showEndScreen(PlayerColor[] winner) {
 		playEndScreenCelebration();
 		
@@ -408,9 +427,7 @@ public class GameGUI extends GUI {
 
 		labelThirdPlaceImage.setBounds(x, y + 2 * z, 50, 50);
 		boardLayeredPane.add(labelThirdPlaceImage);
-
-		//
-
+		
 		labelFirstPlaceImage2.setBounds(325, y, 50, 50);
 		boardLayeredPane.add(labelFirstPlaceImage2);
 
@@ -418,62 +435,49 @@ public class GameGUI extends GUI {
 		boardLayeredPane.add(labelSecondPlaceImage2);
 
 		labelThirdPlaceImage2.setBounds(325, y + 2 * z, 50, 50);
-		boardLayeredPane.add(labelThirdPlaceImage2);
-
-		//
-
-
-		
+		boardLayeredPane.add(labelThirdPlaceImage2);		
 
 
 		rbtnFirstPlace.setVisible(true);
 		rbtnFirstPlace.setText("Winner");
-		//rbtnFirstPlace.setBorder(new MyBorder());
 		rbtnFirstPlace.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		rbtnFirstPlace.setBorder(new EmptyBorder(0, 0, 0, 0));
 		rbtnFirstPlace.setBounds(0, 0, 200, 100);
 		rbtnFirstPlace.setLayout(new GridLayout());
 		rbtnFirstPlace.setLocation(190, 61);
-		//rbtnFirstPlace.setEnabled(false);
 		boardLayeredPane.add(rbtnFirstPlace);
 
 
 		rbtnSecondPlace.setVisible(true);
 		rbtnSecondPlace.setText("Second");
-		//rbtnSecondPlace.setBorder(new MyBorder());
 		rbtnSecondPlace.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		rbtnSecondPlace.setBorder(new EmptyBorder(0, 0, 0, 0));
 		rbtnSecondPlace.setBounds(0, 0, 200, 100);
 		rbtnSecondPlace.setLayout(new GridLayout());
 		rbtnSecondPlace.setLocation(190, 181);
-		//rbtnSecondPlace.setEnabled(false);
 		boardLayeredPane.add(rbtnSecondPlace);
 
 
 		rbtnThirdPlace.setVisible(true);
 		rbtnThirdPlace.setText("Third");
-		//rbtnThirdPlace.setBorder(new MyBorder());
 		rbtnThirdPlace.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		rbtnThirdPlace.setBorder(new EmptyBorder(0, 0, 0, 0));
 		rbtnThirdPlace.setBounds(0, 0, 200, 100);
 		rbtnThirdPlace.setLayout(new GridLayout());
 		rbtnThirdPlace.setLocation(190, 301);
-		//rbtnThirdPlace.setEnabled(false);
 		boardLayeredPane.add(rbtnThirdPlace);
 
 
 		rbtnFourthPlace.setVisible(true);
 		rbtnFourthPlace.setText("Fourth");
-
 		rbtnFourthPlace.setFont(new Font("Lexend Deca", Font.BOLD, 15));
 		rbtnFourthPlace.setBorder(new EmptyBorder(0, 0, 0, 0));
 		rbtnFourthPlace.setBounds(0, 0, 200, 100);
 		rbtnFourthPlace.setLayout(new GridLayout());
 		rbtnFourthPlace.setLocation(190, 421);
-		//rbtnFourthPlace.setEnabled(false);
 		boardLayeredPane.add(rbtnFourthPlace);
 
-		// Variable again wird ganz oben deklariert und initialisiert, weil sonst kein getter möglich.
+
 		btnPlayAgain.setVisible(true);
 		btnPlayAgain.setText("Play again?");
 		btnPlayAgain.setFont(new Font("Lexend Deca", Font.BOLD, 15));
@@ -483,10 +487,9 @@ public class GameGUI extends GUI {
 		btnPlayAgain.setLocation(470, 520);
 		btnPlayAgain.setEnabled(true);
 		btnPlayAgain.setActionCommand(AGAIN);
-
-
 		boardLayeredPane.add(btnPlayAgain);
 
+		
 		rbtnBoardLayeredPaneShadow.setEnabled(false);
 		rbtnBoardLayeredPaneShadow.setPreferredSize(new Dimension(700, 700));
 		rbtnBoardLayeredPaneShadow.setBounds(0, 0, 700, 700);
@@ -494,31 +497,6 @@ public class GameGUI extends GUI {
 		rbtnBoardLayeredPaneShadow.setBackground(new Color(0, 0, 0, 200));
 		rbtnBoardLayeredPaneShadow.setVisible(true);
 		boardLayeredPane.add(rbtnBoardLayeredPaneShadow);
-
-			/*
-			 -------------------------------
-			|								|
-			|								|
-			 ------------       ------------
-			 	-----	 |     | 	-----
-			   |	 | 	 |     |   |     |
-			   |  	 |	 |     |   |     |
-	           |	 |	 |     |   |     |
-			   | 	 |	 |     |   |     |
-			   |	 |	 |     |   |     |
-			   |	 |	 |     |   |     |
-			   |	 |	 |     |   |     |
-			   |	 |	 |     |   |     |
-			   |	 |	 |     |   |     |
-			   |	 |	 |     |   |     |
-			   |	 |	 |     |   |     |
-			   |	 |	  -----    |     |          ___
-			   |	 |	  		   |     |      ___|  |
-   	   -------- 	  -------------       ------      |
-      |			 		                            __|  
-  	  | 		  	  							___|    
-       ----------------------------------------- 
-			*/
 
 		RoundButton2[] placement = {rbtnFirstPlace, rbtnSecondPlace, rbtnThirdPlace, rbtnFourthPlace};
 		
@@ -543,6 +521,13 @@ public class GameGUI extends GUI {
 	
 	
 	public class SoundRunnable implements Runnable {
+		
+		/* 
+		 * erstellt den Pfad zum Sound
+		 * 
+		 * stellt die Lautstärke ein und gibt die Möglichkeit den Sound zu stoppen
+		 * 
+		 */
 		@Override
 		public void run() {
 			Clip clip;
@@ -570,13 +555,17 @@ public class GameGUI extends GUI {
 			}
 		}
 	}
-	
+	/* 
+	 * erstellt einen neuen Thread sobald ein Sound aufgerufen wird, damit Sounds auch übereinander laufen können
+	 */
 	private void playSound() {
 			Thread soundThread = new Thread(new SoundRunnable());
 			soundThread.start();
 		}
 	
-	
+	/* 
+	 * erstellt die einzelnen Sounds
+	 */
 	private void playDiceSound1() {
 		soundUrl = "DiceSound1.wav";
 		playSound();
@@ -614,13 +603,13 @@ public class GameGUI extends GUI {
 		soundUrl = "Celebration.wav";
 		playSound();
 	}
-	private void playBackgroundMusic() {
-		soundUrl = "Hintergrundmusik.wav";
-		playSound();
-	}
 	
 	
-	
+	/* 
+	 * Kreiert eine zufällige Zahl zwischen 1 und 8
+	 * 
+	 * Wählt basierend auf der Zahl einen zufälligen Würfelsound aus damit es nicht jedes mal der gleiche ist
+	 */
 	public void playDiceSound() {
 		
 		Random randomSound = new Random();
