@@ -9,7 +9,7 @@ public class Player {
 
 	private int lastDiced;
 	private PlayerState playerState;
-	private Piece[] pieces = {new Piece(this, 0), new Piece(this, 1), new Piece(this, 2),new Piece(this, 3)};
+	private Piece[] pieces = {new Piece(this, 0), new Piece(this, 1), new Piece(this, 2), new Piece(this, 3)};
 	private PlayerColor playerColor;
 
 	private static int nextPlace = 1;

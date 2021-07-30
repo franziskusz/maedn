@@ -39,7 +39,7 @@ public class GameModel extends Observable {
 	 * Initialisiert player, pieces, board, playerTurn, Gamestate
 	 * Falls erster Spieler Bot, wird dieser zum Würfeln gezwungen
 	 *
-	 * @param INITIAL_PLAYERS
+	 * @param INITIAL_PLAYERS Initialordnung der Spieler
 	 */
 	public GameModel(ArrayList<Player> INITIAL_PLAYERS) {
 		this.INITIAL_PLAYERS = INITIAL_PLAYERS;
@@ -81,9 +81,6 @@ public class GameModel extends Observable {
 
 		playerTurn.setLastDiced(diced);
 
-		//TODO entfernen
-		System.out.println(playerTurn.getPlayerColor().toString() + " hat " + diced + " gewürfelt");
-
 		// Wird gerade der Beginner ausgewürelt?
 		if(gameState == GameState.DETERMINE_ORDER) {
 			// Ist Spieler 4? -> (Alle haben gewürfelt)
@@ -93,9 +90,6 @@ public class GameModel extends Observable {
 					setPlayerOrder();
 					clearPlayerLastDice();
 					changeGameState(GameState.IN_GAME);
-
-					//TODO entfernen
-					System.out.println(players.get(0).getPlayerColor().toString() + " beginnt!\n");
 
 					// Spiel beginnt mit Spieler, der die höchste Zahl gewürfelt hat
 					firstPlayer();
@@ -110,12 +104,9 @@ public class GameModel extends Observable {
 		}
 
 		options = board.getOptions(playerTurn, diced, INITIAL_PLAYERS);
-		//TODO entfernen
-		System.out.println(playerTurn.getPlayerColor().toString() + " hat " + options.size() + " optionen");
 		if(!(playerTurn instanceof Bot)) {
 			givePiecesOptionFlag();
 		}
-
 
 		// Gibt es eine oder mehrere Möglichkeiten, unter der der Spieler auswählen kann
 		if(hasOption()) {
@@ -155,10 +146,6 @@ public class GameModel extends Observable {
 	 * @param option 0-3 entspricht der Option und somit auch PieceID
 	 */
 	public void performOption(int option) {
-
-		// TODO entfernen
-		System.out.println(playerTurn.getPlayerColor().toString() + " will Option " + option);
-
 		board.performOption(playerTurn, playerTurn.getPieces()[option].getPosition(), diced, INITIAL_PLAYERS);
 
 		if(playerTurn.isGoalAchieved()) {
@@ -174,35 +161,11 @@ public class GameModel extends Observable {
 		removePiecesOptionFlag();
 
 		if(gameState != GameState.END) {
-			// TODO unbedingt nochmal logik nachvollziehen, kann gut sein, dass hier noch was nicht richtig passiert
-			// TODO Wenn Spieler durch diesen Zug THREE TIMES bekommt und keine 6 gewürfelt hat
-			//  darf er erst nächste Runde wieder würfeln.
-			//  Wenn er allerdings durch diesen Zug THREE TIMES bekommt und eine 6 gewürfelt hat,
-			//  darf er direkt weiter 3x würfeln!
-			//  !!!!Wird durch folgendes gelöst (wahrscheinlich)!!!
-
 			if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
 				isBot_DoAction(BotAction.DICE);
 			} else {
 				nextPlayer();
 			}
-
-//			if(board.isSuperSpecialCase()) {
-//				if(playerTurn.getPlayerState() == PlayerState.DICE_AGAIN) {
-//					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
-//					isBot_DoAction(BotAction.DICE);
-//				} else {
-//					playerTurn.setPlayerState(PlayerState.DICE_THREE_TIMES);
-//					nextPlayer();
-//				}
-//			} else {
-//				if(playerTurn.getPlayerState() == PlayerState.NORMAL) {
-//					nextPlayer();
-//				} else {
-//					isBot_DoAction(BotAction.DICE);
-//				}
-//			}
-
 		}
 
 		updateGUI();
@@ -264,7 +227,7 @@ public class GameModel extends Observable {
 	 * @param view    Spiel JFrame
 	 * @param command eingegebener Befehl
 	 */
-	public void perfromAdminCommand(JFrame view, String command) {
+	public void performAdminCommand(JFrame view, String command) {
 		if(!command.trim().equals("")) {
 			command = command.toUpperCase().replaceAll("\\s+", " ");
 			String[] args = command.trim().split(" ");
@@ -292,7 +255,7 @@ public class GameModel extends Observable {
 										if(players.size() <= 1) {
 											players.get(0).setGoalAchieved();
 											changeGameState(GameState.END);
-										}  else {
+										} else {
 											nextPlayer();
 										}
 									}
@@ -440,7 +403,6 @@ public class GameModel extends Observable {
 	 * Setzt playerTurnDicedCount 0
 	 */
 	private void nextPlayer() {
-
 		// Falls durch Admin angezeigt muss entfernt werden
 		removePiecesOptionFlag();
 
@@ -456,8 +418,6 @@ public class GameModel extends Observable {
 			try {
 				playerTurn = players.get(indexOfPlayerTurn + 1);
 			} catch(Exception ex) {
-				//  TODO entfernen
-				System.out.println("Gewollter Fehler, der abgefangen wird.");
 				playerTurn = players.get(0);
 			}
 		} else {

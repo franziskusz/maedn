@@ -1,21 +1,18 @@
 package main.model.player;
 
-import main.model.enums.PieceState;
 import main.model.graph.Vertex;
 
 public class Piece {
 
-	Player player;
-	int id;
-	PieceState pieceState;
-	Vertex position;
+	private Player player;
+	private int id;
+	private Vertex position;
 	private boolean isOption;
 
 	public Piece(Player player, int id) {
 		this.player = player;
 		this.id = id;
 		this.isOption = false;
-		this.pieceState = PieceState.HOME;
 	}
 
 	public Player getPlayer() {
@@ -24,14 +21,6 @@ public class Piece {
 
 	public int getId() {
 		return id;
-	}
-
-	public PieceState getPieceState() {
-		return pieceState;
-	}
-
-	public void setPieceState(PieceState pieceState) {
-		this.pieceState = pieceState;
 	}
 
 	public Vertex getPosition() {
