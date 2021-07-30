@@ -102,11 +102,8 @@ public class GameGUI extends GUI {
 
 
 	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allHuman) {
-		
-		
-		
-		//this.setIconImage(logo.getImage());
-		playBackgroundMusic();
+	
+	
 		this.setTitle("Mensch ärgere dich nicht!");
 
 		boardLayeredPane = new PanelGameBoard(new ImageIcon("./images/background.png").getImage(), pieces);

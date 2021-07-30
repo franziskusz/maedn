@@ -7,12 +7,14 @@ import main.model.player.Bot;
 import main.model.player.Gamer;
 import main.model.player.Player;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ArrayList;
 
 public class SetupGUI extends GUI {
