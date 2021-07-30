@@ -38,7 +38,6 @@ public class GameController implements Observer, ActionListener {
 		// ControllerGUI soll Model beobachten
 		gameModel.addObserver(this);
 
-
 		// set Listener für Buttons
 		gameGUI.getBtnDice().addActionListener(this);
 		gameGUI.getBtnOption0().addActionListener(this);
@@ -81,9 +80,6 @@ public class GameController implements Observer, ActionListener {
 			gameGUI.getTfAdmin().setEnabled(true);
 			gameGUI.getTfInstruction().setText("Please roll the dice: " + gameModel.getPlayerTurn().getPlayerColor().toString());
 		}
-
-		// TODO entfernen
-		System.out.println("Init GUI");
 	}
 
 
@@ -159,9 +155,6 @@ public class GameController implements Observer, ActionListener {
 			gameGUI.setDicedImage(gameModel.getDiced());
 			gameGUI.getBoardLayeredPane().setPieces(gameModel.getPieces());
 			gameGUI.getBoardLayeredPane().repaint();
-
-			//TODO entfernen
-			System.out.println("Updated GUI");
 		}
 	}
 
@@ -195,7 +188,7 @@ public class GameController implements Observer, ActionListener {
 				gameModel.performOption(3);
 				break;
 			case GameGUI.ADMIN:
-				gameModel.perfromAdminCommand(gameGUI, gameGUI.getTfAdmin().getText());
+				gameModel.performAdminCommand(gameGUI, gameGUI.getTfAdmin().getText());
 				gameGUI.getTfAdmin().setText("");
 				break;
 			case GameGUI.AGAIN:
