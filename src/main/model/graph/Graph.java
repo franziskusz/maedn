@@ -179,7 +179,7 @@ public class Graph
 		// gegnerische Heimatfelder ausschließen
 		if (re==true)
 		{
-			if ((target.getIndex()>40)&&(target.getIndex()<56))
+			if ((target.getIndex()>39)&&(target.getIndex()<56))
 			{	
 				for(int i=0; i<4; i++)
 				{
