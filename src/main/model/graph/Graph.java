@@ -49,11 +49,11 @@ public class Graph
 		vertices.get(0).printPiece();
 		*/
 		
-		System.out.println("Stein 1 von Spieler 1 steht auf Vertex "+getVertexIndexbyPiece(players.get(0).getPieces()[0])); //debug
-		System.out.println("Stein 2 von Spieler 3 steht auf Vertex "+players.get(2).getPieces()[1].getPosition().getIndex()); //debug
+		//System.out.println("Stein 1 von Spieler 1 steht auf Vertex "+getVertexIndexbyPiece(players.get(0).getPieces()[0])); //debug
+		//System.out.println("Stein 2 von Spieler 3 steht auf Vertex "+players.get(2).getPieces()[1].getPosition().getIndex()); //debug
 		
-		System.out.println("Testausgabe Player 1 Options für Dice 6:");
-		getOptions(players.get(1), 6, players); //Debug
+		//System.out.println("Testausgabe Player 1 Options für Dice 6:");
+		//getOptions(players.get(1), 6, players); //Debug
 		//performOption(players.get(1), vertices.get(47), 6, players); //debug
 	}
 	
@@ -104,15 +104,16 @@ public class Graph
 					SuperSpecialCase=checkforSuperSpecialCase(player, players);
 					if(SuperSpecialCase==true)
 					{
-						System.out.println("DICE_THREE_TIMES"+player.getPlayerColor());
+						System.out.println("DICE_THREE_TIMES "+player.getPlayerColor());
 						player.setPlayerState(PlayerState.DICE_THREE_TIMES);
 					}
+					else 
+					{
+						System.out.println("Player State NORMAL "+player.getPlayerColor());
+						player.setPlayerState(PlayerState.NORMAL);
+					}
 				}
-				else 
-				{
-					System.out.println("Player State NORMAL "+player.getPlayerColor());
-					player.setPlayerState(PlayerState.NORMAL);
-				}
+				
 	
 				if(checkGoal(player, players))
 				{
@@ -175,7 +176,7 @@ public class Graph
 				re=false;
 			}
 		}
-		//Heimatfelder ausschließen
+		// gegnerische Heimatfelder ausschließen
 		if (re==true)
 		{
 			if ((target.getIndex()>40)&&(target.getIndex()<56))
