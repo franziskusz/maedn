@@ -84,10 +84,12 @@ public class SetupGUI extends GUI {
 
 	public SetupGUI() {
 		
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("./images/logo.png"));
 		this.setTitle("Mensch ärgere dich nicht!");
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.setLocation(500, 200);
 		this.setSize(520, 520);
+		
 
 		
 		labelWhatToDo.setText(" Please select 'Person' if you want to play by yourself or ");

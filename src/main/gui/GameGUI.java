@@ -94,7 +94,7 @@ public class GameGUI extends GUI {
 	
 	private String DIR_SEPERATOR = java.io.File.separator;
 	private String soundUrl = "---";
-	private int volumeSounds = 60;
+	private int volumeSounds = 100;
 	private static float MINIMAL_GAIN = -30f;
 	
 	//ImageIcon logo = new ImageIcon("./images/logo.png");
@@ -103,8 +103,10 @@ public class GameGUI extends GUI {
 
 	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allHuman) {
 		
+		
+		
 		//this.setIconImage(logo.getImage());
-
+		playBackgroundMusic();
 		this.setTitle("Mensch ärgere dich nicht!");
 
 		boardLayeredPane = new PanelGameBoard(new ImageIcon("./images/background.png").getImage(), pieces);
@@ -547,7 +549,7 @@ public class GameGUI extends GUI {
 		@Override
 		public void run() {
 			Clip clip;
-			File file = new File("./images" + DIR_SEPERATOR + soundUrl);
+			File file = new File("./sounds" + DIR_SEPERATOR + soundUrl);
 			
 			try {
 				clip = AudioSystem.getClip();
@@ -613,6 +615,10 @@ public class GameGUI extends GUI {
 	
 	private void playEndScreenCelebration() {
 		soundUrl = "Celebration.wav";
+		playSound();
+	}
+	private void playBackgroundMusic() {
+		soundUrl = "Hintergrundmusik.wav";
 		playSound();
 	}
 	
