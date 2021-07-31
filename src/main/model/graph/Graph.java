@@ -675,8 +675,12 @@ public class Graph
 						player.setPlayerState(PlayerState.NORMAL);
 					}
 				}
+				else
+				{
+					System.out.println("Player State NORMAL "+player.getPlayerColor()); //debug
+					player.setPlayerState(PlayerState.NORMAL);
+				}
 				
-	
 				if(checkGoal(player, players))
 				{
 					player.setGoalAchieved();
@@ -740,7 +744,7 @@ public class Graph
 	//
 	// INTERNE METHODEN
 	//
-	
+
 	/*
 	 * Zentrale Hilfsfunktion für getOptions(), performOption() und adminMove()
 	 * Ermittelt anhand des gegebenen Spielers und seiner Option den eindeutigen Zielknoten
