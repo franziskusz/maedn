@@ -1,5 +1,6 @@
 package main.gui;
 
+//Import's
 import main.controller.GameController;
 import main.model.GameModel;
 import main.model.enums.PlayerColor;
@@ -7,15 +8,14 @@ import main.model.player.Bot;
 import main.model.player.Gamer;
 import main.model.player.Player;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.ArrayList;
+
 
 public class SetupGUI extends GUI {
 
@@ -75,7 +75,11 @@ public class SetupGUI extends GUI {
 
 	private JCheckBox cbAdmin = new JCheckBox("Admin", false);
 
-
+	/**
+	 * Konstruktor
+	 * initialisiert die Einstellungs GUI mit möglichen Optionen
+	 * um Bot, Mensch und Admin zu wählen
+	 */
 	public SetupGUI() {
 		
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("./images/logo.png"));
@@ -412,12 +416,20 @@ public class SetupGUI extends GUI {
 		this.setResizable(false);
 	}
 
+	/**
+	 * Startet das Spiel und erkennt ob Mensch oder Bot ausgewählt
+	 * Erkennt ob nur Menschen ausgewählt wurden
+	 * 
+	 * Initialisiert das Spiel mit den eingegebenen Einstllungen und übergibt die Daten
+	 * an Modeler, Controller, und GUI
+	 */
 	private void startGame() {
 
 		boolean allHuman = true;
 
 		ArrayList<Player> INITIAL_PLAYERS = new ArrayList<>();
 
+		
 		if(clickedRedHuman) {
 			INITIAL_PLAYERS.add(new Gamer(PlayerColor.RED));
 		} else {
@@ -454,10 +466,16 @@ public class SetupGUI extends GUI {
 		this.setVisible(false);
 	}
 
+	/**
+	 *  zeigt die Setup GUI
+	 */
 	public void showGUI() {
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Deaktiviert den Go Button solange bis auf jeder Ebene eine Einstellung ausgewählt wurde
+	 */
 	private void checkStartGame() {
 		
 		if ((clickedRedHuman || clickedRedBot) &&

@@ -5,7 +5,9 @@ import java.util.List;
 
 import main.model.player.Piece;
 
-
+/*
+ * Hilfsklasse für den Graphen: Verwaltung der Ecken. 
+ */
 public class Vertex
 {
 
@@ -56,9 +58,9 @@ public class Vertex
 		return coordinateY;
 	}
 	
-	public void setCoordinateY(int coordniateY)
+	public void setCoordinateY(int coordinateY)
 	{
-		this.coordinateY = coordniateY;
+		this.coordinateY = coordinateY;
 	}
 	
 	public Vertex(Graph graphPtr)

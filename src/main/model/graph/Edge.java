@@ -1,5 +1,7 @@
 package main.model.graph;
-
+/*
+ * Hilfsklasse für den Graphen: Verwaltung der Kanten. 
+ */
 public class Edge
 {
 

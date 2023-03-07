@@ -1,5 +1,6 @@
 package main.gui;
 
+//Import's
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,10 +10,14 @@ import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JButton;
-import javax.swing.border.EmptyBorder;
 
 import main.model.enums.PlayerColor;
 
+/**
+ * Sorgt dafür dass der Button abgerundete Ecken hat und gerendert wird
+ * @Credits JavaForum Robat und individuelle Anpassungen
+ * https://www.java-forum.org/thema/runde-buttons-erstellen.182494/
+ */
 public class RoundButton extends JButton {
 
     private Shape shape;
@@ -43,7 +48,23 @@ public class RoundButton extends JButton {
         setFocusable(false);
     }
     
-    
+    @Override
+    protected void paintBorder(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+        g2d.setColor(getBackground().darker());
+        g2d.draw(new RoundRectangle2D.Double(0, 0, getWidth()-1, getHeight()-1, arc, arc));
+    }
+
+    @Override
+    public boolean contains( int x, int y ) {
+        if(shape == null || !shape.getBounds().equals(getBounds())) {
+            this.shape = new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), arc, arc);
+        }
+        return shape.contains(x, y);
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -51,6 +72,7 @@ public class RoundButton extends JButton {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);       
         
+        //verändert den Hntergrund des Buttons beim klicken abhängig vom Spieler, der gerade dran ist
         switch(color){
         
         case RED:
@@ -74,25 +96,11 @@ public class RoundButton extends JButton {
         super.paintComponent(g);
     }
 
-    @Override
-    protected void paintBorder(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-
-        g2d.setColor(getBackground().darker());
-        g2d.draw(new RoundRectangle2D.Double(0, 0, getWidth()-1, getHeight()-1, arc, arc));
-    }
-
-    @Override
-    public boolean contains( int x, int y ) {
-        if(shape == null || !shape.getBounds().equals(getBounds())) {
-            this.shape = new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), arc, arc);
-        }
-        return shape.contains(x, y);
-    }
-    
-    public static void hierhastewas(PlayerColor color) {
+   
+    /*
+     * setzt die Farbe des Buttons
+     */
+    public static void setColor (PlayerColor color) {
     	RoundButton.color=color;
     }
 }

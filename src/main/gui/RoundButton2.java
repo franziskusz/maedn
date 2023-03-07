@@ -1,5 +1,5 @@
 package main.gui;
-
+//Import's
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,10 +9,14 @@ import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JButton;
-import javax.swing.border.EmptyBorder;
 
 import main.model.enums.PlayerColor;
 
+/**
+ * Gleiche Klasse wie RoundButton
+ * Unterschied in der Klick-Farbe um Spielerunabhängige Buttons 
+ * (Admin, Play again, Go) in einheitlicher Farbe beim Klick zu gestalten
+ */
 public class RoundButton2 extends JButton {
 
     private Shape shape;
@@ -79,7 +83,7 @@ public class RoundButton2 extends JButton {
         return shape.contains(x, y);
     }
     
-    public static void hierhastewas(PlayerColor color) {
+    public static void setColor (PlayerColor color) {
     	RoundButton2.color=color;
     }
 }

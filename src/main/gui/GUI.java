@@ -1,9 +1,18 @@
 package main.gui;
 
+//Import
 import javax.swing.*;
 
+/*
+ * Überklasse für GUI 
+ */
 public class GUI extends JFrame {
 
+	/**
+	 * Erstellt eine Warnmeldung wenn Spiel beendet werden soll und fragt ab
+	 * ob man das Spiel wirklich beenden möchte
+	 * @Credits Vorlesung Prof. Krämer
+	 */
 	public void closeGUI() {
 		Object[] options = {"Ja", "Nein"};
 		int n = JOptionPane.showOptionDialog(this,

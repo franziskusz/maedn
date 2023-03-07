@@ -1,6 +1,7 @@
 package main.model.graph;
 
 import main.model.enums.PlayerState;
+import main.model.player.Bot;
 import main.model.player.Piece;
 import main.model.player.Player;
 
@@ -10,13 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+ * Gerichteter und gewichteter Graph als Repräsentation des Mensch ärgere dich nicht Spielfeldes.
+ * Für jeden möglichen Spielzug gibt es eine Kante, dessen Gewicht das Würfelergebnis darstellt.
+ * 
+ * Basiert grundlegend auf der entsprechenden Übung im Seminar bei Prof. Dr. Krämer.
+ */
 
 public class Graph
 {
 	private Map <Integer, Vertex> vertices = new HashMap<Integer, Vertex>();
 	private List<Edge> edges = new ArrayList<Edge>();
-	private int [][] guiRaster = new int [11][11];
-	private boolean SuperSpecialCase=false;
+	private boolean superSpecialCase=false;
 
 	public Graph(ArrayList<Player> INITIAL_PLAYERS)
 	{
@@ -40,16 +46,16 @@ public class Graph
 	
 	/*
 	 * 1. Initialiserung + Hilfsfunktionen + Ausgabefunktionen
-	 * (ca. Zeilen 60-470)
+	 * (ca. Zeilen 107-375)
 	 * 
 	 * 2. Public Funktionen, die vom Model aufgerufen werden
 	 * 	2.1 getOptions()
 	 *  2.2 performOption()
 	 *  2.3 adminMove()
-	 * (ca. Zeilen 470-740)
+	 * (ca. Zeilen 377-650)
 	 * 
 	 * 3. Private Hilfsfunktionen für die Funktionen aus 2.
-	 * (ca. Zeilen 740-2000)
+	 * (ca. Zeilen 650-1760)
 	 * 	
 	 */
 	
@@ -96,135 +102,28 @@ public class Graph
 	 * Die Zielfelder sind mit ihren Vorgängern auf dem Rundweg und mit ihren Vorgängern im Ziel
 	 * und dem Kantengewicht entsprechend der Entfernung verbunden
 	 * 
-	 * Falls hier in der Zählung und den Kanten noch Fehler vorhanden sind
-	 * bitte ich um Entschuldigung, aber bei mittlerweile 352 Kanten den 
-	 * Überblick zu behalten ist nicht ganz einfach :D
-	 * 
 	 */
+	
+	static final int[][] guiRaster = {
+			{44,45,-1,-1,18,19,20,-1,-1,48,49,},
+			{46,47,-1,-1,17,64,21,-1,-1,50,51,},
+			{-1,-1,-1,-1,16,65,22,-1,-1,-1,-1,},
+			{-1,-1,-1,-1,15,66,23,-1,-1,-1,-1,},
+			{10,11,12,13,14,67,24,25,26,27,28,},
+			{ 9,60,61,62,63,-1,71,70,69,68,29,},
+			{ 8, 7, 6, 5, 4,59,34,33,32,31,30,},
+			{-1,-1,-1,-1, 3,58,35,-1,-1,-1,-1,},
+			{-1,-1,-1,-1, 2,57,36,-1,-1,-1,-1,},
+			{40,41,-1,-1, 1,56,37,-1,-1,52,53,},
+			{42,43,-1,-1, 0,39,38,-1,-1,54,55,}};
 	
 	private void initGraph()
 	{
-		//Initialisierung der insgesamt 72 Knoten/Felder
-		initGUIRaster();
-		
 		initVertices();
 		
 		initTour();
 		initHome();
 		initGoal();
-	}
-	
-
-	private void initGUIRaster()
-	{	//zunächst mit -1 füllen, weil -1 für alle weiteren Funktionen, die auf das Raster zugreifen 'neutral' ist
-		for (int i = 0; i<11; i++)
-		{
-			for (int j=0; j<11; j++)
-			{
-			guiRaster[i][j]=-1;
-			}
-		}
-		
-		/*
-		 * ab hier wird es wieder unübesichtlich, aber ich sehe keine Alternative dazu, jeder Koordinate ihren Knoten einzeln zuzuweisen
-		 */
-		
-		//Spieler 1 links unten
-		//Home
-		guiRaster[0][9]=40;
-		guiRaster[1][9]=41;
-		guiRaster[0][10]=42;
-		guiRaster[1][10]=43;
-		//Zielfelder
-		guiRaster[5][9]=56;
-		guiRaster[5][8]=57;
-		guiRaster[5][7]=58;
-		guiRaster[5][6]=59;
-		
-		//Spieler 2 links oben
-		//Home
-		guiRaster[0][0]=44;
-		guiRaster[1][0]=45;
-		guiRaster[0][1]=46;
-		guiRaster[1][1]=47;
-		//Zielfelder
-		guiRaster[1][5]=60;
-		guiRaster[2][5]=61;
-		guiRaster[3][5]=62;
-		guiRaster[4][5]=63;
-		
-		//Spieler 3 rechts oben
-		//Home
-		guiRaster[9][0]=48;
-		guiRaster[10][0]=49;
-		guiRaster[9][1]=50;
-		guiRaster[10][1]=51;
-		//Zielfelder
-		guiRaster[5][1]=64;
-		guiRaster[5][2]=65;
-		guiRaster[5][3]=66;
-		guiRaster[5][4]=67;
-		
-		//Spieler 4 rechts unten
-		//Home
-		guiRaster[9][9]=52;
-		guiRaster[10][9]=53;
-		guiRaster[9][10]=54;
-		guiRaster[10][10]=55;
-		//Zielfelder
-		guiRaster[9][5]=68;
-		guiRaster[8][5]=69;
-		guiRaster[7][5]=70;
-		guiRaster[6][5]=71;
-		
-		//Rundreise
-		//Spieler 1 Start->Spieler 2 Ende
-		guiRaster[4][10]=0;
-		guiRaster[4][9]=1;
-		guiRaster[4][8]=2;
-		guiRaster[4][7]=3;
-		guiRaster[4][6]=4;//Kurve
-		guiRaster[3][6]=5; 
-		guiRaster[2][6]=6;
-		guiRaster[1][6]=7;
-		guiRaster[0][6]=8;//Kurve
-		guiRaster[0][5]=9; 
-		
-		//Spieler 2 Start->Spieler 3 Ende
-		guiRaster[0][4]=10;
-		guiRaster[1][4]=11;
-		guiRaster[2][4]=12;
-		guiRaster[3][4]=13;
-		guiRaster[4][4]=14;//Kurve
-		guiRaster[4][3]=15; 
-		guiRaster[4][2]=16;
-		guiRaster[4][1]=17;
-		guiRaster[4][0]=18;//Kurve
-		guiRaster[5][0]=19; 
-		
-		//Spieler 3 Start->Spieler 4 Ende
-		guiRaster[6][0]=20;
-		guiRaster[6][1]=21;
-		guiRaster[6][2]=22;
-		guiRaster[6][3]=23;
-		guiRaster[6][4]=24;//Kurve
-		guiRaster[7][4]=25; 
-		guiRaster[8][4]=26;
-		guiRaster[9][4]=27;
-		guiRaster[10][4]=28;//Kurve
-		guiRaster[10][5]=29; 
-		
-		//Spieler 4 Start->Spieler 1 Ende
-		guiRaster[10][6]=30;
-		guiRaster[9][6]=31;
-		guiRaster[8][6]=32;
-		guiRaster[7][6]=33;
-		guiRaster[6][6]=34;//Kurve
-		guiRaster[6][7]=35; 
-		guiRaster[6][8]=36;
-		guiRaster[6][9]=37;
-		guiRaster[6][10]=38;//Kurve
-		guiRaster[5][10]=39; 	
 	}
 	
 	/*
@@ -253,14 +152,15 @@ public class Graph
 	private int getRasterX(int vertexIndex)
 	{
 		int x = -1;
+		out:
 		for (int i=0; i<11; i++)
 		{
 			for (int j=0; j<11; j++)
 			{
-				if (guiRaster[j][i]==vertexIndex)
+				if (guiRaster[i][j]==vertexIndex)
 				{
 					x = j;
-					break;
+					break out;
 				}
 			}
 		}
@@ -270,14 +170,15 @@ public class Graph
 	private int getRasterY(int vertexIndex)
 	{
 		int y = -1;
+		out:
 		for (int i=0; i<11; i++)
 		{
 			for (int j=0; j<11; j++)
 			{
-				if (guiRaster[j][i]==vertexIndex)
+				if (guiRaster[i][j]==vertexIndex)
 				{
 					y = i;
-					break;
+					break out;
 				}
 			}
 		}
@@ -290,8 +191,8 @@ public class Graph
 	private void initTour() 
 	{
 		// i = Knotenindex in Rundreise, j = mögliches Würfelergebnis
-		// @Edit Zusammengestaucht, da mit Mod (%) 40 einfach bei 0 weitergeht
-		for(int i = 0; i < 40; i++) 
+		// @Edit Zusammengestaucht, da es mit Mod (%) 40 einfach bei 0 weitergeht
+		for(int i = Fields.START_RED; i < 40; i++) 
 		{
 			int to;
 
@@ -309,23 +210,23 @@ public class Graph
 	private void initHome() 
 	{
 		int to;
-		for(int i = 40; i < 56; i++) 
+		for(int i = Fields.RED_HOME_1; i < Fields.RED_GOAL_1; i++) 
 		{
-			if(i <= 43) 
+			if(i <= Fields.RED_HOME_4) 
 			{
-				to = 0; //Startfeld Spieler 1
+				to = Fields.START_RED; //Startfeld Spieler 1
 			} 
-			else if(i <= 47) 
+			else if(i <= Fields.BLUE_HOME_4) 
 			{
-				to = 10; //Startfeld Spieler 2
+				to = Fields.START_BLUE; //Startfeld Spieler 2
 			} 
-			else if(i <= 51) 
+			else if(i <= Fields.GREEN_HOME_4) 
 			{
-				to = 20; //Startfeld Spieler 3
+				to = Fields.START_GREEN; //Startfeld Spieler 3
 			} 
 			else 
 			{
-				to = 30; //Startfeld Spieler 4
+				to = Fields.START_YELLOW; //Startfeld Spieler 4
 			}
 			newEdge(i, to, 6);
 		}
@@ -339,8 +240,8 @@ public class Graph
 		// @Edit, hier ist es wah. etwas schwer nachvollziehbar, was passiert. aber es ist
 		// Zusammengestaucht und hat nicht so viele temporäre variablen
 
-		int[] lastVertexPlayerHome = {59, 63, 67, 71};
-		int[] lastVertexPlayerTour = {39, 9, 19, 29};
+		int[] lastVertexPlayerHome = {Fields.RED_GOAL_4, Fields.BLUE_GOAL_4, Fields.GREEN_GOAL_4, Fields.YELLOW_GOAL_4};
+		int[] lastVertexPlayerTour = {Fields.LAST_RED, Fields.LAST_BLUE, Fields.LAST_GREEN, Fields.LAST_YELLOW};
 
 		for(int k = 0; k < 4; k++) {
 			// Ziehen im Haus
@@ -378,7 +279,7 @@ public class Graph
 	}
 	
 	/**
-	 * Weise den Pieces initial ihren Knoten zu und setze den Piece im Knoten
+	 * Weise den Figuren initial ihren Knoten zu und setze die Figur im Knoten.
 	 *
 	 * @param INITIAL_PLAYERS Spieler in initialreihnfolge
 	 */
@@ -386,26 +287,26 @@ public class Graph
 	{
 		// @Edit Variable players in INITIAL_PLAYERS, weil es für die Bewertung wichtig ist das zu
 		// unterscheiden. Außerdem count weg gemacht und durch k-i ersetzt (spart nur variable und ist wah. unüberischtlicher)
-		for(int i = 40; i < 56; i=i+4)
+		for(int i = Fields.RED_HOME_1; i < Fields.RED_GOAL_1; i=i+4)
 		{
-			if(i == 40) {
-				for(int k = 40; k < 44; k++) 
+			if(i == Fields.RED_HOME_1) {
+				for(int k = Fields.RED_HOME_1; k < Fields.BLUE_HOME_1; k++) 
 				{
 					vertices.get(k).setPiece(INITIAL_PLAYERS.get(0).getPieces()[k-i]);
 					INITIAL_PLAYERS.get(0).getPieces()[k-i].setPosition(vertices.get(k));
 				}
 			} 
-			else if(i == 44) 
+			else if(i == Fields.BLUE_HOME_1) 
 			{
-				for(int k = 44; k < 48; k++) 
+				for(int k = Fields.BLUE_HOME_1; k < Fields.GREEN_HOME_1; k++) 
 				{
 					vertices.get(k).setPiece(INITIAL_PLAYERS.get(1).getPieces()[k-i]);
 					INITIAL_PLAYERS.get(1).getPieces()[k-i].setPosition(vertices.get(k));
 				}
 			}
-			else if(i == 48) 
+			else if(i == Fields.GREEN_HOME_1) 
 			{
-				for(int k = 48; k < 52; k++) 
+				for(int k = Fields.GREEN_HOME_1; k < Fields.YELLOW_HOME_1; k++) 
 				{
 					vertices.get(k).setPiece(INITIAL_PLAYERS.get(2).getPieces()[k-i]);
 					INITIAL_PLAYERS.get(2).getPieces()[k-i].setPosition(vertices.get(k));
@@ -413,7 +314,7 @@ public class Graph
 			}
 			else 
 			{
-				for(int k = 52; k < 56; k++) 
+				for(int k = Fields.YELLOW_HOME_1; k < Fields.RED_GOAL_1; k++) 
 				{
 					vertices.get(k).setPiece(INITIAL_PLAYERS.get(3).getPieces()[k-i]);
 					INITIAL_PLAYERS.get(3).getPieces()[k-i].setPosition(vertices.get(k));
@@ -428,24 +329,26 @@ public class Graph
 	 */
 	public void printGUIRaster()
 	{
-		for (int i = 0; i<11; i++)
+		for (int j = 0; j<11; j++)
 		{
-			System.out.print("\n");
-			for (int j=0; j<11; j++)
+			System.out.print("{");
+			
+			for (int i=0; i<11; i++)
 			{
 				if (guiRaster[j][i]<10&&guiRaster[j][i]>=0)
 				{
-					System.out.print("["+0+guiRaster[j][i]+"]");
+					System.out.print(" "+guiRaster[j][i]+",");
 				}
 				else if (guiRaster[j][i]<0)
 				{
-					System.out.print("    "); //aus -1 werden leere Felder
+					System.out.print("   "); //aus -1 werden leere Felder
 				}
 				else
 				{
-					System.out.print("["+guiRaster[j][i]+"]");
+					System.out.print(""+guiRaster[j][i]+",");
 				}
 			}
+			System.out.print("},\n");
 		}	
 	}
 	
@@ -476,25 +379,24 @@ public class Graph
 	// AUFRUF AUS MODEL
 	//
 	/**
-	 * Gibt die Möglichleiten für den Spieler mit gewürfelter Zahl zurück (inform der pieceIDs)
-	 * Bei keinen Möglichkeiten return null;
+	 * Gibt die Möglichleiten für den Spieler mit gewürfelter Zahl zurück (inform der pieceIDs).
+	 * Bei keinen Möglichkeiten return leere Liste.
+	 *
+	 * Prüft ob den Zielposition ein eigener Stein steht.
+	 * Prüft ob Rundreise für den Spieler bereits beendet ist.
+	 * Prüft ob im Zielfeld eine eigene Figur übersprungen werden müsste.
+	 * Prüft ob die Figur in ein fremdes Zielfeld einlaufen würde.
+	 * Sortiert Optionen aus die nicht den folgenden Pflichten entsprechen:
+	 * 1. Verlassen der Heimatfelder 2. Verlassen des Startfeldes 3. Schlagpflicht.
 	 *
 	 * @param player
 	 * @param diced
 	 * @param players
 	 * @return ArrayList
 	 */
-	
-	//Prüft ob den Zielposition ein eigener Stein steht
-	//Prüft ob Rundreise für den Spieler bereits beendet ist
-	//Prüft ob im Zielfeld eine eigene Figur übersprungen werden müsste
-	//Prüft ob die Figur in ein fremdes Zielfeld einlaufen würde
-	//Sortiert Optionen aus die nicht den folgenden Pflichten entsprechen:
-	// 1. Verlassen der Heimatfelder 2. Verlassen des Startfeldes 3. Schlagpflicht
-	
 	public ArrayList<Integer> getOptions(Player player, int diced, ArrayList<Player> players)
 	{
-		SuperSpecialCase=false; //reinitialiserung vor jedem Zug
+		superSpecialCase=false; //Reinitialiserung vor jedem Zug.
 		ArrayList<Integer> options=new ArrayList<Integer>();
 		Vertex[] optionVertices=new Vertex[4];
 		
@@ -508,12 +410,13 @@ public class Graph
 		//System.out.println(Arrays.toString(optionVertices)); //debug
 		
 		
-		//Für alle Ausgangspositionen wird geschaut, wie viele Ziele (Kanten) es von dort aus gibt
+		//Für alle Ausgangspositionen wird geschaut, wie viele Ziele (Kanten) es von dort aus gibt.
 		for (int j = 0; j<4; j++)
 		{
 			int sizeOptions=optionVertices[j].getSucc().size();
 			
-			//Für jede dieser Kanten wird dann geprüft, ob sie mit dem Würfelergebnis begehbar sind.
+			//Für jede dieser Kanten wird dann geprüft, ob sie mit dem Würfelergebnis begehbar sind –
+			//Und ob das Ziel für den jeweiligen Spielenden legal ist.
 			//Wenn ja, werden die Indexe der Zielknoten in der ArrayList options abgelegt
 			for (int k=0; k<sizeOptions; k++)
 			{	
@@ -533,21 +436,27 @@ public class Graph
 		}			
 
 		//Hausverlasspflicht, Startverlasspflicht und Schlagpflicht prüfen
-		ArrayList<Integer> leaveHomeRuleOptions=new ArrayList<Integer>();
-		ArrayList<Integer> mustLeaveStartOptions=new ArrayList<Integer>();
-		ArrayList<Integer> mustHitOptions=new ArrayList<Integer>();
+		ArrayList<Integer> leaveHomeRuleOptions = new ArrayList<Integer>();
+		ArrayList<Integer> mustLeaveStartOptions = new ArrayList<Integer>();
+		ArrayList<Integer> mustHitOptions = new ArrayList<Integer>();
 		
 		//TODO nur an einer Stelle überschreiben
-		leaveHomeRuleOptions=leaveHomeRule(options, diced, player);
-		options=leaveHomeRuleOptions;
+		leaveHomeRuleOptions = leaveHomeRule(options, diced, player);
+		options = leaveHomeRuleOptions;
 		//System.out.println(options.toString());//Testausgabe
 		
-		mustLeaveStartOptions=leaveStart(options, diced, player, players);
-		options=mustLeaveStartOptions;
+		mustLeaveStartOptions = leaveStart(options, diced, player, players);
+		options = mustLeaveStartOptions;
 		//System.out.println(options.toString());//Testausgabe
 		
-		mustHitOptions=mustHit(options, diced, player, players);
-		options=mustHitOptions;
+		mustHitOptions = mustHit(options, diced, player, players);
+		options = mustHitOptions;
+		
+		//Handelt es sich um einen Bot, wird jene Option mit der kürzesten Entfernung zum Ziel gewählt.
+		if ((player instanceof Bot)&&(options.size()>1))
+		{
+			options=sortBotOptions(options, player, players);
+		}
 		
 		//System.out.println(options.toString());//Testausgabe
 		return options;	
@@ -555,35 +464,33 @@ public class Graph
 
 	/**
 	 * 
-	 * führt für den gwünschten Spielstein eine Option aus 
+	 * Führt für den gewünschten Spielstein die Option aus.
 	 *
 	 * @param player
 	 * @param diced
-	 * @param Vertex/Piece/PieceID
+	 * @param option
+	 * @param players
 	 * @return
 	 */
-	
 	public void performOption(Player player, Vertex option, int diced, ArrayList<Player> players)
 	{
 		Vertex target = getTarget(player, option, diced, players);
 		int targetIndex = target.getIndex();
-		
 		Piece movingPiece = option.getPiece();
-		//int movingPieceID=movingPiece.getId();
-		
 		Piece targetPiece = target.getPiece();
 
-		if (target.getPiece()==null) // Laufen
+		if (target.getPiece() == null) // Laufen
 		{
 			vertices.get(targetIndex).setPiece(movingPiece);
 			vertices.get(targetIndex).getPiece().setPosition(target);
 			option.setPiece(null);
 			
-			if (targetIndex>55)
+			//Prüfen, ob der sich bewegende Spieler nun dreimal Würfeln darf.
+			if (targetIndex>Fields.YELLOW_HOME_4)
 			{
-				SuperSpecialCase=checkforSuperSpecialCase(player, players);
+				superSpecialCase=checkforSuperSpecialCase(player, players);
 				//debug
-				if(SuperSpecialCase==true)
+				if(superSpecialCase == true)
 				{
 					System.out.println("DICE_THREE_TIMES "+player.getPlayerColor()); //debug
 					player.setPlayerState(PlayerState.DICE_THREE_TIMES);
@@ -596,29 +503,29 @@ public class Graph
 			}
 			if (player.isGoalAchieved())
 			{
-				SuperSpecialCase=false;
+				superSpecialCase=false;
 			}
 		}
 		
 		else //Schlagen
 		{
-			int targetPieceID=targetPiece.getId();
+			int targetPieceID = targetPiece.getId();
 			Player targetPlayer = target.getPiece().getPlayer();
 			boolean newPositionfound = false;
-			boolean diceThreeTimes=false;
+			boolean diceThreeTimes = false;
 			
-			//geschlagene Pieces gehen nach Hause
+			//Geschlagene Figuren gehen nach Hause.
 			sendTargetHome(target, players, newPositionfound, targetPieceID);
 			
 			vertices.get(targetIndex).setPiece(movingPiece);
 			vertices.get(targetIndex).getPiece().setPosition(target);
 			option.setPiece(null);
 			
-			//SuperSpecialCase prüfen: Wenn true, wird die gleichnamige boolsche Variable auf true gesetzt
+			//Prüfen, ob der geschlagene Spieler nun dreimal Würfeln darf.
 			diceThreeTimes=checkforSuperSpecialCase(targetPlayer, players);
 			//debug
 			
-			if(diceThreeTimes==true)
+			if(diceThreeTimes == true)
 			{
 				System.out.println("DICE_THREE_TIMES "+targetPlayer.getPlayerColor()); //debug
 				targetPlayer.setPlayerState(PlayerState.DICE_THREE_TIMES);
@@ -631,7 +538,8 @@ public class Graph
 	
 	/**
 	 * 
-	 * abgeleitet von performOption(), nur dass man statt Vertex Option und diced Vertex target und int PieceID mitgibt 
+	 * Abgeleitet von performOption(), nur dass statt Vertex option und diced Vertex target und int PieceID übergeben werden. 
+	 * Ermöglich fast beliebige Züge im Admin Modus, bis auf das Betreten gegnerischer Heimat- und Zielfelder und das Schlagen eigener Figuren.
 	 *
 	 * @param player
 	 * @param pieceID
@@ -641,30 +549,31 @@ public class Graph
 	 */
 	public boolean adminMove(Player player, int pieceID, Vertex target, ArrayList<Player> players)
 	{
-		int targetIndex=target.getIndex();
-		Piece movingPiece=player.getPieces()[pieceID];
-		Vertex option=player.getPieces()[pieceID].getPosition();
-		Piece targetPiece=target.getPiece();
-		boolean legalMove=false;
+		int targetIndex = target.getIndex();
+		Piece movingPiece = player.getPieces()[pieceID];
+		Vertex option = player.getPieces()[pieceID].getPosition();
+		Piece targetPiece = target.getPiece();
+		boolean legalMove = false;
+		superSpecialCase = false;
 		
-		//TODO Prüfen, dass der Zug nicht im gegnerischen Zielfeld landet, nicht in einem Heimatfeld landet und keine eigene Figur schlägt
+		//Prüfen, dass der Zug nicht im gegnerischen Zielfeld landet, nicht in einem Heimatfeld landet und keine eigene Figur schlägt.
 		if ((excludeOpponentsGoal(player, target, players))&&(checkAdminTarget(player, target, players)))
 		{
-			legalMove=true;
+			legalMove = true;
 		}
 		
 		if (legalMove)
 		{
-			if (target.getPiece()==null) // Laufen
+			if (target.getPiece() == null) // Laufen
 			{
 				vertices.get(targetIndex).setPiece(movingPiece);
 				vertices.get(targetIndex).getPiece().setPosition(target);
 				option.setPiece(null);
 				
-				if (targetIndex>39)
+				if (targetIndex>Fields.LAST_RED) //Prüfen ob der sich bewegende Spieler danach dreimal Würfeln darf.
 				{
-					SuperSpecialCase=checkforSuperSpecialCase(player, players);
-					if(SuperSpecialCase==true)
+					superSpecialCase = checkforSuperSpecialCase(player, players);
+					if(superSpecialCase == true)
 					{
 						System.out.println("DICE_THREE_TIMES "+player.getPlayerColor()); //debug
 						player.setPlayerState(PlayerState.DICE_THREE_TIMES);
@@ -684,7 +593,7 @@ public class Graph
 				if(checkGoal(player, players))
 				{
 					player.setGoalAchieved();
-					SuperSpecialCase=false;
+					superSpecialCase = false;
 				}
 			}
 			
@@ -693,16 +602,16 @@ public class Graph
 				int targetPieceID=targetPiece.getId();
 				Player targetPlayer = target.getPiece().getPlayer();
 				boolean newPositionfound = false;
-				boolean diceThreeTimes=false;
+				boolean diceThreeTimes = false;
 				
-				//geschlagene Pieces gehen nach Hause
+				//Geschlagene Pieces gehen nach Hause.
 				sendTargetHome(target, players, newPositionfound, targetPieceID);
 				
 				vertices.get(targetIndex).setPiece(movingPiece);
 				vertices.get(targetIndex).getPiece().setPosition(target);
 				option.setPiece(null);
 				
-				//SuperSpecialCase prüfen: Wenn true, wird die gleichnamige boolsche Variable auf true gesetzt
+				//Prüfen ob der geschlagene Spieler danach dreimal Würfeln darf.
 				diceThreeTimes=checkforSuperSpecialCase(targetPlayer, players);
 				if(diceThreeTimes==true)
 				{
@@ -732,7 +641,7 @@ public class Graph
 
 	public boolean isSuperSpecialCase()
 	{
-		return SuperSpecialCase;
+		return superSpecialCase;
 	}
 	
 	//
@@ -744,15 +653,15 @@ public class Graph
 	//
 	// INTERNE METHODEN
 	//
-
+	
+	
 	/*
 	 * Zentrale Hilfsfunktion für getOptions(), performOption() und adminMove()
 	 * Ermittelt anhand des gegebenen Spielers und seiner Option den eindeutigen Zielknoten
 	 * @param player
 	 * @param option
 	 * @param diced
-	 * @param players(INITAL PLAYERS)
-	 * 
+	 * @param players (INITAL PLAYERS)
 	 * @return Vertex target
 	 */
 	private Vertex getTarget(Player player, Vertex option, int diced, ArrayList<Player> players)
@@ -762,11 +671,11 @@ public class Graph
 		//Spieler 1
 		if (player==players.get(0))
 		{
-			if(option.getIndex()<34)
+			if(option.getIndex()<Fields.ROUNDABOUT_34)
 			{
 				target=vertices.get(option.getIndex()+diced);
 			}
-			else if (option.getIndex()==34)
+			else if (option.getIndex()==Fields.ROUNDABOUT_34)
 			{
 				if(diced < 6)
 				{
@@ -774,10 +683,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(56);
+					target=vertices.get(Fields.RED_GOAL_1);
 				}
 			}
-			else if (option.getIndex()==35)
+			else if (option.getIndex()==Fields.ROUNDABOUT_35)
 			{
 				if(diced < 5)
 				{
@@ -785,10 +694,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(56+diced-5);
+					target=vertices.get(Fields.RED_GOAL_1+diced-5);
 				}
 			}
-			else if (option.getIndex()==36)
+			else if (option.getIndex()==Fields.ROUNDABOUT_36)
 			{
 				if(diced < 4)
 				{
@@ -796,10 +705,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(56+diced-4);
+					target=vertices.get(Fields.RED_GOAL_1+diced-4);
 				}
 			}
-			else if (option.getIndex()==37)
+			else if (option.getIndex()==Fields.ROUNDABOUT_37)
 			{
 				if(diced < 3)
 				{
@@ -807,10 +716,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(56+diced-3);
+					target=vertices.get(Fields.RED_GOAL_1+diced-3);
 				}
 			}
-			else if (option.getIndex()==38)
+			else if (option.getIndex()==Fields.ROUNDABOUT_38)
 			{
 				if(diced < 2)
 				{
@@ -818,18 +727,18 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(56+diced-2);
+					target=vertices.get(Fields.RED_GOAL_1+diced-2);
 				}
 			}
-			else if (option.getIndex()==39)
+			else if (option.getIndex()==Fields.LAST_RED)
 			{
-					target=vertices.get(56+diced-1);
+					target=vertices.get(Fields.RED_GOAL_1+diced-1);
 			}
-			else if ((option.getIndex()==40)||(option.getIndex()==41)||(option.getIndex()==42)||(option.getIndex()==43))
+			else if ((option.getIndex()==Fields.RED_HOME_1)||(option.getIndex()==Fields.RED_HOME_2)||(option.getIndex()==Fields.RED_HOME_3)||(option.getIndex()==Fields.RED_HOME_4))
 			{
 					target=vertices.get(0);
 			}
-			else if ((option.getIndex()==56)||(option.getIndex()==57)||(option.getIndex()==58))
+			else if ((option.getIndex()==Fields.RED_GOAL_1)||(option.getIndex()==Fields.RED_GOAL_2)||(option.getIndex()==Fields.RED_GOAL_3))
 			{
 				target=vertices.get(option.getIndex()+diced);
 			}
@@ -837,11 +746,11 @@ public class Graph
 		//Spieler 2
 		if (player==players.get(1))
 		{
-			if(((option.getIndex()<34)&&(option.getIndex()>9))||(option.getIndex()<4))
+			if(((option.getIndex()<Fields.ROUNDABOUT_34)&&(option.getIndex()>Fields.LAST_BLUE))||(option.getIndex()<Fields.ROUNDABOUT_4))
 			{
 				target=vertices.get(option.getIndex()+diced);
 			}
-			else if (option.getIndex()==34)
+			else if (option.getIndex()==Fields.ROUNDABOUT_34)
 			{
 				if(diced < 6)
 				{
@@ -849,10 +758,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0);
+					target=vertices.get(Fields.START_RED);
 				}
 			}
-			else if (option.getIndex()==35)
+			else if (option.getIndex()==Fields.ROUNDABOUT_35)
 			{
 				if(diced < 5)
 				{
@@ -860,10 +769,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-5);
+					target=vertices.get(Fields.START_RED+diced-5);
 				}
 			}
-			else if (option.getIndex()==36)
+			else if (option.getIndex()==Fields.ROUNDABOUT_36)
 			{
 				if(diced < 4)
 				{
@@ -871,10 +780,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-4);
+					target=vertices.get(Fields.START_RED+diced-4);
 				}
 			}
-			else if (option.getIndex()==37)
+			else if (option.getIndex()==Fields.ROUNDABOUT_37)
 			{
 				if(diced < 3)
 				{
@@ -882,10 +791,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-3);
+					target=vertices.get(Fields.START_RED+diced-3);
 				}
 			}
-			else if (option.getIndex()==38)
+			else if (option.getIndex()==Fields.ROUNDABOUT_38)
 			{
 				if(diced < 2)
 				{
@@ -893,15 +802,15 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-2);
+					target=vertices.get(Fields.START_RED+diced-2);
 				}
 			}
-			else if (option.getIndex()==39)
+			else if (option.getIndex()==Fields.LAST_RED)
 			{
-					target=vertices.get(0+diced-1);
+					target=vertices.get(Fields.START_RED+diced-1);
 			}
 			
-			else if (option.getIndex()==4)
+			else if (option.getIndex()==Fields.ROUNDABOUT_4)
 			{
 				if(diced < 6)
 				{
@@ -909,10 +818,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(60);
+					target=vertices.get(Fields.BLUE_GOAL_1);
 				}
 			}
-			else if (option.getIndex()==5)
+			else if (option.getIndex()==Fields.ROUNDABOUT_5)
 			{
 				if(diced < 5)
 				{
@@ -920,10 +829,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(60+diced-5);
+					target=vertices.get(Fields.BLUE_GOAL_1+diced-5);
 				}
 			}
-			else if (option.getIndex()==6)
+			else if (option.getIndex()==Fields.ROUNDABOUT_6)
 			{
 				if(diced < 4)
 				{
@@ -931,10 +840,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(60+diced-4);
+					target=vertices.get(Fields.BLUE_GOAL_1+diced-4);
 				}
 			}
-			else if (option.getIndex()==7)
+			else if (option.getIndex()==Fields.ROUNDABOUT_7)
 			{
 				if(diced < 3)
 				{
@@ -942,10 +851,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(60+diced-3);
+					target=vertices.get(Fields.BLUE_GOAL_1+diced-3);
 				}
 			}
-			else if (option.getIndex()==8)
+			else if (option.getIndex()==Fields.ROUNDABOUT_8)
 			{
 				if(diced < 2)
 				{
@@ -953,18 +862,18 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(60+diced-2);
+					target=vertices.get(Fields.BLUE_GOAL_1+diced-2);
 				}
 			}
-			else if (option.getIndex()==9)
+			else if (option.getIndex()==Fields.LAST_BLUE)
 			{
-					target=vertices.get(60+diced-1);
+					target=vertices.get(Fields.BLUE_GOAL_1+diced-1);
 			}
-			else if ((option.getIndex()==44)||(option.getIndex()==45)||(option.getIndex()==46)||(option.getIndex()==47))
+			else if ((option.getIndex()==Fields.BLUE_HOME_1)||(option.getIndex()==Fields.BLUE_HOME_2)||(option.getIndex()==Fields.BLUE_HOME_3)||(option.getIndex()==Fields.BLUE_HOME_4))
 			{
-					target=vertices.get(10);
+					target=vertices.get(Fields.START_BLUE);
 			}
-			else if ((option.getIndex()==60)||(option.getIndex()==61)||(option.getIndex()==62))
+			else if ((option.getIndex()==Fields.BLUE_GOAL_1)||(option.getIndex()==Fields.BLUE_GOAL_2)||(option.getIndex()==Fields.BLUE_GOAL_3))
 			{
 				target=vertices.get(option.getIndex()+diced);
 			}
@@ -973,11 +882,11 @@ public class Graph
 		//Spieler 3
 		if (player==players.get(2))
 		{
-			if(((option.getIndex()<34)&&(option.getIndex()>19))||(option.getIndex()<14))
+			if(((option.getIndex()<Fields.ROUNDABOUT_34)&&(option.getIndex()>Fields.LAST_GREEN))||(option.getIndex()<Fields.ROUNDABOUT_14))
 			{
 				target=vertices.get(option.getIndex()+diced);
 			}
-			else if (option.getIndex()==34)
+			else if (option.getIndex()==Fields.ROUNDABOUT_34)
 			{
 				if(diced < 6)
 				{
@@ -985,10 +894,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0);
+					target=vertices.get(Fields.START_RED);
 				}
 			}
-			else if (option.getIndex()==35)
+			else if (option.getIndex()==Fields.ROUNDABOUT_35)
 			{
 				if(diced < 5)
 				{
@@ -996,10 +905,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-5);
+					target=vertices.get(Fields.START_RED+diced-5);
 				}
 			}
-			else if (option.getIndex()==36)
+			else if (option.getIndex()==Fields.ROUNDABOUT_36)
 			{
 				if(diced < 4)
 				{
@@ -1007,10 +916,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-4);
+					target=vertices.get(Fields.START_RED+diced-4);
 				}
 			}
-			else if (option.getIndex()==37)
+			else if (option.getIndex()==Fields.ROUNDABOUT_37)
 			{
 				if(diced < 3)
 				{
@@ -1018,10 +927,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-3);
+					target=vertices.get(Fields.START_RED+diced-3);
 				}
 			}
-			else if (option.getIndex()==38)
+			else if (option.getIndex()==Fields.ROUNDABOUT_38)
 			{
 				if(diced < 2)
 				{
@@ -1029,15 +938,15 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-2);
+					target=vertices.get(Fields.START_RED+diced-2);
 				}
 			}
-			else if (option.getIndex()==39)
+			else if (option.getIndex()==Fields.LAST_RED)
 			{
-					target=vertices.get(0+diced-1);
+					target=vertices.get(Fields.START_RED+diced-1);
 			}
 			
-			else if (option.getIndex()==14)
+			else if (option.getIndex()==Fields.ROUNDABOUT_14)
 			{
 				if(diced < 6)
 				{
@@ -1045,10 +954,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(64);
+					target=vertices.get(Fields.GREEN_GOAL_1);
 				}
 			}
-			else if (option.getIndex()==15)
+			else if (option.getIndex()==Fields.ROUNDABOUT_15)
 			{
 				if(diced < 5)
 				{
@@ -1056,10 +965,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(64+diced-5);
+					target=vertices.get(Fields.GREEN_GOAL_1+diced-5);
 				}
 			}
-			else if (option.getIndex()==16)
+			else if (option.getIndex()==Fields.ROUNDABOUT_16)
 			{
 				if(diced < 4)
 				{
@@ -1067,10 +976,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(64+diced-4);
+					target=vertices.get(Fields.GREEN_GOAL_1+diced-4);
 				}
 			}
-			else if (option.getIndex()==17)
+			else if (option.getIndex()==Fields.ROUNDABOUT_17)
 			{
 				if(diced < 3)
 				{
@@ -1078,10 +987,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(64+diced-3);
+					target=vertices.get(Fields.GREEN_GOAL_1+diced-3);
 				}
 			}
-			else if (option.getIndex()==18)
+			else if (option.getIndex()==Fields.ROUNDABOUT_18)
 			{
 				if(diced < 2)
 				{
@@ -1089,18 +998,18 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(64+diced-2);
+					target=vertices.get(Fields.GREEN_GOAL_1+diced-2);
 				}
 			}
-			else if (option.getIndex()==19)
+			else if (option.getIndex()==Fields.LAST_GREEN)
 			{
-					target=vertices.get(64+diced-1);
+					target=vertices.get(Fields.GREEN_GOAL_1+diced-1);
 			}
-			else if ((option.getIndex()==48)||(option.getIndex()==49)||(option.getIndex()==50)||(option.getIndex()==51))
+			else if ((option.getIndex()==Fields.GREEN_HOME_1)||(option.getIndex()==Fields.GREEN_HOME_2)||(option.getIndex()==Fields.GREEN_HOME_3)||(option.getIndex()==Fields.GREEN_HOME_4))
 			{
-					target=vertices.get(20);
+					target=vertices.get(Fields.START_GREEN);
 			}
-			else if ((option.getIndex()==64)||(option.getIndex()==65)||(option.getIndex()==66))
+			else if ((option.getIndex()==Fields.GREEN_GOAL_1)||(option.getIndex()==Fields.GREEN_GOAL_2)||(option.getIndex()==Fields.GREEN_GOAL_3))
 			{
 				target=vertices.get(option.getIndex()+diced);
 			}
@@ -1109,11 +1018,11 @@ public class Graph
 		//Spieler 4
 		if (player==players.get(3))
 		{
-			if(((option.getIndex()<34)&&(option.getIndex()>29))||(option.getIndex()<24))
+			if(((option.getIndex()<Fields.ROUNDABOUT_34)&&(option.getIndex()>Fields.LAST_YELLOW))||(option.getIndex()<Fields.ROUNDABOUT_24))
 			{
 				target=vertices.get(option.getIndex()+diced);
 			}
-			else if (option.getIndex()==34)
+			else if (option.getIndex()==Fields.ROUNDABOUT_34)
 			{
 				if(diced < 6)
 				{
@@ -1121,10 +1030,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0);
+					target=vertices.get(Fields.START_RED);
 				}
 			}
-			else if (option.getIndex()==35)
+			else if (option.getIndex()==Fields.ROUNDABOUT_35)
 			{
 				if(diced < 5)
 				{
@@ -1132,10 +1041,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-5);
+					target=vertices.get(Fields.START_RED+diced-5);
 				}
 			}
-			else if (option.getIndex()==36)
+			else if (option.getIndex()==Fields.ROUNDABOUT_36)
 			{
 				if(diced < 4)
 				{
@@ -1143,10 +1052,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-4);
+					target=vertices.get(Fields.START_RED+diced-4);
 				}
 			}
-			else if (option.getIndex()==37)
+			else if (option.getIndex()==Fields.ROUNDABOUT_37)
 			{
 				if(diced < 3)
 				{
@@ -1154,10 +1063,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-3);
+					target=vertices.get(Fields.START_RED+diced-3);
 				}
 			}
-			else if (option.getIndex()==38)
+			else if (option.getIndex()==Fields.ROUNDABOUT_38)
 			{
 				if(diced < 2)
 				{
@@ -1165,15 +1074,15 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(0+diced-2);
+					target=vertices.get(Fields.START_RED+diced-2);
 				}
 			}
-			else if (option.getIndex()==39)
+			else if (option.getIndex()==Fields.LAST_RED)
 			{
 					target=vertices.get(0+diced-1);
 			}
 			
-			else if (option.getIndex()==24)
+			else if (option.getIndex()==Fields.ROUNDABOUT_24)
 			{
 				if(diced < 6)
 				{
@@ -1181,10 +1090,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(68);
+					target=vertices.get(Fields.YELLOW_GOAL_1);
 				}
 			}
-			else if (option.getIndex()==25)
+			else if (option.getIndex()==Fields.ROUNDABOUT_25)
 			{
 				if(diced < 5)
 				{
@@ -1192,10 +1101,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(68+diced-5);
+					target=vertices.get(Fields.YELLOW_GOAL_1+diced-5);
 				}
 			}
-			else if (option.getIndex()==26)
+			else if (option.getIndex()==Fields.ROUNDABOUT_26)
 			{
 				if(diced < 4)
 				{
@@ -1203,10 +1112,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(68+diced-4);
+					target=vertices.get(Fields.YELLOW_GOAL_1+diced-4);
 				}
 			}
-			else if (option.getIndex()==27)
+			else if (option.getIndex()==Fields.ROUNDABOUT_27)
 			{
 				if(diced < 3)
 				{
@@ -1214,10 +1123,10 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(68+diced-3);
+					target=vertices.get(Fields.YELLOW_GOAL_1+diced-3);
 				}
 			}
-			else if (option.getIndex()==28)
+			else if (option.getIndex()==Fields.ROUNDABOUT_28)
 			{
 				if(diced < 2)
 				{
@@ -1225,18 +1134,18 @@ public class Graph
 				}
 				else
 				{
-					target=vertices.get(68+diced-2);
+					target=vertices.get(Fields.YELLOW_GOAL_1+diced-2);
 				}
 			}
-			else if (option.getIndex()==29)
+			else if (option.getIndex()==Fields.LAST_YELLOW)
 			{
-					target=vertices.get(68+diced-1);
+					target=vertices.get(Fields.YELLOW_GOAL_1+diced-1);
 			}
-			else if ((option.getIndex()==52)||(option.getIndex()==53)||(option.getIndex()==54)||(option.getIndex()==55))
+			else if ((option.getIndex()==Fields.YELLOW_HOME_1)||(option.getIndex()==Fields.YELLOW_HOME_2)||(option.getIndex()==Fields.YELLOW_HOME_3)||(option.getIndex()==Fields.YELLOW_HOME_4))
 			{
-					target=vertices.get(30);
+					target=vertices.get(Fields.START_YELLOW);
 			}
-			else if ((option.getIndex()==68)||(option.getIndex()==69)||(option.getIndex()==70))
+			else if ((option.getIndex()==Fields.YELLOW_GOAL_1)||(option.getIndex()==Fields.YELLOW_GOAL_2)||(option.getIndex()==Fields.YELLOW_GOAL_3))
 			{
 				target=vertices.get(option.getIndex()+diced);
 			}
@@ -1249,56 +1158,42 @@ public class Graph
 	 * Die nächsten sieben Funktionen sind Hilfsfunktionen für getOptions()
 	 */
 	
-	//Prüft, ob das Haus verlassen werden kann bzw. muss, wenn ja, bleibt nur die Option
+	
+	/*
+	 * Hilfsfunktion für getOptions()
+	 * Prüft, ob das Haus verlassen werden kann bzw. muss, wenn ja, bleibt nur die Option.
+	 * @param player
+	 * @param option
+	 * @param diced
+	 * @param players (INITAL PLAYERS)
+	 * @return options
+	 */
 	private ArrayList<Integer> leaveStart(ArrayList<Integer> options, int diced, Player player, ArrayList<Player> players)
 	{
-		ArrayList<Integer> selectedOptions=new ArrayList<Integer>();
+		ArrayList<Integer> selectedOptions = new ArrayList<Integer>();
 		int sizeOptions=options.size();
-		for (int i =0; i<sizeOptions; i++)
+		int add=0;
+		int add2=0;
+		
+		for (int i = 0; i<4; i++)
 		{
-			if(player==players.get(0))
+			if (player==players.get(i))
 			{
-				if((player.getPieces()[options.get(i)].getPosition().getIndex()==0)
-						&&((vertices.get(40).getPiece()!=null)
-						||(vertices.get(41).getPiece()!=null)
-						||(vertices.get(42).getPiece()!=null)
-						||(vertices.get(43).getPiece()!=null)))
-				{
-					selectedOptions.add(options.get(i));
-				}
+				add=i*4;
+				add2=i*10;
+				break;
 			}
-			else if(player==players.get(1))
+		}
+		
+		for (int i = 0; i<sizeOptions; i++)
+		{
+			if((player.getPieces()[options.get(i)].getPosition().getIndex()==Fields.START_RED+add2)
+					&&((vertices.get(Fields.RED_HOME_1+add).getPiece()!=null)
+					||(vertices.get(Fields.RED_HOME_2+add).getPiece()!=null)
+					||(vertices.get(Fields.RED_HOME_3+add).getPiece()!=null)
+					||(vertices.get(Fields.RED_HOME_4+add).getPiece()!=null)))
 			{
-				if((player.getPieces()[options.get(i)].getPosition().getIndex()==10)
-						&&((vertices.get(44).getPiece()!=null)
-						||(vertices.get(45).getPiece()!=null)
-						||(vertices.get(46).getPiece()!=null)
-						||(vertices.get(47).getPiece()!=null)))
-				{
-					selectedOptions.add(options.get(i));
-				}
-			}
-			else if(player==players.get(2))
-			{
-				if((player.getPieces()[options.get(i)].getPosition().getIndex()==20)
-						&&((vertices.get(48).getPiece()!=null)
-						||(vertices.get(49).getPiece()!=null)
-						||(vertices.get(50).getPiece()!=null)
-						||(vertices.get(51).getPiece()!=null)))
-				{
-					selectedOptions.add(options.get(i));
-				}
-			}
-			else if(player==players.get(3))
-			{
-				if((player.getPieces()[options.get(i)].getPosition().getIndex()==30)
-						&&((vertices.get(52).getPiece()!=null)
-						||(vertices.get(53).getPiece()!=null)
-						||(vertices.get(54).getPiece()!=null)
-						||(vertices.get(55).getPiece()!=null)))
-				{
-					selectedOptions.add(options.get(i));
-				}
+				selectedOptions.add(options.get(i));
 			}
 		}
 		if (selectedOptions.size()>0)
@@ -1309,8 +1204,15 @@ public class Graph
 		return options;
 	}
 	
-	
-	//Prüfen ob geschlagen werden kann – wenn ja, wird eine veränderte Liste zurückgegeben
+	/*
+	 * Hilfsfunktion für getOptions()
+	 * Prüfen ob geschlagen werden kann – wenn ja, wird eine veränderte Liste zurückgegeben.
+	 * @param player
+	 * @param option
+	 * @param diced
+	 * @param players (INITAL PLAYERS)
+	 * @return options
+	 */
 	private ArrayList<Integer> mustHit(ArrayList<Integer> options, int diced, Player player, ArrayList<Player> players)
 	{
 		ArrayList<Integer> selectedOptions=new ArrayList<Integer>();
@@ -1340,9 +1242,14 @@ public class Graph
 		return options;
 	}
 	
-	
-	//Prüfen ob mit gewürfelter 6 das Haus verlassen werden kann
-	// wenn ja, wird eine veränderte Options Liste zurückgegeben
+	/*
+	 * Hilfsfunktion für getOptions()
+	 * Prüfen ob mit gewürfelter 6 das Haus verlassen werden kann, wenn ja, wird eine veränderte Options Liste zurückgegeben.
+	 * @param player
+	 * @param option
+	 * @param diced
+	 * @return options
+	 */
 	private ArrayList<Integer> leaveHomeRule(ArrayList<Integer> options, int diced, Player player)
 	{
 		ArrayList<Integer> selectedOptions=new ArrayList<Integer>();
@@ -1351,11 +1258,12 @@ public class Graph
 		{
 			for (int i=0; i<sizeOptions; i++)
 			{
-				for(int j=40; j<56; j++)
+				for(int j=Fields.RED_HOME_1; j<Fields.RED_GOAL_1; j++)
 				{
 					if(player.getPieces()[options.get(i)].getPosition().getIndex()==j)
 					{
 						selectedOptions.add(options.get(i));
+						break;
 					}
 				}
 			}
@@ -1367,7 +1275,15 @@ public class Graph
 		return options;
 	}
 	
-	//Wenn auf dem Zielfeld eine Figur des aktiven Spielers steht, wird der zu bewegende Stein nicht als Option gezählt
+	/*
+	 * Hilfsfunktion für getOptions()
+	 * Wenn auf dem Zielfeld eine Figur des aktiven Spielers steht, wird der zu bewegende Stein nicht als Option gezählt
+	 * @param movingPlayer
+	 * @param option
+	 * @param diced
+	 * @param players
+	 * @return boolean
+	 */
 	private boolean checkTargetOccupation(Player movingPlayer, Vertex option, int diced, ArrayList<Player> players)
 	{
 		Piece targetPiece;
@@ -1395,271 +1311,146 @@ public class Graph
 		}
 	}
 	
-	//Wenn der Würfelnde Spieler auf einem der letzten beiden Feldern der Rundreise steht
-	// aber eine Zahl würfelt, die größer als die Kantengewichte der Zielfelder ist
-	// wird der zu bewegende Stein nicht als Option gezählt.
+	/*
+	 * Hilfsfunktion für getOptions()
+	 * Wenn der Würfelnde Spieler auf einem der letzten beiden Feldern der Rundreise steht,
+	 * aber eine Zahl würfelt, die größer als die Kantengewichte der Zielfelder ist,
+	 * wird der zu bewegende Stein nicht als Option gezählt.
+	 * @param movingPlayer
+	 * @param option
+	 * @param diced
+	 * @param players
+	 * @return boolean
+	 */
 	private boolean checkJourneyEnd(Player movingPlayer, Vertex option, ArrayList<Player> players, int diced)
 	{
 		boolean re = true;
-		if (movingPlayer==players.get(0))
+		int sub = 0;
+		
+		if (movingPlayer==players.get(1))
 		{
-			if ((option.getIndex()==39)&&diced>4)
-			{
-				re = false;
-			}
-			else if ((option.getIndex()==38)&&diced>5)
-			{
-				re = false;
-			}	
-		}
-		else if (movingPlayer==players.get(1))
-		{
-			if ((option.getIndex()==9)&&diced>4)
-			{
-				re = false;
-			}
-			else if ((option.getIndex()==8)&&diced>5)
-			{
-				re = false;
-			}	
+			sub=30;
 		}
 		else if (movingPlayer==players.get(2))
 		{
-			if ((option.getIndex()==19)&&diced>4)
-			{
-				re = false;
-			}
-			else if ((option.getIndex()==18)&&diced>5)
-			{
-				re = false;
-			}	
+			sub=20;
 		}
 		else if (movingPlayer==players.get(3))
 		{
-			if ((option.getIndex()==29)&&diced>4)
-			{
-				re = false;
-			}
-			else if ((option.getIndex()==28)&&diced>5)
-			{
-				re = false;
-			}	
+			sub=10;
+		}
+		if ((option.getIndex()==Fields.LAST_RED-sub)&&diced>4)
+		{
+			re = false;
+		}
+		else if ((option.getIndex()==Fields.ROUNDABOUT_38-sub)&&diced>5)
+		{
+			re = false;
 		}
 		return re;
 	}
 	
-	//Prüfen ob auf den Zielfeldern eine Figur übersprungen werden müsste
-	//Wird ein Zielfeld geprüft, dass über die Rundreise des jeweiligen Spielers hinausgehen würde,
-	//wird das wie das Entfernungsmäßig äquivalente Zielfeld behandelt
+	/*
+	 * Hilfsfunktion für getOptions()
+	 * Prüfen ob auf den Zielfeldern eine Figur übersprungen werden müsste.
+	 * Wird ein Zielfeld geprüft, dass über die Rundreise des jeweiligen Spielers hinausgehen würde,
+	 * wird das wie das entfernungsmäßig äquivalente Zielfeld behandelt.
+	 * @param movingPlayer
+	 * @param option
+	 * @param diced
+	 * @param players
+	 * @return boolean
+	 */
 	private boolean somethingInTheWay(Player movingPlayer, Vertex option, Vertex target, ArrayList<Player> players)
 	{
 		boolean re = true;
-		if (movingPlayer==players.get(0))
-		{
-			if ((option.getIndex()==(39))||(option.getIndex()==(38))||(option.getIndex()==(37))
-					||(option.getIndex()==(36))||(option.getIndex()==(35)))
-			{
-				if (((target.getIndex()==57)||(target.getIndex()==1))
-						&&((vertices.get(56).getPiece()!=null) // Ist das zu überspingende Feld frei?
-						||(vertices.get(57).getPiece()!=null))) //Ist das Zielfeld frei?
-				{
-					re = false;
-				}
-				else if (((target.getIndex()==58)||(target.getIndex()==2))
-						&&((vertices.get(57).getPiece()!=null)
-						||(vertices.get(56).getPiece()!=null)
-						||(vertices.get(58).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if (((target.getIndex()==59)||(target.getIndex()==3))
-						&&((vertices.get(58).getPiece()!=null)
-						||(vertices.get(57).getPiece()!=null)
-						||(vertices.get(56).getPiece()!=null)
-						||(vertices.get(59).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}
-			else if (option.getIndex()==(56))
-			{
-				if ((target.getIndex()==58)
-						&&((vertices.get(57).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if ((target.getIndex()==59)
-						&&((vertices.get(58).getPiece()!=null)
-						||(vertices.get(57).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}
-			else if (option.getIndex()==(57))
-			{
-				if ((target.getIndex()==59)&&((vertices.get(58).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}	
-		}
+		int add = 0;
+		int add2 = 0;
+		int sub = 0;
+		
 		if (movingPlayer==players.get(1))
 		{
-			if ((option.getIndex()==(9))||(option.getIndex()==(8))||(option.getIndex()==(7))
-					||(option.getIndex()==(6))||(option.getIndex()==(5)))
-			{
-				if (((target.getIndex()==61)||(target.getIndex()==11))
-						&&((vertices.get(60).getPiece()!=null)
-						||(vertices.get(61).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if (((target.getIndex()==62)||(target.getIndex()==12))
-						&&((vertices.get(61).getPiece()!=null)
-						||(vertices.get(60).getPiece()!=null)
-						||(vertices.get(62).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if (((target.getIndex()==63)||(target.getIndex()==13))
-						&&((vertices.get(62).getPiece()!=null)
-						||(vertices.get(61).getPiece()!=null)
-						||(vertices.get(60).getPiece()!=null)
-						||(vertices.get(63).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}
-			else if (option.getIndex()==(60))
-			{
-				if ((target.getIndex()==62)
-						&&((vertices.get(61).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if ((target.getIndex()==63)
-						&&((vertices.get(62).getPiece()!=null)
-						||(vertices.get(61).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}
-			else if (option.getIndex()==(61))
-			{
-				if ((target.getIndex()==63)&&((vertices.get(62).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}	
+			add=4;
+			add2=10;
+			sub=30;
 		}
-		if (movingPlayer==players.get(2))
+		else if (movingPlayer==players.get(2))
 		{
-			if ((option.getIndex()==(19))||(option.getIndex()==(18))||(option.getIndex()==(17))
-					||(option.getIndex()==(16))||(option.getIndex()==(15)))
-			{
-				if (((target.getIndex()==65)||(target.getIndex()==21))
-						&&((vertices.get(64).getPiece()!=null)
-						||(vertices.get(65).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if (((target.getIndex()==66)||(target.getIndex()==22))
-						&&((vertices.get(65).getPiece()!=null)
-						||(vertices.get(64).getPiece()!=null)
-						||(vertices.get(66).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if (((target.getIndex()==67)||(target.getIndex()==23))
-						&&((vertices.get(66).getPiece()!=null)
-						||(vertices.get(65).getPiece()!=null)
-						||(vertices.get(64).getPiece()!=null)
-						||(vertices.get(67).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}
-			else if (option.getIndex()==(64))
-			{
-				if ((target.getIndex()==66)
-						&&((vertices.get(65).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if ((target.getIndex()==67)
-						&&((vertices.get(66).getPiece()!=null)
-						||(vertices.get(65).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}
-			else if (option.getIndex()==(65))
-			{
-				if ((target.getIndex()==67)&&((vertices.get(66).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}	
+			add=8;
+			add2=20;
+			sub=20;
 		}
-		if (movingPlayer==players.get(3))
+		else if (movingPlayer==players.get(3))
 		{
-			if ((option.getIndex()==(29))||(option.getIndex()==(28))||(option.getIndex()==(27))
-					||(option.getIndex()==(26))||(option.getIndex()==(25)))
-			{
-				if (((target.getIndex()==69)||(target.getIndex()==31))
-						&&((vertices.get(68).getPiece()!=null)
-						||(vertices.get(69).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if (((target.getIndex()==70)||(target.getIndex()==32))
-						&&((vertices.get(69).getPiece()!=null)
-						||(vertices.get(68).getPiece()!=null)
-						||(vertices.get(70).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if (((target.getIndex()==71)||(target.getIndex()==33))
-						&&((vertices.get(70).getPiece()!=null)
-						||(vertices.get(69).getPiece()!=null)
-						||(vertices.get(68).getPiece()!=null)
-						||(vertices.get(71).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}
-			else if (option.getIndex()==(68))
-			{
-				if ((target.getIndex()==70)
-						&&((vertices.get(69).getPiece()!=null)))
-				{
-					re = false;
-				}
-				else if ((target.getIndex()==71)
-						&&((vertices.get(70).getPiece()!=null)
-						||(vertices.get(69).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}
-			else if (option.getIndex()==(69))
-			{
-				if ((target.getIndex()==71)&&((vertices.get(70).getPiece()!=null)))
-				{
-					re = false;
-				}
-			}	
+			add=12;
+			add2=30;
+			sub=10;
 		}
-		return re;
+		
+		if ((option.getIndex()==(Fields.LAST_RED-sub))||(option.getIndex()==(Fields.ROUNDABOUT_38-sub))||(option.getIndex()==(Fields.ROUNDABOUT_37-sub))
+				||(option.getIndex()==(Fields.ROUNDABOUT_36-sub))||(option.getIndex()==(Fields.ROUNDABOUT_35-sub)))
+		{
+			if (((target.getIndex()==Fields.RED_GOAL_2+add)||(target.getIndex()==Fields.ROUNDABOUT_1+add2))
+					&&((vertices.get(Fields.RED_GOAL_1+add).getPiece()!=null) // Ist das zu überspingende Feld frei?
+					||(vertices.get(Fields.RED_GOAL_2+add).getPiece()!=null))) //Ist das Zielfeld frei?
+			{
+				re = false;
+			}
+			else if (((target.getIndex()==Fields.RED_GOAL_3+add)||(target.getIndex()==Fields.ROUNDABOUT_2+add2))
+					&&((vertices.get(Fields.RED_GOAL_2+add).getPiece()!=null)
+					||(vertices.get(Fields.RED_GOAL_1+add).getPiece()!=null)
+					||(vertices.get(Fields.RED_GOAL_3+add).getPiece()!=null)))
+			{
+				re = false;
+			}
+			else if (((target.getIndex()==Fields.RED_GOAL_4+add)||(target.getIndex()==Fields.ROUNDABOUT_3+add2))
+					&&((vertices.get(Fields.RED_GOAL_3+add).getPiece()!=null)
+					||(vertices.get(Fields.RED_GOAL_2+add).getPiece()!=null)
+					||(vertices.get(Fields.RED_GOAL_1+add).getPiece()!=null)
+					||(vertices.get(Fields.RED_GOAL_4+add).getPiece()!=null)))
+			{
+				re = false;
+			}
+		}
+		else if (option.getIndex()==(Fields.RED_GOAL_1+add))
+		{
+			if ((target.getIndex()==Fields.RED_GOAL_3+add)
+					&&((vertices.get(Fields.RED_GOAL_2+add).getPiece()!=null)))
+			{
+				re = false;
+			}
+			else if ((target.getIndex()==Fields.RED_GOAL_4+add)
+					&&((vertices.get(Fields.RED_GOAL_3+add).getPiece()!=null)
+					||(vertices.get(Fields.RED_GOAL_2+add).getPiece()!=null)))
+			{
+				re = false;
+			}
+		}
+		else if (option.getIndex()==(Fields.RED_GOAL_2+add))
+		{
+			if ((target.getIndex()==Fields.RED_GOAL_4+add)&&((vertices.get(Fields.RED_GOAL_3+add).getPiece()!=null)))
+			{
+				re = false;
+			}
+		}
+	return re;
 	}
 	
-	//Schließt gegnerische Zielfelder als Option aus
+	
+	/*
+	 * Hilfsfunktion für getOptions()
+	 * Schließt gegnerische Zielfelder als Option aus.
+	 * @param movingPlayer
+	 * @param option
+	 * @param players
+	 * @return boolean
+	 */
 	public boolean excludeOpponentsGoal(Player movingPlayer, Vertex target, ArrayList<Player> players)
 	{
 		boolean re = true;
 		if (movingPlayer==players.get(0))
 		{
-			for(int i = 60; i<72; i++)
+			for(int i = Fields.BLUE_GOAL_1; i<72; i++)
 			{
 				if (target==vertices.get(i))
 				{
@@ -1669,14 +1460,14 @@ public class Graph
 		}
 		else if (movingPlayer==players.get(1))
 		{
-			for(int i = 64; i<72; i++)
+			for(int i = Fields.GREEN_GOAL_1; i<72; i++)
 			{
 				if (target==vertices.get(i))
 				{
 					re = false;
 				}
 			}
-			for(int i = 56; i<60; i++)
+			for(int i = Fields.RED_GOAL_1; i<Fields.BLUE_GOAL_1; i++)
 			{
 				if (target==vertices.get(i))
 				{
@@ -1686,14 +1477,14 @@ public class Graph
 		}
 		else if (movingPlayer==players.get(2))
 		{
-			for(int i = 68; i<72; i++)
+			for(int i = Fields.YELLOW_GOAL_1; i<72; i++)
 			{
 				if (target==vertices.get(i))
 				{
 					re = false;
 				}
 			}
-			for(int i = 56; i<64; i++)
+			for(int i = Fields.RED_GOAL_1; i<Fields.GREEN_GOAL_1; i++)
 			{
 				if (target==vertices.get(i))
 				{
@@ -1703,7 +1494,7 @@ public class Graph
 		}
 		else if (movingPlayer==players.get(3))
 		{
-			for(int i = 56; i<68; i++)
+			for(int i = Fields.RED_GOAL_1; i<Fields.YELLOW_GOAL_1; i++)
 			{
 				if (target==vertices.get(i))
 				{
@@ -1716,30 +1507,103 @@ public class Graph
 	}
 	
 	/*
+	 * Hilfsfunktion für getOptions()
+	 * Gibt für Bots nur die Option aus, welche den kürzesten Abstand zum Ziel hat.
+	 * Simulation einer sinnvollen Strategie.
+	 * @param player
+	 * @param option
+	 * @param players
+	 * @return shortOptions
+	 */
+	private ArrayList<Integer> sortBotOptions(ArrayList<Integer> options, Player player, ArrayList<Player> players)
+	{
+		int sizeOptions = options.size();
+		int shortestPath = 1000;
+		Vertex finalVertex = null;
+		ArrayList<Integer> shortOptions = new ArrayList<Integer>();
+		
+		for (int i = 0; i<sizeOptions; i++)
+		{
+			Vertex optionVertex = player.getPieces()[options.get(i)].getPosition();
+			Vertex betweenVertex = null;
+			int way = 0;
+			
+			for (int k = 0; k<4; k++)
+			{
+				if (player == players.get(k))
+				{
+					finalVertex = vertices.get(Fields.RED_GOAL_4+(k*4));
+					break;
+				}
+			}
+			
+			if ((optionVertex.getIndex()>Fields.LAST_RED)&&(optionVertex.getIndex()<Fields.RED_GOAL_1))
+			{
+				way = 44; // Vom Start aus sind die Entfernungen gleich und es muss nicht sortiert werden.
+				//System.out.println("Der kürzere Weg zum Ziel ist "+way+" von "+optionVertex); //debug
+				shortestPath = way;
+				shortOptions.add(options.get(i));
+			}
+			else //Ansonsten wird die Entfernung von der Option aus zum letzten Zielfeld bestimmt.
+			{
+				while (finalVertex!=optionVertex)
+				{
+					int length=finalVertex.getPred().size();
+					for(int j = 0; j < length; j++)
+					{
+						if (finalVertex.getPred().get(j).getWeight() == 1)
+						{
+							betweenVertex = finalVertex.getPred().get(j).getFrom();
+							finalVertex = betweenVertex;
+							way++;
+							break;
+						}
+					}
+				}
+				if (way < shortestPath) //Wenn ein kürzerer Weg gefunden ist, wird die bisherige Liste gelöscht und durch die kürzere Option ersetzt.
+				{
+					//System.out.println(player.getPlayerColor()+" Der kürzere Weg zum Ziel ist "+way+" von "+optionVertex); //debug
+					shortestPath = way;
+					shortOptions.clear();
+					shortOptions.add(options.get(i));
+				}
+			}
+		}
+		//System.out.println(options.toString());//Testausgabe
+		//System.out.println(shortOptions.toString());//Testausgabe
+		return shortOptions;
+	}
+	
+	
+	
+	
+	/*
 	 * Die nächsten drei Funktionen sind Hilfsfunktionen für performOption()
 	 */
 	
-	//Prüft ob ein Spieler fertig ist
+	/*
+	 * Hilfsfunktion für performOption() und adminMove()
+	 * Prüft ob ein Spieler fertig ist
+	 * @param player
+	 * @param players
+	 * @return boolean
+	 */
 	private boolean checkGoal(Player player, ArrayList<Player> players)
 	{
 		boolean re = false;
 		int add=0;
 		
-		if (player==players.get(1))
+		for (int i = 0; i<4; i++)
 		{
-			add=add+4;
+			if (player==players.get(i))
+			{
+				add=i*4;
+				break;
+			}
 		}
-		else if (player==players.get(2))
-		{
-			add=add+8;
-		}
-		else if (player==players.get(3))
-		{
-			add=add+12;
-		}
-		
-		if ((vertices.get(56+add).getPiece()!=null)&&(vertices.get(57+add).getPiece()!=null)
-				&&(vertices.get(58+add).getPiece()!=null)&&(vertices.get(59+add).getPiece()!=null))
+		//Dafür müssen alle Zielfelder des Spielenden belegt sein.
+		if ((vertices.get(Fields.RED_GOAL_1+add).getPiece()!=null)&&(vertices.get(Fields.RED_GOAL_2+add).getPiece()!=null)
+				&&(vertices.get(Fields.RED_GOAL_3+add).getPiece()!=null)&&(vertices.get(Fields.RED_GOAL_4+add).getPiece()!=null))
 		{
 			re = true;
 		}
@@ -1747,209 +1611,102 @@ public class Graph
 		return re;
 	}
 	
-	
-	//Prüft, ob SuperSpecialCase/DICE_THREE_TIMES eintritt 
+	/*
+	 * Hilfsfunktion für performOption() adminMove()
+	 * Prüft, ob ein Spieler nun dreimal Würfeln dar. 
+	 * @param specialPlayer
+	 * @param players
+	 * @return boolean
+	 */
 	private boolean checkforSuperSpecialCase(Player specialPlayer, ArrayList<Player> players)
 	{
 		boolean re=false;
-		if (specialPlayer==players.get(0))
+		int add=0;
+		
+		for (int i = 0; i<4; i++)
 		{
-			if ((vertices.get(40).getPiece()!=null)&&(vertices.get(41).getPiece()!=null)
-				&&(vertices.get(42).getPiece()!=null)&&(vertices.get(43).getPiece()!=null))
+			if (specialPlayer==players.get(i))
+			{
+				add=i*4;
+			}
+		}
+		if ((vertices.get(Fields.RED_HOME_1+add).getPiece()!=null)&&(vertices.get(Fields.RED_HOME_2+add).getPiece()!=null)
+			&&(vertices.get(Fields.RED_HOME_3+add).getPiece()!=null)&&(vertices.get(Fields.RED_HOME_4+add).getPiece()!=null))
+			{
+				re=true;
+			}
+		else
+		{
+			int count = 0;
+			for(int i=0; i<4; i++)
+			{
+				if (vertices.get(Fields.RED_HOME_1+add+i).getPiece()==null)
+				{
+					count=count+1;
+				}
+			}
+			for (int j=0; j<count; j++)
+			{
+				if(vertices.get(Fields.RED_GOAL_4+add-j).getPiece()!=null)
 				{
 					re=true;
 				}
-			else
-			{
-				int count = 0;
-				for(int i=0; i<4; i++)
+				else
 				{
-					if (vertices.get(40+i).getPiece()==null)
-					{
-						count=count+1;
-					}
+					re=false;
+					break;
 				}
-				for (int j=0; j<count; j++)
-				{
-					if(vertices.get(59-j).getPiece()!=null)
-					{
-						re=true;
-					}
-					else
-					{
-						re=false;
-						break;
-					}
-				}
-			}	
-		}
-		if (specialPlayer==players.get(1))
-		{
-			if ((vertices.get(44).getPiece()!=null)&&(vertices.get(45).getPiece()!=null)
-				&&(vertices.get(46).getPiece()!=null)&&(vertices.get(47).getPiece()!=null))
-				{
-					re=true;
-				}
-			else
-			{
-				int count = 0;
-				for(int i=0; i<4; i++)
-				{
-					if (vertices.get(44+i).getPiece()==null)
-					{
-						count=count+1;
-					}
-				}
-				for (int j=0; j<count; j++)
-				{
-					if(vertices.get(63-j).getPiece()!=null)
-					{
-						re=true;
-					}
-					else
-					{
-						re=false;
-						break;
-					}
-				}
-			}	
-		}
-		if (specialPlayer==players.get(2))
-		{
-			if ((vertices.get(48).getPiece()!=null)&&(vertices.get(49).getPiece()!=null)
-				&&(vertices.get(50).getPiece()!=null)&&(vertices.get(51).getPiece()!=null))
-				{
-					re=true;
-				}
-			else
-			{
-				int count = 0;
-				for(int i=0; i<4; i++)
-				{
-					if (vertices.get(48+i).getPiece()==null)
-					{
-						count=count+1;
-					}
-				}
-				for (int j=0; j<count; j++)
-				{
-					if(vertices.get(67-j).getPiece()!=null)
-					{
-						re=true;
-					}
-					else
-					{
-						re=false;
-						break;
-					}
-				}
-			}	
-		}
-		if (specialPlayer==players.get(3))
-		{
-			if ((vertices.get(52).getPiece()!=null)&&(vertices.get(53).getPiece()!=null)
-				&&(vertices.get(54).getPiece()!=null)&&(vertices.get(55).getPiece()!=null))
-				{
-					re=true;
-				}
-			else
-			{
-				int count = 0;
-				for(int i=0; i<4; i++)
-				{
-					if (vertices.get(52+i).getPiece()==null)
-					{
-						count=count+1;
-					}
-				}
-				for (int j=0; j<count; j++)
-				{
-					if(vertices.get(71-j).getPiece()!=null)
-					{
-						re=true;
-					}
-					else
-					{
-						re=false;
-						break;
-					}
-				}
-			}	
-		}
+			}
+		}	
 		return re;
 	}
 	
-	//Schickt geschlagene Figuren auf ein freies Heimatfeld
+	/*
+	 * Hilfsfunktion für performOption() admindMove().
+	 * Schickt geschlagene Figuren auf ein freies Heimatfeld.
+	 * @param target
+	 * @param players
+	 * @param newPositionfound
+	 * @param targetPieceID
+	 */
 	private void sendTargetHome(Vertex target, ArrayList<Player> players, boolean newPositionfound, int targetPieceID)
 	{
-		if (target.getPiece().getPlayer()==players.get(0))
+		int add=0;
+		int playerIndex=0;
+		
+		for (int i = 0; i<4; i++)
 		{
-			for (int i = 0; i<4; i++)
+			if (target.getPiece().getPlayer()==players.get(i))
 			{
-				if (newPositionfound == false)
-				{
-					if (vertices.get(40+i).getPiece()==null)
-					{
-						vertices.get(40+i).setPiece(target.getPiece());
-						players.get(0).getPieces()[targetPieceID].setPosition(vertices.get(40+i));
-						newPositionfound = true;
-					}
-				}	
+				add=i*4;
+				playerIndex=i;
+				break;
 			}
 		}
-		else if (target.getPiece().getPlayer()==players.get(1))
+		
+		for (int i = 0; i<4; i++)
 		{
-			for (int i = 0; i<4; i++)
+			if (newPositionfound == false)
 			{
-				if (newPositionfound == false)
+				if (vertices.get(Fields.RED_HOME_1+add+i).getPiece()==null)
 				{
-					if (vertices.get(44+i).getPiece()==null)
-					{
-						vertices.get(44+i).setPiece(target.getPiece());
-						players.get(1).getPieces()[targetPieceID].setPosition(vertices.get(44+i));
-						newPositionfound = true;
-					}
+					vertices.get(Fields.RED_HOME_1+add+i).setPiece(target.getPiece());
+					players.get(playerIndex).getPieces()[targetPieceID].setPosition(vertices.get(Fields.RED_HOME_1+add+i));
+					newPositionfound = true;
 				}
-				
-			}
-		}
-		else if (target.getPiece().getPlayer()==players.get(2))
-		{
-			for (int i = 0; i<4; i++)
-			{
-				if (newPositionfound == false)
-				{
-					if (vertices.get(48+i).getPiece()==null)
-					{
-						vertices.get(48+i).setPiece(target.getPiece());
-						players.get(2).getPieces()[targetPieceID].setPosition(vertices.get(48+i));
-						newPositionfound = true;
-					}
-				}
-			}
-		}
-		else if (target.getPiece().getPlayer()==players.get(3))
-		{
-			for (int i = 0; i<4; i++)
-			{
-				if (newPositionfound == false)
-				{
-					if (vertices.get(52+i).getPiece()==null)
-					{
-						vertices.get(52+i).setPiece(target.getPiece());
-						players.get(3).getPieces()[targetPieceID].setPosition(vertices.get(52+i));
-						newPositionfound = true;
-					}
-				}
-			}
+			}	
 		}
 	}
 	
 	/*
 	 * Hilfsfunktion für adminMove()
-	 * prüft zwei Bedingungen
+	 * Prüft zwei Bedingungen:
 	 * 1. Keine eigene Figur darf geschlagen werden
 	 * 2. Gegenerische Heimatfelder dürfen nicht betreten werden.
+	 * @param player
+	 * @param target
+	 * @param players
+	 * @return boolean
 	 */
 	boolean checkAdminTarget(Player player, Vertex target, ArrayList<Player> players)
 	{
@@ -1966,14 +1723,14 @@ public class Graph
 		// gegnerische Heimatfelder ausschließen
 		if (re==true)
 		{
-			if ((target.getIndex()>39)&&(target.getIndex()<56))
+			if ((target.getIndex()>Fields.LAST_RED)&&(target.getIndex()<Fields.RED_GOAL_1))
 			{	
 				for(int i=0; i<4; i++)
 				{
 					int add=(1+i)*4;
 					if (player==players.get(i))
 					{
-						for (int j=36+add; j<40+add; j++)
+						for (int j=Fields.ROUNDABOUT_36+add; j<Fields.RED_HOME_1+add; j++)
 						{
 							if (target.getIndex()==j)
 							{

@@ -1,12 +1,16 @@
 package main.gui;
 
+//Import's
 import main.model.player.Piece;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-
+/**
+ * Verantwortlich für das eigentliche Spielfeld
+ * Sowohl Hntergrundbild, als auch Elemente werden hier hinterlegt bzw. erzeugt
+ */
 public class PanelGameBoard extends JLayeredPane {
 
 	private ArrayList<Piece> pieces;
@@ -21,8 +25,13 @@ public class PanelGameBoard extends JLayeredPane {
 		setLayout(null);
 	}
 
+	/**
+	 * Hintergrund wird hier gesetzt
+	 * Spielsteine und Spielfelder werden erzeugt und auf dem PanelGameBoard platziert
+	 * gleichzeitig werden sie hier gerendert um nicht mehr verpixelt zu sein
+	 */
 	public void paintComponent(Graphics g) {
-		Image img = new ImageIcon("./images/background.png").getImage();
+		Image img = new ImageIcon(this.getClass().getResource("images/background.png")).getImage();
 		g.drawImage(img, 0, 0, null);
 		// 			(Zeile,Spalte)
 
@@ -67,10 +76,10 @@ public class PanelGameBoard extends JLayeredPane {
 		g.fillOval(320, 120, 40, 40); //2,6
 		g.fillOval(320, 170, 40, 40); //3,6
 		g.fillOval(220, 470, 40, 40); //9,4
-		g.fillOval(220, 420, 40, 40);    //8,4
+		g.fillOval(220, 420, 40, 40); //8,4
 		g.fillOval(220, 370, 40, 40); //7,4
 		g.fillOval(320, 470, 40, 40); //9,6
-		g.fillOval(320, 420, 40, 40);    //8,6
+		g.fillOval(320, 420, 40, 40); //8,6
 		g.fillOval(320, 370, 40, 40); //7,6
 
 		g.setColor(new Color(0, 0, 255, 150));
@@ -112,9 +121,9 @@ public class PanelGameBoard extends JLayeredPane {
 		g.fillOval(220, 520, 40, 40);//10,4
 		//Safezone
 		g.fillOval(270, 470, 40, 40); //9,5
-		g.fillOval(270, 420, 40, 40);    //8,5
+		g.fillOval(270, 420, 40, 40); //8,5
 		g.fillOval(270, 370, 40, 40); //7,5
-		g.fillOval(270, 320, 40, 40);    //6,5
+		g.fillOval(270, 320, 40, 40); //6,5
 
 		g.setColor(new Color(255, 215, 0, 150));
 		//Haus
@@ -130,7 +139,9 @@ public class PanelGameBoard extends JLayeredPane {
 		g.fillOval(420, 270, 40, 40);//5,8
 		g.fillOval(470, 270, 40, 40);//5,9
 
-
+		/*
+		 * Errechnet die Position des jeweiligen Spielsteins und platziert ihn auf dem PanelGameBoard
+		 */
 		for(Piece piece : pieces) {
 			int x = 20 + (piece.getPosition().getCoordinateX() * 50) + 5;
 			int y = 20 + (piece.getPosition().getCoordinateY() * 50) + 5;
@@ -162,7 +173,7 @@ public class PanelGameBoard extends JLayeredPane {
 				g.drawString(String.valueOf(piece.getId()), x + 11, y + 20);
 			}
 
-			// Zeige den Platz an, wenn feritg
+			// Zeige den Platz an, wenn fertig
 			if(piece.getPlayer().isGoalAchieved()) {
 				g.setColor(new Color(0, 0, 0, 255));
 				g.drawString(String.valueOf(piece.getPlayer().getPlace()), x + 11, y + 20);

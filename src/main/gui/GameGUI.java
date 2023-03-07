@@ -17,8 +17,6 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
@@ -69,17 +67,17 @@ public class GameGUI extends GUI {
 	private JTextField tfSliderRight = new JTextField("slow");
 
 	//ImageIcon's
-	private ImageIcon imageIconDiced1 = new ImageIcon("./images/1.png");
-	private ImageIcon imageIconDiced2 = new ImageIcon("./images/2.png");
-	private ImageIcon imageIconDiced3 = new ImageIcon("./images/3.png");
-	private ImageIcon imageIconDiced4 = new ImageIcon("./images/4.png");
-	private ImageIcon imageIconDiced5 = new ImageIcon("./images/5.png");
-	private ImageIcon imageIconDiced6 = new ImageIcon("./images/6.png");
-	private ImageIcon imageIconWreath = new ImageIcon("./images/wreath.png");
-	private ImageIcon imageIconFirstPlace = new ImageIcon("./images/first.png");
-	private ImageIcon imageIconSecondPlace = new ImageIcon("./images/second.png");
-	private ImageIcon imageIconThirdPlace = new ImageIcon("./images/third.png");
-	private ImageIcon imageIconKonfetti = new ImageIcon("./images/konfetti.gif");
+	private ImageIcon imageIconDiced1 = new ImageIcon(this.getClass().getResource("images/1.png"));
+	private ImageIcon imageIconDiced2 = new ImageIcon(this.getClass().getResource("images/2.png"));
+	private ImageIcon imageIconDiced3 = new ImageIcon(this.getClass().getResource("images/3.png"));
+	private ImageIcon imageIconDiced4 = new ImageIcon(this.getClass().getResource("images/4.png"));
+	private ImageIcon imageIconDiced5 = new ImageIcon(this.getClass().getResource("images/5.png"));
+	private ImageIcon imageIconDiced6 = new ImageIcon(this.getClass().getResource("images/6.png"));
+	private ImageIcon imageIconWreath = new ImageIcon(this.getClass().getResource("images/wreath.png"));
+	private ImageIcon imageIconFirstPlace = new ImageIcon(this.getClass().getResource("images/first.png"));
+	private ImageIcon imageIconSecondPlace = new ImageIcon(this.getClass().getResource("images/second.png"));
+	private ImageIcon imageIconThirdPlace = new ImageIcon(this.getClass().getResource("images/third.png"));
+	private ImageIcon imageIconKonfetti = new ImageIcon(this.getClass().getResource("images/konfetti.gif"));
 
 	//Label's
 	private JLabel labelDicedImage;
@@ -94,21 +92,25 @@ public class GameGUI extends GUI {
 	
 	//Sound Einstellungen
 	private String DIR_SEPERATOR = java.io.File.separator;
-	private String soundUrl = "---";
 	private int volumeSounds = 80;
 	private static float MINIMAL_GAIN = -30f;
 	
 	//Spielfeld
 	private PanelGameBoard boardLayeredPane;
 	
-
-
+	/**
+	 * Konstruktor
+	 * initialisiert Spieloberfläche mit individuellen Einstellungen
+	 * 
+	 * @param admin true wenn Admin-Checkbox ausgewählt
+	 * @param allHuman true wenn keine Bots ausgewählt
+	 */
 	public GameGUI(ArrayList<Piece> pieces, boolean admin, boolean allHuman) {
 	
-	
+		//Konstruktor
 		this.setTitle("Mensch ärgere dich nicht!");
 
-		boardLayeredPane = new PanelGameBoard(new ImageIcon("./images/background.png").getImage(), pieces);
+		boardLayeredPane = new PanelGameBoard(new ImageIcon(this.getClass().getResource("images/background.png")).getImage(), pieces);
 		boardLayeredPane.setPreferredSize(new Dimension(580, 580));
 		this.add(boardLayeredPane, BorderLayout.CENTER);
 
@@ -128,9 +130,8 @@ public class GameGUI extends GUI {
 		panelBottom.add(panelBottomCenter, BorderLayout.CENTER);
 		panelBottom.add(panelBottomBottom, BorderLayout.SOUTH);
 
-
+		// wenn Admin ausgewählt, erweitert sich die Oberfläche für den Admin-Bereich
 		if(admin) {
-			// Höhe des Panels anpassen, damit Buttons noch angezeigt werden
 			panelBottomCenter.setPreferredSize(new Dimension(580, 50));
 		} else {
 			panelBottomCenter.setPreferredSize(new Dimension(580, 0));
@@ -169,7 +170,10 @@ public class GameGUI extends GUI {
 		sliderBotSpeed.addChangeListener(e -> BotThread.setPace(sliderBotSpeed.getValue()));
 		sliderBotSpeed.setValue(BotThread.getPace());
 
-
+		/*
+		 *  Soll verhindern dass der Slider zur Steuerung der Botgeschwindigkeit 
+		 * angezeigt wird wenn nur Menschen im Spiel sind
+		 */ 
 		if(!allHuman) {
 			panelBottomBottom.setBorder(new EmptyBorder(0, 0, 10, 0));
 			panelBottomBottom.add(tfSliderLeft);
@@ -220,7 +224,7 @@ public class GameGUI extends GUI {
 		btnOption3.setBackground(new Color(255, 255, 255, 255));
 		panelBottomTop.add(btnOption3);
 
-
+		// wenn Admin Checkbox ausgewählt
 		if(admin) {
 			// Admin Elemente anzeigen
 			tfAdmin.setPreferredSize(new Dimension(200, 30));
@@ -238,7 +242,10 @@ public class GameGUI extends GUI {
 			btnAdmin.setBackground(new Color(255, 255, 255, 255));
 			panelBottomCenter.add(btnAdmin);
 		}
-
+		/* Sicherheitswarnung beim schließen
+		*  statt DefaultCloseOperation eigene Methode und
+		*  Do_Nothing_On_Close
+		*/
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				closeGUI();
@@ -250,7 +257,7 @@ public class GameGUI extends GUI {
 		this.setVisible(true);
 	}
 
-
+	//Getter
 	public JButton getBtnDice() {
 		return btnDice;
 	}
@@ -265,17 +272,17 @@ public class GameGUI extends GUI {
 		return btnOption1;
 	}
 
-
+	
 	public JButton getBtnOption2() {
 		return btnOption2;
 	}
 
-
+	
 	public JButton getBtnOption3() {
 		return btnOption3;
 	}
 
-
+	
 	public JButton getBtnAdmin() {
 		return btnAdmin;
 	}
@@ -300,11 +307,9 @@ public class GameGUI extends GUI {
 		return boardLayeredPane;
 	}
 
-	/*
-	 * Stellt Bild der gewürfelten Zahl zur Verfügung
-	 *
-	 * @param diced 
-	 * übergibt die gewürfelte Zahl
+	/**
+	 * Setzt Bild der gewürfelten Zahl
+	 * @param diced übergibt die gewürfelte Zahl
 	 */
 	public void setDicedImage(int diced) {
 		
@@ -332,12 +337,12 @@ public class GameGUI extends GUI {
 		}
 	}
 
-	/*
+	/**
 	 * Färbt den oberen Teil des Fensters genau in der Farbe des Spielers, 
 	 * der an der Reihe ist
 	 *
 	 * @param playercolor
-	 * übergibt die Farbe des Spielers, der gerade dran ist
+	 * übergibt die Farbe des Spielers, der an der Reihe ist
 	 */
 	public void setBackgroundColor(PlayerColor playerColor) {
 		
@@ -359,8 +364,8 @@ public class GameGUI extends GUI {
 	}
 
 	
-	/*
-	 *?
+	/**
+	 * Spielneustart durch Play again Button
 	 */
 	public void stopGame() {
 		this.setVisible(false);
@@ -368,8 +373,8 @@ public class GameGUI extends GUI {
 	}
 
 	
-	/*
-	 * Endbildschirm/Sigeranzeige
+	/**
+	 * Endbildschirm/Siegeranzeige
 	 * 
 	 * Holt sich das erste Element im Array - den Sieger- 
 	 * und färbt den oberen Bereich des Fensters in der entsprechenden Farbe
@@ -519,23 +524,31 @@ public class GameGUI extends GUI {
 		}
 	}
 	
-	
+	/**
+	 * Klasse zum asynchronen abspielen von Spielsounds
+	 */
 	public class SoundRunnable implements Runnable {
 		
-		/* 
+		/**
 		 * erstellt den Pfad zum Sound
 		 * 
 		 * stellt die Lautstärke ein und gibt die Möglichkeit den Sound zu stoppen
-		 * 
+		 * @Credits Softwareprojekt der letzten Jahre (Semster 4+5)
 		 */
+		final String soundUrl;
+		
+		public SoundRunnable(String soundUrl)
+		{
+			this.soundUrl = soundUrl;
+		}
+		
 		@Override
 		public void run() {
 			Clip clip;
-			File file = new File("./sounds" + DIR_SEPERATOR + soundUrl);
-			
+	
 			try {
 				clip = AudioSystem.getClip();
-				clip.open(AudioSystem.getAudioInputStream(file));
+				clip.open(AudioSystem.getAudioInputStream(this.getClass().getResourceAsStream("sounds/"+soundUrl)));
 				FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 				float effectsGain = (100f - (float)volumeSounds) / 100f * MINIMAL_GAIN;
 				gainControl.setValue(effectsGain);
@@ -558,105 +571,29 @@ public class GameGUI extends GUI {
 	/* 
 	 * erstellt einen neuen Thread sobald ein Sound aufgerufen wird, damit Sounds auch übereinander laufen können
 	 */
-	private void playSound() {
-			Thread soundThread = new Thread(new SoundRunnable());
+	private void playSound(String soundUrl) {
+			Thread soundThread = new Thread(new SoundRunnable(soundUrl));
 			soundThread.start();
 		}
-	
+
 	/* 
-	 * erstellt die einzelnen Sounds
+	 * Spielt den Jubelsound ab
 	 */
-	private void playDiceSound1() {
-		soundUrl = "DiceSound1.wav";
-		playSound();
-	}
-	private void playDiceSound2() {
-		soundUrl = "DiceSound2.wav";
-		playSound();
-	}
-	private void playDiceSound3() {
-		soundUrl = "DiceSound3.wav";
-		playSound();
-	}
-	private void playDiceSound4() {
-		soundUrl = "DiceSound4.wav";
-		playSound();
-	}
-	private void playDiceSound5() {
-		soundUrl = "DiceSound5.wav";
-		playSound();
-	}
-	private void playDiceSound6() {
-		soundUrl = "DiceSound6.wav";
-		playSound();
-	}
-	private void playDiceSound7() {
-		soundUrl = "DiceSound7.wav";
-		playSound();
-	}
-	private void playDiceSound8() {
-		soundUrl = "DiceSound8.wav";
-		playSound();
-	}
-	
 	private void playEndScreenCelebration() {
-		soundUrl = "Celebration.wav";
-		playSound();
+		playSound("Celebration.wav");
 	}
-	
 	
 	/* 
 	 * Kreiert eine zufällige Zahl zwischen 1 und 8
 	 * 
 	 * Wählt basierend auf der Zahl einen zufälligen Würfelsound aus damit es nicht jedes mal der gleiche ist
 	 */
-	public void playDiceSound() {
-		
+	public void playDiceSound()
+	{
 		Random randomSound = new Random();
-		int n = randomSound.nextInt(8)+1;
-		
-		switch(n) {
-		case 1:
-			playDiceSound1();
-			break;
-		case 2:
-			playDiceSound2();
-			break;
-		case 3:
-			playDiceSound3();
-			break;
-		case 4:
-			playDiceSound4();
-			break;
-		case 5:
-			playDiceSound5();
-			break;
-		case 6:
-			playDiceSound6();
-			break;
-		case 7:
-			playDiceSound7();
-			break;
-		case 8:
-			playDiceSound8();
-			break;
-		}
-		
+		String [] sounds = new String [] {"DiceSound1.wav","DiceSound2.wav","DiceSound3.wav","DiceSound4.wav","DiceSound5.wav","DiceSound6.wav","DiceSound7.wav","DiceSound8.wav"};
+		int n = randomSound.nextInt(8);
+		playSound(sounds[n]);
 	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

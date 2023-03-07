@@ -104,7 +104,7 @@ public class GameController implements Observer, ActionListener {
 
 			} else {
 				gameGUI.setBackgroundColor(gameModel.getPlayerTurn().getPlayerColor());
-				RoundButton.hierhastewas(gameModel.getPlayerTurn().getPlayerColor());
+				RoundButton.setColor(gameModel.getPlayerTurn().getPlayerColor());
 				if(gameModel.getPlayerTurn() instanceof Bot) {
 					gameGUI.getBtnDice().setEnabled(false);
 					gameGUI.getBtnOption0().setEnabled(false);

@@ -1,6 +1,5 @@
 package main.gui;
-
-import java.awt.Color;
+//Import's
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -9,6 +8,11 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JTextField;
 
+/**
+ * Sorgt dafür, dass das Textfeld abgerundete Ecken hat und gerendert wird
+ * @Credits JavaForum ronniecoleman, IMartin
+ * https://www.java-forum.org/thema/jtextfield-mit-abgerundeten-ecken-geht-ueber-grenze-hinaus.138861/
+ */
 public class RoundJTextField extends JTextField {
     private Shape shape;
     public RoundJTextField(int size) {
