@@ -1,5 +1,4 @@
 # Mensch ärgere dich nicht
-Abschlussprojekt für den Kurs "Anwendungsorientiertes Programmieren" der HTWK Leipzig
 - Kompilierte, ohne weiteres ausführbare Version ist als Release im Repository enthalten
 
 # Regeln
